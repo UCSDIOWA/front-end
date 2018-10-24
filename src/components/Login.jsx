@@ -1,11 +1,19 @@
-import React, { Component } from React;
+import React, { Component } from 'react';
 import {Button, Icon} from 'semantic-ui-react';
-import {login} from '../server/api';
 
 export class LoginButton extends Component {
-render() {
-  < div className='login-button'>
-    <>
-  </div>
-  
+  render() {
+   return (
+   < div className='login-button'>
+      <Button
+        color='blue'
+        onClick = {() => { 
+          this.props.onClick();
+        }}
+      >
+        Log In
+      </Button>
+    </div>
+      );
+  }
 }
