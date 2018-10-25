@@ -31,20 +31,6 @@ export default class LoginView extends Component {
         </Grid>
       
       </div>
-      /*
-      <div>
-          <Button icon color='blue' labelPosition='left' size='medium'>
-            <Icon name='user' color='white'/>
-            Login
-          </Button>
-    
-          <Button icon color='blue' labelPosition='left' size='medium'>
-            <Icon name='user plus' color='white'/>
-            Sign Up
-          </Button>
-          
-      </div>
-      */
     );
   }
 }
