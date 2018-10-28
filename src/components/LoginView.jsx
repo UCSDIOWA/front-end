@@ -7,22 +7,23 @@ import logoImage from '../tealogosmall.png';
 export default class LoginView extends Component {
   constructor(props){
     super(props);
-    this.state={isGary:true, submittedEmail:'', submittedPw:''};
+    this.state = { isGary:true, sEmail: '', sPw: '' }
     this.handlePicClick=this.handlePicClick.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
     
   }
 
-  handleSubmit(){
-    const {email, pw} = this.state;
-    this.setState({submittedEmail:email, submittedPw: pw});
+  handleSubmit () {
+    const { pw, email } = this.state
+
+    this.setState(state=> ({ sEmail:email, sPw:pw }));
   }
 
   handlePicClick(){
     this.setState(state => ({isGary : !state.isGary}));
   }
   render() {
-    const {email, pw} = this.state;
+    const { pw, email, sEmail, sPw } = this.state
     return (
       <div>
         <Grid textAlign='center' style={{height: '100%'}} verticalAlign='middle'>
@@ -41,8 +42,8 @@ export default class LoginView extends Component {
             </Header>
             <Form >
               <Segment stacked>
-                <Form.Input icon='user' iconPosition='right' placeholder='UCSD Email' name='email' value={email}/>
-                <Form.Input icon='lock' iconPosition='right' placeholder='Password' type='password' name='pw' value={pw}/>
+                <Form.Input icon='user' iconPosition='right' placeholder='UCSD Email' onChange={e=>this.setState({sEmail:e.target.value})}/>
+                <Form.Input icon='lock' iconPosition='right' placeholder='Password' type='password' onChange={e=>this.setState({sPw:e.target.value})} />
                 <Button color='teal' size='medium'>
                   Sign Up
                 </Button>
@@ -56,8 +57,12 @@ export default class LoginView extends Component {
 
           </Grid.Column>
         </Grid>
-      
+        <div>
+      <strong>onChange:</strong>
+      <pre>{JSON.stringify({ sEmail, sPw }, null, 2)}</pre>
       </div>
+      </div>
+
       /*
       <div>
           <Button icon color='blue' labelPosition='left' size='medium'>
