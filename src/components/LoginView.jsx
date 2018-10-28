@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Icon, Grid, Header, Image, Segment, Form, Message } from 'semantic-ui-react';
+import { Button, Icon, Grid, Header, Image, Segment, Form, Message, Container,} from 'semantic-ui-react';
 import holderImage from '../holder-image.jpg';
 
 // view for the login page
@@ -9,19 +9,28 @@ export default class LoginView extends Component {
       <div>
         <Grid textAlign='center' style={{height: '100%'}} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 650 }}>
-            <Header as='h1' color='teal' textAlign='center' >
-              <Image fluid src={holderImage} /> Tea
+          <Header>
+            <Grid>
+            <Grid.Column width={7} floated='left' textAlign='left' verticalAlign='bottom'>
+              
+              Tea
+              
+            </Grid.Column>
+            <Grid.Column width={7} floated='right'>
+              <Image  spaced='right' rounded='true' src={holderImage} width='100px' />
+            </Grid.Column>
+            </Grid>
             </Header>
             <Form>
               <Segment stacked>
-                <Form.Input icon='user' iconPosition='left' placeholder='Username or Email' />
-                <Form.Input icon='lock' iconPosition='left' placeholder='Password' type='password'/>
-                <Button color='teal' size='large'>
-                  Login
+                <Form.Input icon='user' iconPosition='right' placeholder='UCSD Email' />
+                <Form.Input icon='lock' iconPosition='right' placeholder='Password' type='password'/>
+                <Button color='teal' size='medium'>
+                  Sign Up
                 </Button>
                 
-                <Button color='teal' size='large'>
-                  Sign Up
+                <Button color='linkedin' size='huge'>
+                  Login
                 </Button>
               </Segment>
 
@@ -31,6 +40,20 @@ export default class LoginView extends Component {
         </Grid>
       
       </div>
+      /*
+      <div>
+          <Button icon color='blue' labelPosition='left' size='medium'>
+            <Icon name='user' color='white'/>
+            Login
+          </Button>
+    
+          <Button icon color='blue' labelPosition='left' size='medium'>
+            <Icon name='user plus' color='white'/>
+            Sign Up
+          </Button>
+          
+      </div>
+      */
     );
   }
 }
