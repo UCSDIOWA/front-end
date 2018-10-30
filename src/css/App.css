@@ -8,7 +8,7 @@
 }
 
 .App-header {
-    background-color: darkseagreen;
+    background-color: lightgreen;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -20,7 +20,7 @@
 
 .App-container {
     width: auto;
-    background-color: darkseagreen;
+    background-color: lightgreen;
     min-height: 100vh;
     display: flex;
     flex-direction: column;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Icon, Grid, Header, Image, Segment, Form, Message, Container} from 'semantic-ui-react';
-import holderImage from '../holder-image.jpg';
+import holderImage from '../logo.png';
 import logoImage from '../tealogosmall.png';
 
 // view for the login page
@@ -47,7 +47,7 @@ export default class LoginView extends Component {
                   Sign Up
                 </Button>
                 
-                <Button color='linkedin' size='huge' onClick={this.handleSubmit}>
+                <Button color='linkedin' size='medium' onClick={this.handleSubmit}>
                   Login
                 </Button>
               </Segment>
