@@ -17,7 +17,7 @@ const NavBar = () => (
     <Menu fixed='top' inverted>
       <Container textAlign='right'>
       
-      <Menu.Item as='a' header>
+      <Menu.Item as='a' header position='right'>
           <Image size='mini' src={HolderImage} style={{ marginRight: '1.5em' }} /> 
         </Menu.Item>
         <Dropdown item simple text='Profile'>
