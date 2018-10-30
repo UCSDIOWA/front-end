@@ -25,6 +25,7 @@ const NavBar = () => (
           <Dropdown.Menu>
             <Dropdown.Item>Settings</Dropdown.Item>
             <Dropdown.Item>Logout</Dropdown.Item>
+             <DropdownItem ><a style={{ color: 'black'}}href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" color='red' >DO NOT CLICK PLZ</a></DropdownItem>
           </Dropdown.Menu>
         </Dropdown>
       </Container>
