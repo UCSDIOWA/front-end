@@ -14,16 +14,18 @@ export default class LoginView extends Component {
   }
 
   handleSubmit () {
-    const { pw, email } = this.state
-
-    this.setState(state=> ({ sEmail:email, sPw:pw }));
+    console.log(this.state.sEmail);
+    console.log(this.state.sPw);
+  }
+  handlePW(){
+    console.log("Forgot Password");
   }
 
   handlePicClick(){
     this.setState(state => ({isGary : !state.isGary}));
   }
   render() {
-    const { pw, email, sEmail, sPw } = this.state
+    const { sEmail, sPw } = this.state
     return (
       <div>
         <Grid textAlign='center' style={{height: '100%'}} verticalAlign='middle'>
@@ -35,14 +37,17 @@ export default class LoginView extends Component {
              <Header as='h1' id="login_tea">TEA</Header>
             </Grid.Column>
             <Grid.Column width={8} floated='right'>
-              <Image  spaced='right' rounded='true' onClick={this.handlePicClick} src={this.state.isGary ? holderImage : logoImage } width='100px' />
+              <Image  spaced='right' rounded={true} onClick={this.handlePicClick} src={this.state.isGary ? holderImage : logoImage } width='100px' />
             </Grid.Column>
             </Grid>
             </Header>
             <Form>
               <Segment stacked size="huge">
-                <Form.Input icon='user' iconPosition='right' placeholder='UCSD Email' onChange={e=>this.setState({sEmail:e.target.value})}/>
-                <Form.Input icon='lock' iconPosition='right' placeholder='Password' type='password' onChange={e=>this.setState({sPw:e.target.value})} />
+                <Form.Input icon='user' iconPosition='left' placeholder='UCSD Email' onChange={e=>this.setState({sEmail:e.target.value})}/>
+                <Form.Input icon='lock' iconPosition='left' placeholder='Password' type='password' onChange={e=>this.setState({sPw:e.target.value})} />
+                <Grid>
+                <Grid.Row>
+                  <Grid.Column>
                 <Button color='teal' size='huge'>
                   Sign Up
                 </Button>
@@ -50,6 +55,16 @@ export default class LoginView extends Component {
                 <Button color='linkedin' size='huge' onClick={this.handleSubmit}>
                   Login
                 </Button>
+                </Grid.Column>
+                </Grid.Row>
+                </Grid >
+                <Grid centered>
+                <Segment onClick={this.handlePW} id="forgot-pw">
+                <u>
+                  Forgot password?
+                  </u>
+                </Segment>
+                </Grid>
               </Segment>
 
             </Form>
