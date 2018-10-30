@@ -27,27 +27,27 @@ export default class LoginView extends Component {
     return (
       <div>
         <Grid textAlign='center' style={{height: '100%'}} verticalAlign='middle'>
-          <Grid.Column style={{ maxWidth: 650 }}>
+          <Grid.Column style={{ maxWidth: 800 }}>
           <Header>
             <Grid>
-            <Grid.Column width={7} floated='left' textAlign='left' verticalAlign='bottom'>
+            <Grid.Column width={8} floated='left' textAlign='left' verticalAlign='bottom'>
               
              <Header as='h1' id="login_tea">TEA</Header>
             </Grid.Column>
-            <Grid.Column width={7} floated='right'>
+            <Grid.Column width={8} floated='right'>
               <Image  spaced='right' rounded='true' onClick={this.handlePicClick} src={this.state.isGary ? holderImage : logoImage } width='100px' />
             </Grid.Column>
             </Grid>
             </Header>
-            <Form >
-              <Segment stacked>
+            <Form>
+              <Segment stacked size="huge">
                 <Form.Input icon='user' iconPosition='right' placeholder='UCSD Email' onChange={e=>this.setState({sEmail:e.target.value})}/>
                 <Form.Input icon='lock' iconPosition='right' placeholder='Password' type='password' onChange={e=>this.setState({sPw:e.target.value})} />
-                <Button color='teal' size='medium'>
+                <Button color='teal' size='huge'>
                   Sign Up
                 </Button>
                 
-                <Button color='linkedin' size='medium' onClick={this.handleSubmit}>
+                <Button color='linkedin' size='huge' onClick={this.handleSubmit}>
                   Login
                 </Button>
               </Segment>
