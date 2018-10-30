@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Icon, Grid, Header, Image, Segment, Form, Message, Container,} from 'semantic-ui-react';
+import { Button, Icon, Grid, Header, Image, Segment, Form, Message, Container} from 'semantic-ui-react';
 import holderImage from '../holder-image.jpg';
 import logoImage from '../tealogosmall.png';
 
@@ -32,8 +32,7 @@ export default class LoginView extends Component {
             <Grid>
             <Grid.Column width={7} floated='left' textAlign='left' verticalAlign='bottom'>
               
-              Tea
-              
+             <Header as='h1' id="login_tea">TEA</Header>
             </Grid.Column>
             <Grid.Column width={7} floated='right'>
               <Image  spaced='right' rounded='true' onClick={this.handlePicClick} src={this.state.isGary ? holderImage : logoImage } width='100px' />
