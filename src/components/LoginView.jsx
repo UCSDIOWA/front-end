@@ -76,21 +76,6 @@ export default class LoginView extends Component {
       <pre>{JSON.stringify({ sEmail, sPw }, null, 2)}</pre>
       </div>
       </div>
-
-      /*
-      <div>
-          <Button icon color='blue' labelPosition='left' size='medium'>
-            <Icon name='user' color='white'/>
-            Login
-          </Button>
-    
-          <Button icon color='blue' labelPosition='left' size='medium'>
-            <Icon name='user plus' color='white'/>
-            Sign Up
-          </Button>
-          
-      </div>
-      */
     );
   }
 }
