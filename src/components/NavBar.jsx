@@ -5,29 +5,33 @@ import {
   Menu,
   Popup,
   Button
-} from 'semantic-ui-react'
-import HolderImage from '../holder-image.jpg'
-import Logo from '../logo.png'
+} from 'semantic-ui-react';
+import {Link} from 'react-router-dom';
+import HolderImage from '../holder-image.jpg';
+import Logo from '../logo.png';
+import ProfileView from './ProfileView';
+import {navConsts} from '../constants';
+
+const {GATEWAY, SIGNUP, PROFILE} = navConsts;
 
 const NavBar = () => (
     <Menu fixed='top' inverted borderless size='large'>
         <Menu.Menu position='left'>
           <Menu.Item>
-            <Image size='mini' src={Logo} /> 
+            <Link to={'/'}>          
+              <Image size='mini' src={Logo} /> 
+            </Link>  
           </Menu.Item >
         </Menu.Menu>
         <Menu.Item  position='right' icon='meh outline' ></Menu.Item>
         <Dropdown item simple icon='bars' direction='left' inline> 
           <Dropdown.Menu>
              <Dropdown.Item >
-               <Popup trigger={<text>Profile</text>} position='left center'
-                  content='I can do dis'
-                  on='click'
-                  hideOnScroll
-                  basic
-                />
+             <Link to={'/' + PROFILE} style={{color: 'black'}}>Profile </Link>
              </Dropdown.Item>
-             <Dropdown.Item>Logout</Dropdown.Item>
+             <Dropdown.Item>
+             <Link to={'/'} style={{color: 'black'}}>Logout </Link>
+             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
     </Menu>
