@@ -7,8 +7,8 @@ import {
   Button
 } from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
-import HolderImage from '../holder-image.jpg';
-import Logo from '../logo.png';
+import HolderImage from '../resources/holder-image.jpg';
+import Logo from '../resources/logo.png';
 import ProfileView from './ProfileView';
 import {navConsts} from '../constants';
 

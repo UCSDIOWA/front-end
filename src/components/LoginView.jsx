@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Icon, Grid, Header, Image, Segment, Form, Message, Container} from 'semantic-ui-react';
-import holderImage from '../logo.png';
-import logoImage from '../tealogosmall.png';
+import holderImage from '../resources/logo.png';
+import logoImage from '../resources/tealogosmall.png';
 import {navConsts} from '../constants';
 import {Link} from 'react-router-dom';
 
@@ -10,9 +10,10 @@ export default class LoginView extends Component {
   constructor(props){
     super(props);
     this.state = { isGary:true, sEmail: '', sPw: '' }
+
+    // bind this to handle methods
     this.handlePicClick=this.handlePicClick.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
-    
   }
 
   handleSubmit () {
