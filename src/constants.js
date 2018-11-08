@@ -5,5 +5,5 @@ export const navConsts = {
   GATEWAY: 'home',
   SIGNUP: 'signup',
   PROFILE: 'profile',
-  CREATE_PROJECT: 'create-project'
+  CREATE_PROJECT: 'home/create-project'
 };

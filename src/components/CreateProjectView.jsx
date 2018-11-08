@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Header, Grid, Form, Input, TextArea, Segment, Checkbox, Button} from 'semantic-ui-react'
-import {Calender} from './CalendarModule';
+import {CalendarModule} from './CalendarModule';
+import {Link} from 'react-router-dom';
+import {navConsts} from '../constants';
+
+const {GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT} = navConsts;
+
 
 export default class CreateProjectView extends Component {
     constructor(props){
@@ -31,7 +36,8 @@ export default class CreateProjectView extends Component {
         return (
             <div>
             <Header style={{fontSize: '5em'}}>Create Project</Header>
-            <Grid textAlign='center' style={{height: '80%'}} verticalAlign='middle'>
+            <Segment>
+            <Grid textAlign='center' style={{height: '100%'}} verticalAlign='middle'>
             <Grid.Row>
                 <Form>
                     <Form.Group >
@@ -43,6 +49,8 @@ export default class CreateProjectView extends Component {
                             value={title}
                             onChange={this.handleChange}
                         />
+                    </Form.Group>
+                    <Form.Group>
                          <Form.Input 
                             control={TextArea}
                             label='Description'
@@ -60,8 +68,15 @@ export default class CreateProjectView extends Component {
                     </Form.Group>
                 </Form>
             </Grid.Row>
+            <Grid.Row>
+            <CalendarModule></CalendarModule>
+            </Grid.Row>
         </Grid>
         <Button color='teal' onClick={this.handleSubmit}>Create</Button>
+        <Link to={'/' + GATEWAY}>
+            <Button color='red'>Cancel</Button>
+        </Link>
+        </Segment>
         </div>
         );
     }

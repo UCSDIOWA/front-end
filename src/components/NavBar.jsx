@@ -3,9 +3,6 @@ import {
   Dropdown,
   Image,
   Menu,
-  Popup,
-  Button,
-  Header
 } from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import Logo from '../logo.png';
