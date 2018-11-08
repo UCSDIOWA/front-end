@@ -31,10 +31,7 @@ const NavBar = () => (
              <Dropdown.Item>
               <Link to={'/'} style={{ color: 'black'}}>Logout</Link>
              </Dropdown.Item>
-             <Dropdown.Item>
-             <Link to={'/' + CREATE_PROJECT} style={{color: 'black'}}>For Testing only</Link>
-             </Dropdown.Item>
-          </Dropdown.Menu>
+         </Dropdown.Menu>
         </Dropdown>
     </Menu>
 )
