@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import { Button, Icon, Grid, Header, Image, Segment, Form, Message, Container, Dropdown} from 'semantic-ui-react';
 import holderImage from '../resources/logo.png';
 import logoImage from '../resources/tealogosmall.png';
+=======
+import { Button, Dropdown} from 'semantic-ui-react';
+
+>>>>>>> 1e62a1f056dcbc628cba24bb925de44a2c5dd975
 import {navConsts} from '../constants';
 import {Link} from 'react-router-dom';
+
+const {GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT} = navConsts;
 
  const options = [
   { key: 'angular', text: 'Angular', value: 'angular' },
@@ -32,7 +39,9 @@ export default class GatewayView extends Component {
 
     return (
       <div>
+        <Link to={'/' + CREATE_PROJECT} >
         <Button  id='create_project' color="blue" size='huge'>Create Project</Button>
+        </Link>
             
             <Button  id='find_a_team' color='green' size='huge'>Find A Team</Button> 
             <hr></hr>

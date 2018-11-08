@@ -3,16 +3,18 @@ import {
   Dropdown,
   Image,
   Menu,
-  Popup,
-  Button
 } from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
+<<<<<<< HEAD
 import HolderImage from '../resources/holder-image.jpg';
 import Logo from '../resources/logo.png';
 import ProfileView from './ProfileView';
+=======
+import Logo from '../logo.png';
+>>>>>>> 1e62a1f056dcbc628cba24bb925de44a2c5dd975
 import {navConsts} from '../constants';
 
-const {GATEWAY, SIGNUP, PROFILE} = navConsts;
+const {GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT} = navConsts;
 
 const NavBar = () => (
     <Menu fixed='top' inverted borderless size='large'>
@@ -24,15 +26,15 @@ const NavBar = () => (
           </Menu.Item >
         </Menu.Menu>
         <Menu.Item  position='right' icon='meh outline' ></Menu.Item>
-        <Dropdown item simple icon='bars' direction='left' inline> 
+        <Dropdown item simple icon='bars' direction='left' closeOnChange openOnFocus> 
           <Dropdown.Menu>
              <Dropdown.Item >
-             <Link to={'/' + PROFILE} style={{color: 'black'}}>Profile </Link>
+              <Link to={'/' + PROFILE} style={{color: 'black'}}>Profile</Link>
              </Dropdown.Item>
              <Dropdown.Item>
-             <Link to={'/'} style={{color: 'black'}}>Logout </Link>
+              <Link to={'/'} style={{ color: 'black'}}>Logout</Link>
              </Dropdown.Item>
-          </Dropdown.Menu>
+         </Dropdown.Menu>
         </Dropdown>
     </Menu>
 )

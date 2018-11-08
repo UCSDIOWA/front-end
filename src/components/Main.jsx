@@ -5,10 +5,11 @@ import GatewayView from './GatewayView';
 import SignUpView from './SignUpView';
 import ProfileView from './ProfileView';
 import {navConsts} from '../constants';
+import CreateProjectView from './CreateProjectView';
 
 export default class Main extends Component {
   render() {
-    const {GATEWAY, SIGNUP, PROFILE} = navConsts;
+    const {GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT} = navConsts;
 
     return (
         <main className="App-container">
@@ -17,6 +18,7 @@ export default class Main extends Component {
             <Route exact path={'/' + GATEWAY} component={GatewayView} />
             <Route exact path={'/' + SIGNUP} component={SignUpView} />
             <Route exact path={'/' + PROFILE} component={ProfileView} />
+            <Route exact path={'/' + CREATE_PROJECT} component={CreateProjectView} />
           </Switch>
         </main>
     );
