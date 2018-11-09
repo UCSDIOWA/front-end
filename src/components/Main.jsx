@@ -6,6 +6,7 @@ import SignUpView from './SignUpView';
 import ProfileView from './ProfileView';
 import {navConsts} from '../constants';
 import CreateProjectView from './CreateProjectView';
+import NavBar from './NavBar';
 
 export default class Main extends Component {
   render() {
@@ -13,6 +14,7 @@ export default class Main extends Component {
 
     return (
         <main className="App-container">
+        <NavBar />
           <Switch>
             <Route exact path='/' component={LoginView} />
             <Route exact path={'/' + GATEWAY} component={GatewayView} />

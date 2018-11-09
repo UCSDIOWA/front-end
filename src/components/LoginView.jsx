@@ -9,8 +9,8 @@ import {Link} from 'react-router-dom';
 export default class LoginView extends Component {
   constructor(props){
     super(props);
-    this.state = { isGary:true, sEmail: '', sPw: '' }
-    this.handlePicClick=this.handlePicClick.bind(this);
+    this.state = {  sEmail: '', sPw: '' }
+    
     this.handleSubmit=this.handleSubmit.bind(this);
     
   }
@@ -23,9 +23,7 @@ export default class LoginView extends Component {
     console.log("Forgot Password");
   }
 
-  handlePicClick(){
-    this.setState(state => ({isGary : !state.isGary}));
-  }
+
   render() {
     const {GATEWAY, SIGNUP} = navConsts;
     const { sEmail, sPw } = this.state
@@ -40,7 +38,7 @@ export default class LoginView extends Component {
              <Header as='h1' id="login_tea">TEA</Header>
             </Grid.Column>
             <Grid.Column width={8} floated='right'>
-              <Image  spaced='right' rounded={true} onClick={this.handlePicClick} src={this.state.isGary ? holderImage : logoImage } width='100px' />
+              <Image  spaced='right' rounded={true}  src={holderImage } width='100px' />
             </Grid.Column>
             </Grid>
             </Header>
@@ -77,10 +75,7 @@ export default class LoginView extends Component {
 
           </Grid.Column>
         </Grid>
-        <div>
-          <strong>onChange:</strong>
-          <pre>{JSON.stringify({ sEmail, sPw }, null, 2)}</pre>
-        </div>
+        
       </div>
     );
   }
