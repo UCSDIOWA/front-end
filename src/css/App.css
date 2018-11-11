@@ -34,6 +34,24 @@
     color: #61dafb;
 }
 
+/*profileView components */
+.profile-grid{
+    width: 60rem;
+}
+.profile-columns1{
+    width:26rem;
+}
+.profile-columns2{
+    width:30rem;
+}
+.profile-header{
+    width:30rem;
+    align-items: center;
+    justify-content: left;
+}
+
+
+
 #login_tea {
     font-size: 4em;
     font-weight: bold;

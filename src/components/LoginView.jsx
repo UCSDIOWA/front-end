@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom';
 export default class LoginView extends Component {
   constructor(props){
     super(props);
-    this.state = {  sEmail: '', sPw: '' }
+    this.state = { sEmail: '', sPw: '' }
     
     this.handleSubmit=this.handleSubmit.bind(this);
     
