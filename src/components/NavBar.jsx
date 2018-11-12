@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  Dropdown,
-  Image,
-  Menu,
-} from 'semantic-ui-react';
+import { Dropdown, Image, Menu, Button} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import Logo from '../logo.png';
 import {navConsts} from '../constants';
@@ -24,6 +20,9 @@ const NavBar = () => (
           <Dropdown.Menu>
              <Dropdown.Item >
               <Link to={'/' + PROFILE} style={{color: 'black'}}>Profile</Link>
+             </Dropdown.Item>
+             <Dropdown.Item >
+              <Link to={'/' + GATEWAY} style={{color: 'black'}}>Home</Link>
              </Dropdown.Item>
              <Dropdown.Item>
               <Link to={'/'} style={{ color: 'black'}}>Logout</Link>
