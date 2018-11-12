@@ -4,7 +4,7 @@ import {CalendarModule} from './CalendarModule';
 import {Link} from 'react-router-dom';
 import {navConsts} from '../constants';
 
-const {GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT} = navConsts;
+const {GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT, SEARCH_PROJECT} = navConsts;
 
 
 export default class CreateProjectView extends Component {
@@ -31,33 +31,7 @@ export default class CreateProjectView extends Component {
         console.log("Title:", this.state.title);
       }
 
-<<<<<<< HEAD
-  render() {
-    return (
-      <Grid textAlign='center' style={{ height: '80%' }} verticalAlign='middle'>
-        <Grid.Row>
-          <Header style={{ fontSize: '5em' }}>Create Project</Header>
-        </Grid.Row>
-        <Grid.Row>
-          <Form>
-            <Form.Group widths='equal'>
-              <Form.Field
-                control={Input}
-                label='Title'
-                placeholder='Title of Project...'
-              />
-              <Form.Field
-                control={TextArea}
-                label='Description'
-                placeholder='Discription of Project...'
-              />
-            </Form.Group>
-          </Form>
-        </Grid.Row>
-      </Grid>
-    );
-  }
-=======
+
     render() {
         const { title, description, size, isPrivate} = this.state;
         return (
@@ -110,5 +84,5 @@ export default class CreateProjectView extends Component {
         </div>
         );
     }
->>>>>>> 1e62a1f056dcbc628cba24bb925de44a2c5dd975
+
 }

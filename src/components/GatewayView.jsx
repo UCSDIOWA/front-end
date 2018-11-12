@@ -6,11 +6,11 @@ import holderImage from '../resources/logo.png';
 import logoImage from '../resources/tealogosmall.png';
 import { navConsts } from "../constants";
 import { Link } from "react-router-dom";
-import { Button, Dropdown} from 'semantic-ui-react';
 
 
 
-const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT } = navConsts;
+
+const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT, SEARCH_PROJECT } = navConsts;
 
 const options = [
   { key: "angular", text: "Angular", value: "angular" },
@@ -43,9 +43,12 @@ export default class GatewayView extends Component {
           </Button>
         </Link>
 
-        <Button id="find_a_team" color="green" size="huge">
-          Find A Team
-        </Button>
+        <Link to={"/" + SEARCH_PROJECT}>
+          <Button id="search_project" color="green" size="huge">
+          Search Project
+          </Button>
+        </Link>
+            
         <hr />
         <h1>My Projects</h1>
         <Dropdown

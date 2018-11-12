@@ -5,16 +5,12 @@ import {
   Menu,
 } from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
-<<<<<<< HEAD
-import HolderImage from '../resources/holder-image.jpg';
+
 import Logo from '../resources/logo.png';
-import ProfileView from './ProfileView';
-=======
-import Logo from '../logo.png';
->>>>>>> 1e62a1f056dcbc628cba24bb925de44a2c5dd975
+
 import {navConsts} from '../constants';
 
-const {GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT} = navConsts;
+const {GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT, SEARCH_PROJECT} = navConsts;
 
 const NavBar = () => (
     <Menu fixed='top' inverted borderless size='large'>

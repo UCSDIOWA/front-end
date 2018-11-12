@@ -15,7 +15,7 @@ export default class LoginView extends Component {
     this.state = { isGary:true, sEmail: '', sPw: '' }
 
     // bind this to handle methods
-    this.handlePicClick=this.handlePicClick.bind(this);
+    //this.handlePicClick=this.handlePicClick.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
   }
 

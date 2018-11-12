@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Segment, Grid, Image, Table } from "semantic-ui-react";
-import holderimage from "../holder-image.jpg";
+import holderimage from "../resources/holder-image.jpg";
 import CurrentProjectsTable from "./CurrentProjectsTable";
 import PreviousProjectsTable from "./PreviousProjectsTable";
 import EndorsementsWidget from "./EndorsementsWidget";
