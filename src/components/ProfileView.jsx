@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Segment, Grid, Image, Table } from "semantic-ui-react";
-import holderimage from "../holder-image.jpg";
+import { Segment, Grid, Image, Container } from "semantic-ui-react";
+import holderimage from "../resources/holder-image.jpg";
 import CurrentProjectsTable from "./CurrentProjectsTable";
 import PreviousProjectsTable from "./PreviousProjectsTable";
 import EndorsementsWidget from "./EndorsementsWidget";
-
+import ProfileDescriptionWidget from "./ProfileDescriptionWidget";
 export default class ProfileView extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +32,8 @@ export default class ProfileView extends Component {
                 <CurrentProjectsTable />
                 <PreviousProjectsTable />
               </Grid.Column>
-              <Grid.Column className="profile-columns2">
+              <Grid.Column className="profile-columns3">
+                <ProfileDescriptionWidget />
                 <EndorsementsWidget />
               </Grid.Column>
             </Grid.Row>

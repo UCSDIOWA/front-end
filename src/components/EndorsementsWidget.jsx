@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Segment, Grid, Image, Statistic, Icon, Feed } from "semantic-ui-react";
-import holderimage from "../holder-image.jpg";
+import EndorsementFeedEvent from "./EndorsementFeedEvent";
 
 export default class EndorsementsWidget extends Component {
   constructor(props) {
@@ -11,29 +11,18 @@ export default class EndorsementsWidget extends Component {
     return (
       <Grid>
         <Grid.Row>
-          <Segment className="profile-columns1">
-            <Segment className="profile-columns2">
+          <Segment className="profile-columns3">
+            <Segment className="profile-columns4">
               <Statistic horizontal size="small">
                 <Statistic.Value>
-                  <Icon name="lemon" />
+                  <Icon name="lemon outline" />
                   69
                 </Statistic.Value>
                 <Statistic.Label>Endorsements</Statistic.Label>
               </Statistic>
             </Segment>
             <Feed>
-              <Feed.Event>
-                <Feed.Label>
-                  <Image src={holderimage} />
-                </Feed.Label>
-                <Feed.Content>
-                  <Feed.Summary>
-                    <Feed.User>Daddy Gary</Feed.User> endorses{" "}
-                    <Feed.User>Paul Cao</Feed.User> for the role{" "}
-                    <a>Software Engineer</a>
-                  </Feed.Summary>
-                </Feed.Content>
-              </Feed.Event>
+              <EndorsementFeedEvent />
             </Feed>
           </Segment>
         </Grid.Row>
