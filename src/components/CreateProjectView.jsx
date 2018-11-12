@@ -96,13 +96,16 @@ export default class CreateProjectView extends Component {
                 </Form>
             </Grid.Row>
             <Grid.Row>
+            <h4>Deadline</h4>
             <CalendarModule></CalendarModule>
             </Grid.Row>
-        </Grid>
+            <Grid.Row>
         <Button color='teal' onClick={this.handleSubmit}>Create</Button>
         <Link to={'/' + GATEWAY}>
             <Button color='red'>Cancel</Button>
         </Link>
+        </Grid.Row>
+        </Grid>
         </Segment>
         </div>
         );
