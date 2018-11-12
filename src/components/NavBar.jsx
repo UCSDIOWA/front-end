@@ -4,9 +4,10 @@ import {Link} from 'react-router-dom';
 import Logo from '../logo.png';
 import {navConsts} from '../constants';
 
-const {GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT} = navConsts;
+const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT } = navConsts;
 
 const NavBar = () => (
+
     <Menu fixed='top' inverted borderless size='large'>
         <Menu.Menu position='left'>
           <Menu.Item>
@@ -32,5 +33,4 @@ const NavBar = () => (
     </Menu>
 )
 
-export default NavBar
-  
+export default NavBar;
