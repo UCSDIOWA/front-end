@@ -19,7 +19,7 @@ const NavBar = () => (
             </Link>  
           </Menu.Item >
         </Menu.Menu>
-        <Menu.Item  position='right' icon='meh outline' ></Menu.Item>
+        <Menu.Item  position='right' icon='user outline' ></Menu.Item>
         <Dropdown item simple icon='bars' direction='left' closeOnChange openOnFocus> 
           <Dropdown.Menu>
              <Dropdown.Item >
