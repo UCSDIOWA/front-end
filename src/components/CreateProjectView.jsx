@@ -17,7 +17,6 @@ const privateOptions = [
 
 ]
 
-const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT } = navConsts;
 
 export default class CreateProjectView extends Component {
   constructor(props) {
@@ -25,7 +24,7 @@ export default class CreateProjectView extends Component {
 
     this.state = { title: '', description: '', size: 10, isPrivate: false, 
                    tags: '', deadline: ''};
-
+  }
   handleChange(e, { name, value }) {
     this.setState({ [name]: value });
   }
