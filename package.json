@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "react": "^16.5.2",
+    "react-calendar": "^2.17.5",
+    "react-datepicker": "^1.8.0",
     "react-dom": "^16.5.2",
     "react-modern-datepicker": "^0.7.1",
     "react-router-dom": "^4.3.1",

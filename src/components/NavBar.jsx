@@ -1,9 +1,7 @@
 import React from "react";
-import { Dropdown, Image, Menu } from "semantic-ui-react";
+import { Dropdown, Image, Menu, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-
-import Logo from "../resources/logo.png";
-import ProfileView from "./ProfileView";
+import Logo from "../logo.png";
 import { navConsts } from "../constants";
 
 const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT } = navConsts;
@@ -17,7 +15,7 @@ const NavBar = () => (
         </Link>
       </Menu.Item>
     </Menu.Menu>
-    <Menu.Item position="right" icon="user outline" />
+    <Menu.Item position="right" icon="meh outline" />
     <Dropdown
       item
       simple
@@ -30,6 +28,11 @@ const NavBar = () => (
         <Dropdown.Item>
           <Link to={"/" + PROFILE} style={{ color: "black" }}>
             Profile
+          </Link>
+        </Dropdown.Item>
+        <Dropdown.Item>
+          <Link to={"/" + GATEWAY} style={{ color: "black" }}>
+            Home
           </Link>
         </Dropdown.Item>
         <Dropdown.Item>
