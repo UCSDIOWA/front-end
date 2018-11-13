@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, Image, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import HolderImage from "../resources/holder-image.jpg";
+
 import Logo from "../resources/logo.png";
 import ProfileView from "./ProfileView";
 import { navConsts } from "../constants";

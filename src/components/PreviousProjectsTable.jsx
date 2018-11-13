@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Segment, Header, Image, Table } from "semantic-ui-react";
+import ProjectTileEvent from "./ProjectTileEvent";
 
 export default class PreviousProjectsTable extends Component {
   constructor(props) {
@@ -12,9 +13,12 @@ export default class PreviousProjectsTable extends Component {
     for (var i = 0; i < this.state.numberViews; i++) {
       this.state.tableRows.push(
         <tbody key={i}>
-          <Table.Row>
-            <Table.Cell>ure mum gay</Table.Cell>
-          </Table.Row>
+          <ProjectTileEvent
+            isFinished={true}
+            projName="Gary's CSE110 Group"
+            groupSize={6}
+            projRole="Software Architect"
+          />
         </tbody>
       );
     }
@@ -25,12 +29,7 @@ export default class PreviousProjectsTable extends Component {
     return (
       <Segment className="profile-columns1">
         <Header>Previous Project(s)</Header>
-        <Table celled>
-          {this.state.tableRows}
-          {this.state.tableRows}
-          {this.state.tableRows}
-          {this.state.tableRows}
-        </Table>
+        <Table celled>{this.state.tableRows}</Table>
       </Segment>
     );
   }
