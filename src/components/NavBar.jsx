@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, Image, Menu, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import Logo from "../logo.png";
+import Logo from "../resources/logo.png";
 import { navConsts } from "../constants";
 
 const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT } = navConsts;
