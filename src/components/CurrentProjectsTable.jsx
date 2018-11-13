@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Segment, Grid, Image, Table } from "semantic-ui-react";
-import holderimage from "../holder-image.jpg";
 
 export default class CurrentProjectsTable extends Component {
   constructor(props) {

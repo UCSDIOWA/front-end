@@ -1,10 +1,19 @@
-import React, { Component } from 'react';
-import { Button, Icon, Grid, Header, Image, Segment, Form, Message, Container} from 'semantic-ui-react';
-import holderImage from '../resources/logo.png';
-import logoImage from '../resources/tealogosmall.png';
-import {navConsts} from '../constants';
-import {Link} from 'react-router-dom';
-
+import React, { Component } from "react";
+import {
+  Button,
+  Icon,
+  Grid,
+  Header,
+  Image,
+  Segment,
+  Form,
+  Message,
+  Container
+} from "semantic-ui-react";
+import holderImage from "../resources/logo.png";
+import logoImage from "../resources/tealogosmall.png";
+import { navConsts } from "../constants";
+import { Link } from "react-router-dom";
 
 // view for the login page
 export default class LoginView extends Component {
@@ -12,11 +21,11 @@ export default class LoginView extends Component {
     super(props);
     this.state = { sEmail: "", sPw: "" };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { isGary:true, sEmail: '', sPw: '' }
+    //this.state = { isGary: true, sEmail: "", sPw: "" };
 
     // bind this to handle methods
-    this.handlePicClick=this.handlePicClick.bind(this);
-    this.handleSubmit=this.handleSubmit.bind(this);
+    //this.handlePicClick=this.handlePicClick.bind(this);
+    //this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit() {

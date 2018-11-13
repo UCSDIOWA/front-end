@@ -1,22 +1,51 @@
+import React, { Component } from "react";
 
-import React, { Component } from 'react';
-
-import { Button, Icon, Grid, Header, Image, Segment, Form, Message, Container, Dropdown} from 'semantic-ui-react';
-import holderImage from '../resources/logo.png';
-import logoImage from '../resources/tealogosmall.png';
+import {
+  Button,
+  Icon,
+  Grid,
+  Header,
+  Image,
+  Segment,
+  Form,
+  Message,
+  Container,
+  Dropdown
+} from "semantic-ui-react";
+import holderImage from "../resources/logo.png";
+import logoImage from "../resources/tealogosmall.png";
 import { navConsts } from "../constants";
 import { Link } from "react-router-dom";
-import { Button, Dropdown} from 'semantic-ui-react';
 
-
-
-const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT } = navConsts;
+const {
+  GATEWAY,
+  SIGNUP,
+  PROFILE,
+  CREATE_PROJECT,
+  PROJECT_DASHBOARD
+} = navConsts;
 
 const options = [
-  { key: "angular", text: "Angular", value: "angular" },
-  { key: "css", text: "CSS", value: "css" },
-  { key: "design", text: "Graphic Design", value: "design" },
-  { key: "ember", text: "Ember", value: "ember" },
+  {
+    key: "angular",
+    text: "Angular",
+    value: "angular"
+  },
+  {
+    key: "css",
+    text: "CSS",
+    value: "css"
+  },
+  {
+    key: "design",
+    text: "Graphic Design",
+    value: "design"
+  },
+  {
+    key: "ember",
+    text: "Ember",
+    value: "ember"
+  },
   { key: "html", text: "HTML", value: "html" },
   { key: "ia", text: "Information Architecture", value: "ia" },
   { key: "javascript", text: "Javascript", value: "javascript" },
@@ -48,13 +77,15 @@ export default class GatewayView extends Component {
         </Button>
         <hr />
         <h1>My Projects</h1>
-        <Dropdown
-          placeholder="My Projects"
-          fluid
-          search
-          selection
-          options={options}
-        />
+        <Link to={"/" + PROJECT_DASHBOARD}>
+          <Dropdown
+            placeholder="My Projects"
+            fluid
+            search
+            selection
+            options={options}
+          />
+        </Link>
       </div>
     );
   }
