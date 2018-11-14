@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Segment, Header, Image, Table } from "semantic-ui-react";
-import holderimage from "../resources/holder-image.jpg";
+import ProjectTileEvent from "./ProjectTileEvent";
 
 export default class CurrentProjectsTable extends Component {
   constructor(props) {
@@ -13,9 +13,13 @@ export default class CurrentProjectsTable extends Component {
     for (var i = 0; i < this.state.numberViews; i++) {
       this.state.tableRows.push(
         <tbody key={i}>
-          <Table.Row>
-            <Table.Cell>ure mum gay</Table.Cell>
-          </Table.Row>
+          <ProjectTileEvent
+            isFinished={false}
+            projName="Gary's CSE110 Group"
+            groupSize={5}
+            projRole="Software Architect"
+            percentDone={69}
+          />
         </tbody>
       );
     }

@@ -16,22 +16,26 @@ const privateOptions = [
         {key: 'f', text:'No', value:false},
     ]
 
-const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT } = navConsts;
 
 export default class CreateProjectView extends Component {
-  constructor(props) {
+    constructor(props){
     super(props);
 
     this.state = { title: '', description: '', size: 10, isPrivate: false, 
                    tags: '', deadline: ''};
 
-  handleChange(e, { name, value }) {
-    this.setState({ [name]: value });
-  }
+    this.handleChange=this.handleChange.bind(this);
+    this.handleSubmit=this.handleSubmit.bind(this);
+    this.handleIsPrivate=this.handleIsPrivate.bind(this);
+    }
+    
+    handleChange (e, {name, value}) {
+        this.setState({ [name]: value});
+    }
 
-  handleIsPrivate() {
-    this.setState({ isPrivate: !this.state.isPrivate });
-  }
+    handleIsPrivate() {
+        this.setState({isPrivate : !this.state.isPrivate});
+    }
 
     handleSubmit () {
         console.log('Current Page is CreateProjectView.jsx')
