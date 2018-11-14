@@ -11,7 +11,7 @@ export default class Main extends Component {
   render() {
     const {GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT} = navConsts;
 
-    return (
+    return (    
         <main className="App-container">
           <Switch>
             <Route exact path='/' component={LoginView} />

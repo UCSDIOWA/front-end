@@ -7,15 +7,14 @@ import {navConsts} from '../constants';
 const {GATEWAY} = navConsts;
 
 const tagsArray = [ 
-    {key:'s', text:'Software Engineering', value:'software engineering'},
-    {key:'c', text:'Computer Science', value:'computer science'}
-      ]  
+        {key:'s', text:'Software Engineering', value:'software engineering'},
+        {key:'c', text:'Computer Science', value:'computer science'}
+    ]  
 
 const privateOptions = [
-    {key: 't', text:'Yes', value:true},
-    {key: 'f', text:'No', value:false},
-
-]
+        {key: 't', text:'Yes', value:true},
+        {key: 'f', text:'No', value:false},
+    ]
 
 const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT } = navConsts;
 
@@ -35,9 +34,10 @@ export default class CreateProjectView extends Component {
   }
 
     handleSubmit () {
-        console.log("isPrivate:",this.state.isPrivate);
-        console.log("Description:",this.state.description);
+        console.log('Current Page is CreateProjectView.jsx')
         console.log("Title:", this.state.title);
+        console.log("Description:",this.state.description);
+        console.log("isPrivate:",this.state.isPrivate);
         console.log("Size:", this.state.size);
         console.log("Tags:", this.state.tags);
         console.log("Deadline:", this.state.deadline);
@@ -95,6 +95,7 @@ export default class CreateProjectView extends Component {
                                         <Form.Field 
                                             control={Select}
                                             options={tagsArray}
+                                            placeholder='ex. CSE 110 Project'
                                             label='Tags'
                                             name='tags'
                                             value={tags}
