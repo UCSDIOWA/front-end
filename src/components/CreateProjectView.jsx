@@ -4,7 +4,8 @@ import {Link} from 'react-router-dom';
 import {navConsts} from '../constants';
 
 
-const {GATEWAY} = navConsts;
+const {GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT, SEARCH_PROJECT} = navConsts;
+
 
 const tagsArray = [ 
     {key:'s', text:'Software Engineering', value:'software engineering'},
@@ -16,6 +17,7 @@ const privateOptions = [
     {key: 'f', text:'No', value:false},
 
 ]
+
 
 
 export default class CreateProjectView extends Component {
@@ -47,6 +49,7 @@ export default class CreateProjectView extends Component {
         console.log("Deadline:", this.state.deadline);
 
       }
+
 
     render() {
         const { title, description, size, isPrivate, tags} = this.state;
@@ -119,4 +122,7 @@ export default class CreateProjectView extends Component {
             </div>
         );
     }
+
+
 }
+

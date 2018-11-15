@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Segment, Grid, Image, Statistic, Icon, Feed } from "semantic-ui-react";
+
 import EndorsementFeedEvent from "./EndorsementFeedEvent";
+
 import holderimage from "../resources/holder-image.jpg";
 
 export default class EndorsementsWidget extends Component {

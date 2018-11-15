@@ -21,7 +21,9 @@ export default class LoginView extends Component {
     super(props);
     this.state = { sEmail: "", sPw: "" };
     this.handleSubmit = this.handleSubmit.bind(this);
+
     this.state = { isGary: true, sEmail: "", sPw: "" };
+
   }
 
   handleSubmit() {
