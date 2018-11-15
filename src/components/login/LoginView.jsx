@@ -10,8 +10,8 @@ import {
   Message,
   Container
 } from "semantic-ui-react";
-import holderImage from "../resources/logo.png";
-import logoImage from "../resources/tealogosmall.png";
+import holderImage from "../../resources/logo.png";
+import logoImage from "../../resources/tealogosmall.png";
 import { navConsts } from "../constants";
 import { Link } from "react-router-dom";
 
@@ -21,7 +21,9 @@ export default class LoginView extends Component {
     super(props);
     this.state = { sEmail: "", sPw: "" };
     this.handleSubmit = this.handleSubmit.bind(this);
+
     this.state = { isGary: true, sEmail: "", sPw: "" };
+
   }
 
   handleSubmit() {
