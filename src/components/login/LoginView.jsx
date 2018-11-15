@@ -10,8 +10,8 @@ import {
   Message,
   Container
 } from "semantic-ui-react";
-import holderImage from "../resources/logo.png";
-import logoImage from "../resources/tealogosmall.png";
+import holderImage from "../../resources/logo.png";
+import logoImage from "../../resources/tealogosmall.png";
 import { navConsts } from "../constants";
 import { Link } from "react-router-dom";
 

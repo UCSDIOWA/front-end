@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Switch, Route} from 'react-router-dom';
-import LoginView from './LoginView';
+import LoginView from './login/LoginView';
 import GatewayView from './GatewayView';
 import SignUpView from './SignUpView';
-import ProfileView from './ProfileView';
+import ProfileView from './profile/ProfileView';
 import {navConsts} from '../constants';
 import CreateProjectView from './CreateProjectView';
 import SearchProjectView from './SearchProjectView';
