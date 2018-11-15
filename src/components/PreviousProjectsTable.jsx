@@ -1,42 +1,38 @@
-import React, {Component} from 'react';
-import {Segment,Grid,Image, Table} from 'semantic-ui-react';
-import holderimage from '../resources/holder-image.jpg'
+
+import React, { Component } from "react";
+import { Segment, Header, Image, Table } from "semantic-ui-react";
+import ProjectTileEvent from "./ProjectTileEvent";
+
 
 export default class PreviousProjectsTable extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.tableGenerate=this.tableGenerate.bind(this);
-    this.state = {numberViews: 4, tableRows:[]};
+    this.tableGenerate = this.tableGenerate.bind(this);
+    this.state = { numberViews: 4, tableRows: [] };
   }
 
-  tableGenerate(){
-    for(var i = 0; i < this.state.numberViews; i++){
-       this.state.tableRows.push(
-         <tbody key={i}>
-           <Table.Row>
-             <Table.Cell>
-              ure mum gay
-             </Table.Cell>
-           </Table.Row>
-       </tbody>);
-    }
- }
-
-
-  render(){
-      this.tableGenerate();
-      return(
-          <Segment className='profile-columns1'>
-            Previous Project(s)
-            <Table celled>
-              {this.state.tableRows}
-              {this.state.tableRows}
-              {this.state.tableRows}
-              {this.state.tableRows}
-            </Table>
-          </Segment>
+  tableGenerate() {
+    for (var i = 0; i < this.state.numberViews; i++) {
+      this.state.tableRows.push(
+        <tbody key={i}>
+          <ProjectTileEvent
+            isFinished={true}
+            projName="Gary's CSE110 Group"
+            groupSize={6}
+            projRole="Software Architect"
+          />
+        </tbody>
       );
+    }
   }
 
-
+  render() {
+    this.tableGenerate();
+    return (
+      <Segment className="profile-columns1">
+        <Header>Previous Project(s)</Header>
+        <Table celled>{this.state.tableRows}</Table>
+      </Segment>
+    );
+  }
 }

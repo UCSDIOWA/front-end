@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Segment, Grid, Image, Table } from "semantic-ui-react";
-import holderimage from "../resources/holder-image.jpg";
+
+import { Segment, Header, Image, Table } from "semantic-ui-react";
+import ProjectTileEvent from "./ProjectTileEvent";
+
 
 export default class CurrentProjectsTable extends Component {
   constructor(props) {
@@ -13,9 +15,13 @@ export default class CurrentProjectsTable extends Component {
     for (var i = 0; i < this.state.numberViews; i++) {
       this.state.tableRows.push(
         <tbody key={i}>
-          <Table.Row>
-            <Table.Cell>ure mum gay</Table.Cell>
-          </Table.Row>
+          <ProjectTileEvent
+            isFinished={false}
+            projName="Gary's CSE110 Group"
+            groupSize={5}
+            projRole="Software Architect"
+            percentDone={69}
+          />
         </tbody>
       );
     }
@@ -25,7 +31,7 @@ export default class CurrentProjectsTable extends Component {
     this.tableGenerate();
     return (
       <Segment className="profile-columns1">
-        Current Project(s)
+        <Header>Current Project(s)</Header>
         <Table celled>{this.state.tableRows}</Table>
       </Segment>
     );
