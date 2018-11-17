@@ -12,8 +12,11 @@ import {
   Container,
   Dropdown
 } from "semantic-ui-react";
+<<<<<<< HEAD
 import holderImage from "../resources/logo.png";
 import logoImage from "../resources/tealogosmall.png";
+=======
+>>>>>>> d4be26dea5753f26dcf7628155d64230e9770b99
 import { navConsts } from "../constants";
 import { Link } from "react-router-dom";
 
