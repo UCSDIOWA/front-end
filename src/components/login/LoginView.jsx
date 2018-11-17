@@ -14,7 +14,7 @@ import holderImage from "../../resources/logo.png";
 import logoImage from "../../resources/tealogosmall.png";
 import { navConsts } from "../../constants";
 import { Link } from "react-router-dom";
-import { login } from "../../server/api";
+//import { login } from "../../server/api";
 
 // view for the login page
 export default class LoginView extends Component {
@@ -22,14 +22,13 @@ export default class LoginView extends Component {
     super(props);
     this.state = { sEmail: "", sPw: "" };
     this.handleLogin = this.handleLogin.bind(this);
-
-    this.state = { sEmail: "", sPw: "" };
   }
 
   handleLogin() {
     console.log(this.state.sEmail);
     console.log(this.state.sPw);
-    login(this.state.sEmail, this.state.sPw);
+
+    //login(this.state.sEmail, this.state.sPw);
   }
   handlePW() {
     console.log("Forgot Password");

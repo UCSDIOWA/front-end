@@ -51,6 +51,7 @@ export default class SignUpForm extends Component {
                   <Form.Field
                     control={Input}
                     placeholder="Password"
+                    type="password"
                     onChange={e => this.setState({ sPw: e.target.value })}
                   />
                   <Form.Field

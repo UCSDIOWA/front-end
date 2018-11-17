@@ -3,7 +3,7 @@ import { signup } from "../../server/api";
 import { Link, withRouter } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
 import LoginView from "../login/LoginView";
-import { Message } from "semantic-ui-react";
+import { Message, Button, Segment } from "semantic-ui-react";
 
 export default class SignUpView extends Component {
   constructor(props) {
@@ -32,7 +32,14 @@ export default class SignUpView extends Component {
 
   render() {
     return this.state.isSubmittedSuccess ? (
-      <Message floating>Sign Up Successful!</Message>
+      <Segment>
+        <Message floating size="massive">
+          Sign Up Successful!
+        </Message>
+        <Link to={"/"}>
+          <Button color="red"> Take me back! </Button>
+        </Link>
+      </Segment>
     ) : (
       <SignUpForm handleSubmit={this.handleSignUp} />
     );

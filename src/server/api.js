@@ -1,5 +1,4 @@
-import axios from "axios";
-
+/*
 export function login(email, password) {
   axios({
     method: "post",
@@ -26,6 +25,7 @@ export function login(email, password) {
       console.log(response);
     });
 }
+*/
 
 export function signup(email, password, first_name, last_name) {
   let url = "https://tea-login-api.herokuapp.com/signup";
@@ -47,24 +47,4 @@ export function signup(email, password, first_name, last_name) {
       console.log("signup post error: ");
       console.log(error);
     });
-  /*
-  return axios({
-    url: url,
-    method: "post",
-    data: {
-      email: email,
-      password: password,
-      first_name: first_name,
-      last_name: last_name
-    },
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8"
-    },
-    validateStatus: status => {
-      if (status != "200") {
-        console.log("Sign up post request failed with status code: " + status);
-      }
-    }
-  })
-  */
 }
