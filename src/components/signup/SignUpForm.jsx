@@ -18,16 +18,6 @@ export default class SignUpForm extends Component {
       sEmail: "",
       sPw: ""
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit() {
-    this.props.handleSubmit(
-      this.state.sEmail,
-      this.state.sPw,
-      this.state.sFirstName,
-      this.state.sLastName
-    );
   }
 
   render() {
@@ -77,7 +67,14 @@ export default class SignUpForm extends Component {
                     <Button
                       color="teal"
                       size="large"
-                      onClick={this.handleSubmit}
+                      onClick={() => {
+                        this.props.onSignUp(
+                          this.state.sEmail,
+                          this.state.sPw,
+                          this.state.sFirstName,
+                          this.state.sLastName
+                        );
+                      }}
                     >
                       Sign Up
                     </Button>

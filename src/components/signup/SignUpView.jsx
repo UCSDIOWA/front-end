@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { signup } from "../../server/api";
 import { Link, withRouter } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
-import LoginView from "../login/LoginView";
 import { Message, Button, Segment } from "semantic-ui-react";
 
 export default class SignUpView extends Component {
@@ -21,9 +20,7 @@ export default class SignUpView extends Component {
       console.log("signup response: ");
       console.log(response);
       signupSuccess = response.success;
-      if (signupSuccess) {
-        alert("successfully signed up");
-      } else {
+      if (!signupSuccess) {
         alert("email already taken, please try a different email");
       }
       this.setState({ isSubmittedSuccess: signupSuccess });
@@ -41,7 +38,7 @@ export default class SignUpView extends Component {
         </Link>
       </Segment>
     ) : (
-      <SignUpForm handleSubmit={this.handleSignUp} />
+      <SignUpForm onSignUp={this.handleSignUp} />
     );
   }
 }
