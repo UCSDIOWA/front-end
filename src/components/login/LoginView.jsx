@@ -11,23 +11,25 @@ import {
   Container
 } from "semantic-ui-react";
 import holderImage from "../../resources/logo.png";
+import logoImage from "../../resources/tealogosmall.png";
 import { navConsts } from "../../constants";
 import { Link } from "react-router-dom";
+import { login } from "../../server/api";
 
 // view for the login page
 export default class LoginView extends Component {
   constructor(props) {
     super(props);
     this.state = { sEmail: "", sPw: "" };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
 
-    this.state = { isGary: true, sEmail: "", sPw: "" };
-
+    this.state = { sEmail: "", sPw: "" };
   }
 
-  handleSubmit() {
+  handleLogin() {
     console.log(this.state.sEmail);
     console.log(this.state.sPw);
+    login(this.state.sEmail, this.state.sPw);
   }
   handlePW() {
     console.log("Forgot Password");
@@ -56,6 +58,7 @@ export default class LoginView extends Component {
                     TEA
                   </Header>
                 </Grid.Column>
+
                 <Grid.Column width={8} floated="right">
                   <Image
                     spaced="right"
@@ -89,11 +92,12 @@ export default class LoginView extends Component {
                           Sign Up
                         </Button>
                       </Link>
+
                       <Link to={"/" + GATEWAY}>
                         <Button
                           color="linkedin"
                           size="huge"
-                          onClick={this.handleSubmit}
+                          onClick={this.handleLogin}
                         >
                           Login
                         </Button>
