@@ -3,6 +3,7 @@ import { signup } from "../../server/api";
 import { Link, withRouter } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
 import LoginView from "../login/LoginView";
+import { Message } from "semantic-ui-react";
 
 export default class SignUpView extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export default class SignUpView extends Component {
 
   render() {
     return this.state.isSubmittedSuccess ? (
-      <LoginView />
+      <Message floating>Sign Up Successful!</Message>
     ) : (
       <SignUpForm handleSubmit={this.handleSignUp} />
     );
