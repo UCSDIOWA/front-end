@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { signup } from "../../server/api";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
 import { Message, Button, Segment } from "semantic-ui-react";
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Segment, Grid, Image, Statistic, Icon, Feed } from "semantic-ui-react";
+import { Segment, Grid, Statistic, Icon, Feed } from "semantic-ui-react";
 
 import EndorsementFeedEvent from "./EndorsementFeedEvent";
 

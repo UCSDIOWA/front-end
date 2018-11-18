@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 
-import { Segment, Header, Image, Table } from "semantic-ui-react";
+import { Segment, Header, Table } from "semantic-ui-react";
 import ProjectTileEvent from "./ProjectTileEvent";
-
 
 export default class CurrentProjectsTable extends Component {
   constructor(props) {

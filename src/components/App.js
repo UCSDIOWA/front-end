@@ -1,14 +1,38 @@
 import React, { Component } from "react";
 import "../css/App.css";
-import Main from "./Main";
+import Main from "./routing/Main";
 import NavBar from "./NavBar";
 
+import UserSession from "../server/UserSession";
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    // handle mounting in case of refresh
+    const priorAuthenticate = UserSession.getAuthenticated() || false;
+    const priorEmail = UserSession.getEmail() || null;
+    UserSession.setEmail(priorEmail);
+    UserSession.setAuthenticated(priorAuthenticate);
+    this.state = { isAuthenticated: priorAuthenticate };
+    this.handleUserSessionUpdate = this.handleUserSessionUpdate.bind(this);
+  }
+
+  handleUserSessionUpdate(email, isAuthenticated) {
+    UserSession.setEmail(email);
+    UserSession.setAuthenticated(isAuthenticated);
+    console.log("Updating UserSession in App");
+    this.setState({ isAuthenticated: isAuthenticated });
+  }
+
   render() {
+    console.log("Rerendering App");
     return (
       <div className="App">
-        <NavBar />
-        <Main />
+        {this.state.isAuthenticated && <NavBar />}
+        <Main
+          onUserSessionUpdate={this.handleUserSessionUpdate}
+          isAuthenticated={this.state.isAuthenticated}
+        />
       </div>
     );
   }

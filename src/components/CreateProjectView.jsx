@@ -12,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import { navConsts } from "../constants";
 
-const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT, SEARCH_PROJECT } = navConsts;
+const { GATEWAY } = navConsts;
 
 const tagsArray = [
   { key: "s", text: "Software Engineering", value: "software engineering" },

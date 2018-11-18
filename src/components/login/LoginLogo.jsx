@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Grid, Header, Image } from "semantic-ui-react";
 import holderImage from "../../resources/logo.png";
 

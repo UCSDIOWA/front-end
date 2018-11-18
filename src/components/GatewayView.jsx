@@ -1,23 +1,11 @@
 import React, { Component } from "react";
 
-import {
-  Button,
-  Icon,
-  Grid,
-  Header,
-  Image,
-  Segment,
-  Form,
-  Message,
-  Container,
-  Dropdown
-} from "semantic-ui-react";
-import holderImage from "../resources/logo.png";
-import logoImage from "../resources/tealogosmall.png";
+import { Button, Dropdown } from "semantic-ui-react";
+
 import { navConsts } from "../constants";
 import { Link } from "react-router-dom";
 
-const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT, SEARCH_PROJECT } = navConsts;
+const { CREATE_PROJECT, SEARCH_PROJECT } = navConsts;
 
 const options = [
   { key: "angular", text: "Angular", value: "angular" },
