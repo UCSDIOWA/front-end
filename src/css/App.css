@@ -31,7 +31,6 @@
   color: black;
   padding-left: 50px;
   padding-right: 50px;
-  
 }
 
 .App-link {
@@ -64,6 +63,17 @@
 .profile-columns4 {
   width: 28rem;
 }
+
+.create-project-grid {
+  width: 60rem;
+}
+.create-project-column {
+  padding-left: 200em;
+}
+.create-project-isPrivate {
+  width: 10%;
+}
+
 #login_tea {
   font-size: 4em;
   font-weight: bold;
