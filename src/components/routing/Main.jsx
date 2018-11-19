@@ -12,9 +12,6 @@ import HomeRedirect from "./HomeRedirect";
 import NotFound from "../NotFound";
 
 export default class Main extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     // same as
     // const GATEWAY = navConsts.GATEWAY etc
