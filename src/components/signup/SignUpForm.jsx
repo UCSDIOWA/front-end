@@ -75,6 +75,7 @@ export default class SignUpForm extends Component {
                     <Button
                       color="teal"
                       size="large"
+                      loading={this.props.onSignUpLoading}
                       onClick={() => {
                         this.props.onSignUp(
                           this.state.sEmail,

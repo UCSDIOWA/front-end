@@ -8,18 +8,21 @@ export default class SignUpView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSubmittedSuccess: false
+      isSubmittedSuccess: false,
+      isSubmittedLoading: false
     };
     this.handleSignUp = this.handleSignUp.bind(this);
   }
 
   handleSignUp(email, password, firstName, lastName) {
+    this.setState({ isSubmittedLoading: true });
     const signupPromise = signup(email, password, firstName, lastName);
     var signupSuccess = false;
     signupPromise.then(response => {
       console.log("signup response: ");
       console.log(response);
       signupSuccess = response.success;
+      this.setState({ isSubmittedLoading: false });
       if (!signupSuccess) {
         alert("email already taken, please try a different email");
       }
@@ -38,7 +41,10 @@ export default class SignUpView extends Component {
         </Link>
       </Segment>
     ) : (
-      <SignUpForm onSignUp={this.handleSignUp} />
+      <SignUpForm
+        onSignUpLoading={this.state.isSubmittedLoading}
+        onSignUp={this.handleSignUp}
+      />
     );
   }
 }

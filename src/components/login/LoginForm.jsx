@@ -39,6 +39,7 @@ export default class LoginForm extends Component {
                 <Button
                   color="linkedin"
                   size="huge"
+                  loading={this.props.onLoadingLogin}
                   onClick={() => {
                     this.props.onLogin(this.state.sEmail, this.state.sPw);
                   }}
@@ -50,9 +51,7 @@ export default class LoginForm extends Component {
           </Grid>
           <Grid centered>
             <Link to={"/" + RECOVER_PASSWORD}>
-              <Message id="forgot-pw">
-                <a href="#">Forgot password?</a>
-              </Message>
+              <Message id="forgot-pw">Forgot password?</Message>
             </Link>
           </Grid>
         </Segment>

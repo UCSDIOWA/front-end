@@ -13,7 +13,7 @@ class App extends Component {
     const priorEmail = UserSession.getEmail() || null;
     UserSession.setEmail(priorEmail);
     UserSession.setAuthenticated(priorAuthenticate);
-    this.state = { isAuthenticated: priorAuthenticate };
+    this.state = { name: "", isAuthenticated: priorAuthenticate };
     this.handleUserSessionUpdate = this.handleUserSessionUpdate.bind(this);
   }
 
@@ -21,7 +21,8 @@ class App extends Component {
     UserSession.setEmail(email);
     UserSession.setAuthenticated(isAuthenticated);
     console.log("Updating UserSession in App");
-    this.setState({ isAuthenticated: isAuthenticated });
+    const name = email; // TODO fix to actual name
+    this.setState({ name: name, isAuthenticated: isAuthenticated });
   }
 
   render() {
@@ -29,7 +30,10 @@ class App extends Component {
     return (
       <div className="App">
         {this.state.isAuthenticated && (
-          <NavBar onUserSessionUpdate={this.handleUserSessionUpdate} />
+          <NavBar
+            onUserSessionUpdate={this.handleUserSessionUpdate}
+            name={this.state.name}
+          />
         )}
         <Main
           onUserSessionUpdate={this.handleUserSessionUpdate}

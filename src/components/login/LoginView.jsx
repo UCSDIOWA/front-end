@@ -8,16 +8,20 @@ import { login } from "../../server/api";
 export default class LoginView extends Component {
   constructor(props) {
     super(props);
+    this.state = { loginLoading: false };
     this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleLogin(email, password) {
+    this.setState({ loginLoading: true });
     const loginPromise = login(email, password);
     var loginSuccess = false;
     loginPromise.then(response => {
       console.log("login response: ");
       console.log(response);
       loginSuccess = response.success;
+      console.log("Handle login promise");
+
       if (!loginSuccess) {
         alert("invalid email or password");
       } else {
@@ -36,7 +40,11 @@ export default class LoginView extends Component {
       >
         <Grid.Column style={{ maxWidth: 800 }} />
         <LoginLogo />
-        <LoginForm onLogin={this.handleLogin} />
+
+        <LoginForm
+          onLogin={this.handleLogin}
+          onLoadingLogin={this.state.loginLoading}
+        />
       </Grid>
     );
   }
