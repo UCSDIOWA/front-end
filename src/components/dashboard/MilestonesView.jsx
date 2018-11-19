@@ -5,8 +5,10 @@ import {
   Header,
   Icon,
   Button,
-  Grid
+  Modal
 } from "semantic-ui-react";
+import AddMilestonesView from "./AddMilestonesView";
+import MilestonesViewEvent from "./MilestonesViewEvent";
 
 export default class MilestonesView extends Component {
   constructor(props) {
@@ -14,26 +16,12 @@ export default class MilestonesView extends Component {
   }
 
   render() {
+    console.log("msview: " + this.props.milestoneArray.length);
     return (
       <Segment>
         <Header size="medium">Milestones View</Header>
         <Progress percent={55}>Current Project Progress</Progress>
-        <Segment vertical>
-          <Icon name="check circle outline" />
-          <Button>Sketch plan for essay</Button>
-        </Segment>
-        <Segment vertical>
-          <Icon name="check circle outline" />
-          <Button>Make essay skeleton</Button>
-        </Segment>
-        <Segment vertical>
-          <Icon name="check circle outline" />
-          <Button>Rough Draft 1</Button>
-        </Segment>
-        <Segment vertical>
-          <Icon name="check circle outline" />
-          <Button>Rough Draft 2</Button>
-        </Segment>
+        {this.props.milestoneArray}
         <Segment vertical>
           <Segment vertical>
             <Button inverted color="red">
@@ -41,9 +29,7 @@ export default class MilestonesView extends Component {
             </Button>
           </Segment>
           <Segment vertical>
-            <Button inverted color="blue">
-              Add milestone
-            </Button>
+            <AddMilestonesView addMilestone={this.props.handleAddMilestone} />
           </Segment>
         </Segment>
       </Segment>

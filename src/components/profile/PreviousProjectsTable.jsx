@@ -1,8 +1,6 @@
-
 import React, { Component } from "react";
 import { Segment, Header, Image, Table } from "semantic-ui-react";
 import ProjectTileEvent from "./ProjectTileEvent";
-
 
 export default class PreviousProjectsTable extends Component {
   constructor(props) {
@@ -12,6 +10,7 @@ export default class PreviousProjectsTable extends Component {
   }
 
   tableGenerate() {
+    this.state.tableRows = [];
     for (var i = 0; i < this.state.numberViews; i++) {
       this.state.tableRows.push(
         <tbody key={i}>

@@ -2,7 +2,7 @@ import React from "react";
 import ModernDatepicker from "react-modern-datepicker";
 import moment from "moment";
 
-export class CalendarModule extends React.Component {
+export default class CalendarModule extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

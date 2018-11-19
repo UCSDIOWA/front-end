@@ -29,9 +29,6 @@
   justify-content: center;
   /* font-size: calc(10px + 2vmin); */
   color: black;
-  padding-left: 50px;
-  padding-right: 50px;
-  
 }
 
 .App-link {
@@ -64,6 +61,11 @@
 .profile-columns4 {
   width: 28rem;
 }
+
+#test {
+  justify-content: center;
+}
+
 #login_tea {
   font-size: 4em;
   font-weight: bold;
@@ -76,6 +78,9 @@
   color: blue;
 }
 
+#description_a {
+  max-width: 420px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
