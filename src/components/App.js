@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../css/App.css";
 import Main from "./routing/Main";
-import NavBar from "./NavBar";
+import NavBar from "./navBar/NavBar";
 
 import UserSession from "../server/UserSession";
 
@@ -28,7 +28,9 @@ class App extends Component {
     console.log("Rerendering App");
     return (
       <div className="App">
-        {this.state.isAuthenticated && <NavBar />}
+        {this.state.isAuthenticated && (
+          <NavBar onUserSessionUpdate={this.handleUserSessionUpdate} />
+        )}
         <Main
           onUserSessionUpdate={this.handleUserSessionUpdate}
           isAuthenticated={this.state.isAuthenticated}

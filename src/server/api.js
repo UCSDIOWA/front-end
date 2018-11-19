@@ -1,3 +1,5 @@
+import UserSession from "./UserSession";
+
 export function signup(email, password, first_name, last_name) {
   let url = "https://tea-login-api.herokuapp.com/signup";
   let data = {
@@ -32,6 +34,11 @@ export function login(email, password) {
       console.log("login post error: ");
       console.log(error);
     });
+}
+
+export function logout() {
+  UserSession.setAuthenticated(false);
+  UserSession.setEmail(null);
 }
 
 export function getProfileData(userEmail) {
