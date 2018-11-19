@@ -10,6 +10,7 @@ import SearchProjectView from "../SearchProjectView";
 import ProtectedRoute from "./ProtectedRoute";
 import HomeRedirect from "./HomeRedirect";
 import NotFound from "../NotFound";
+import TestPage from "../dashboard/TestPage";
 
 export default class Main extends Component {
   constructor(props) {
@@ -72,6 +73,11 @@ export default class Main extends Component {
           <ProtectedRoute
             path={"/" + SEARCH_PROJECT}
             component={SearchProjectView}
+            isAuthenticated={AUTHENTICATED}
+          />
+          <ProtectedRoute
+            path={"/" + "TEST_PAGE"}
+            component={TestPage}
             isAuthenticated={AUTHENTICATED}
           />
 
