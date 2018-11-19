@@ -33,3 +33,17 @@ export function login(email, password) {
       console.log(error);
     });
 }
+
+export function getProfileData(userEmail) {
+  let url = "https://tea-user-profile-api.herokuapp.com/userprofile";
+  let data = {};
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("login post error: ");
+      console.log(error);
+    });
+}

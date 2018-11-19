@@ -19,7 +19,7 @@ export default class CurrentProjectsTable extends Component {
             projName="Gary's CSE110 Group"
             groupSize={5}
             projRole="Software Architect"
-            percentDone={69}
+            percentDone={30}
           />
         </tbody>
       );
