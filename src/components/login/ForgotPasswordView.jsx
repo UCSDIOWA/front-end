@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { sendRecoverPasswordEmail } from "../../server/api";
-import { Segment, Message, Button } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import ForgotPasswordForm from "./ForgotPasswordForm";
 
 export default class ForgotPasswordView extends Component {
@@ -12,20 +11,20 @@ export default class ForgotPasswordView extends Component {
   }
 
   handlePasswordRecovery(email) {
-    sendRecoverPasswordEmail(email);
-    this.setState({ isSubmissionSuccessful: true, sEmail: email });
+    // TODO sendRecoverEmail functionality + callback
+    const result = sendRecoverPasswordEmail(email);
+    const recoverySent = result;
+    if (!recoverySent) {
+      this.props.onAnnouncement("Failed to send recovery email");
+    } else {
+      this.props.onAnnouncement("Sent Recovery Email to " + email + "!");
+    }
+    this.setState({ isSubmissionSuccessful: result, sEmail: email });
   }
 
   render() {
     return this.state.isSubmissionSuccessful ? (
-      <Segment>
-        <Message floating size="massive">
-          Sent Recovery Email to {this.state.sEmail}!
-        </Message>
-        <Link to={"/"}>
-          <Button color="red"> Go to Login! </Button>
-        </Link>
-      </Segment>
+      <Redirect to={"/"} />
     ) : (
       <ForgotPasswordForm onPasswordRecovery={this.handlePasswordRecovery} />
     );

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { signup } from "../../server/api";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
-import { Message, Button, Segment } from "semantic-ui-react";
 
 export default class SignUpView extends Component {
   constructor(props) {
@@ -34,14 +33,7 @@ export default class SignUpView extends Component {
 
   render() {
     return this.state.isSubmittedSuccess ? (
-      <Segment>
-        <Message floating size="massive">
-          Sign Up Successful!
-        </Message>
-        <Link to={"/"}>
-          <Button color="red"> Take me back! </Button>
-        </Link>
-      </Segment>
+      <Redirect to={"/"} />
     ) : (
       <SignUpForm
         onSignUpLoading={this.state.isSubmittedLoading}

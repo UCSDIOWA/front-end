@@ -62,7 +62,9 @@ export default class Main extends Component {
           <Route
             exact
             path={"/" + RECOVER_PASSWORD}
-            component={ForgotPasswordView}
+            render={() => (
+              <ForgotPasswordView onAnnouncement={this.props.onAnnouncement} />
+            )}
           />
 
           <ProtectedRoute
