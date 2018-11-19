@@ -7,6 +7,7 @@ import ProfileView from "../profile/ProfileView";
 import { navConsts } from "../../constants";
 import CreateProjectView from "../CreateProjectView";
 import SearchProjectView from "../SearchProjectView";
+import ForgotPasswordView from "../login/ForgotPasswordView";
 import ProtectedRoute from "./ProtectedRoute";
 import HomeRedirect from "./HomeRedirect";
 import NotFound from "../NotFound";
@@ -21,7 +22,8 @@ export default class Main extends Component {
       PROFILE,
       CREATE_PROJECT,
       SEARCH_PROJECT,
-      LOGIN
+      LOGIN,
+      RECOVER_PASSWORD
     } = navConsts;
 
     const AUTHENTICATED = this.props.isAuthenticated;
@@ -50,6 +52,12 @@ export default class Main extends Component {
           )}
 
           <Route exact path={"/" + SIGNUP} component={SignUpView} />
+          <Route
+            exact
+            path={"/" + RECOVER_PASSWORD}
+            component={ForgotPasswordView}
+          />
+
           <ProtectedRoute
             path={"/" + PROFILE}
             component={ProfileView}

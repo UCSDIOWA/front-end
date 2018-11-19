@@ -41,6 +41,10 @@ export function logout() {
   UserSession.setEmail(null);
 }
 
+export function sendRecoverPasswordEmail(email) {
+  return true;
+}
+
 export function getProfileData(userEmail) {
   let url = "https://tea-user-profile-api.herokuapp.com/userprofile";
   let data = {};
