@@ -24,7 +24,9 @@ export default class SignUpView extends Component {
       signupSuccess = response.success;
       this.setState({ isSubmittedLoading: false });
       if (!signupSuccess) {
-        alert("email already taken, please try a different email");
+        this.props.onAnnouncement("Email Already Taken, please try again.");
+      } else {
+        this.props.onAnnouncement("Sign Up Successful");
       }
       this.setState({ isSubmittedSuccess: signupSuccess });
     });

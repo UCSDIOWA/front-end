@@ -51,7 +51,14 @@ export default class Main extends Component {
             />
           )}
 
-          <Route exact path={"/" + SIGNUP} component={SignUpView} />
+          <Route
+            exact
+            path={"/" + SIGNUP}
+            render={() => (
+              <SignUpView onAnnouncement={this.props.onAnnouncement} />
+            )}
+          />
+
           <Route
             exact
             path={"/" + RECOVER_PASSWORD}
