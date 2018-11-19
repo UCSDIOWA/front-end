@@ -11,6 +11,11 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { navConsts } from "../constants";
+import DayPicker from "react-day-picker/DayPickerInput";
+import "react-day-picker/lib/style.css";
+import { DateUtils } from "react-day-picker";
+import dateFnsFormat from "date-fns/format";
+import dateFnsParse from "date-fns/parse";
 
 const { GATEWAY } = navConsts;
 
@@ -24,6 +29,20 @@ const privateOptions = [
   { key: "f", text: "No", value: false }
 ];
 
+const FORMAT = "M/D/YYYY";
+
+function parseDate(str, format, locale) {
+  const parsed = dateFnsParse(str, format, { locale });
+  if (DateUtils.isDate(parsed)) {
+    return parsed;
+  }
+  return undefined;
+}
+
+function formatDate(date, format, locale) {
+  return dateFnsFormat(date, format, { locale });
+}
+
 export default class CreateProjectView extends Component {
   constructor(props) {
     super(props);
@@ -34,12 +53,13 @@ export default class CreateProjectView extends Component {
       size: 10,
       isPrivate: false,
       tags: "",
-      deadline: ""
+      deadline: null
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleIsPrivate = this.handleIsPrivate.bind(this);
+    this.handleDeadline = this.handleDeadline.bind(this);
   }
 
   handleChange(e, { name, value }) {
@@ -48,6 +68,12 @@ export default class CreateProjectView extends Component {
 
   handleIsPrivate() {
     this.setState({ isPrivate: !this.state.isPrivate });
+  }
+
+  handleDeadline(day, { selected }) {
+    this.setState({
+      deadline: selected ? undefined : day
+    });
   }
 
   handleSubmit() {
@@ -59,15 +85,19 @@ export default class CreateProjectView extends Component {
     console.log("Tags:", this.state.tags);
     console.log("Deadline:", this.state.deadline);
   }
-
+  //width={8} floated="left" style={{ paddingLeft: 20 }}
   render() {
     const { title, description, size, isPrivate, tags } = this.state;
     return (
       <div>
         <Header style={{ fontSize: "5em" }}>Create Project</Header>
         <Segment>
-          <Grid style={{ height: "100%" }}>
-            <Grid.Column width={8} floated="left" style={{ paddingLeft: 20 }}>
+          <Grid className="create-project-grid" centered>
+            <Grid.Column
+              className="create-project-column1"
+              floated="left"
+              width="8"
+            >
               <Form>
                 <Form.Field
                   required
@@ -89,9 +119,26 @@ export default class CreateProjectView extends Component {
                 />
               </Form>
             </Grid.Column>
-            <Grid.Column width={8} floated="right" style={{ paddingRight: 50 }}>
+            <Grid.Column
+              className="create-project-column1"
+              floated="right"
+              width="6"
+            >
               <Grid.Row>
-                <Form>
+                <div>
+                  <Header size="tiny">Deadline</Header>
+                  <DayPicker
+                    placeholder="MM-DD-YYYY"
+                    formatDate={formatDate}
+                    parseDate={parseDate}
+                    format={FORMAT}
+                    hideOnDayClick
+                    inputProps={{ style: { width: 200 } }}
+                    selectedDay={this.state.selectedDay}
+                    onDayChange={this.handleDeadline}
+                  />
+                </div>
+                <Form style={{ paddingTop: 20 }}>
                   <Form.Group>
                     <Form.Field
                       required
@@ -114,17 +161,15 @@ export default class CreateProjectView extends Component {
                       onChange={this.handleChange}
                     />
                   </Form.Group>
-                  <Form.Group>
-                    <Form.Field
-                      control={Select}
-                      options={tagsArray}
-                      placeholder="ex. CSE 110 Project"
-                      label="Tags"
-                      name="tags"
-                      value={tags}
-                      onChange={this.handleChange}
-                    />
-                  </Form.Group>
+                  <Form.Field
+                    control={Select}
+                    options={tagsArray}
+                    placeholder="ex. CSE 110 Project"
+                    label="Tags"
+                    name="tags"
+                    value={tags}
+                    onChange={this.handleChange}
+                  />
                 </Form>
               </Grid.Row>
             </Grid.Column>
