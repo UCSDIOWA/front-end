@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Grid, Segment, Form } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import LoginForm from "./LoginForm";
 import LoginLogo from "./LoginLogo";
 import { login } from "../../server/api";
@@ -8,24 +8,26 @@ import { login } from "../../server/api";
 export default class LoginView extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isAuthenticated: false
-    };
+    this.state = { loginLoading: false };
     this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleLogin(email, password) {
+    this.setState({ loginLoading: true });
     const loginPromise = login(email, password);
     var loginSuccess = false;
     loginPromise.then(response => {
       console.log("login response: ");
       console.log(response);
       loginSuccess = response.success;
+      console.log("Handle login promise");
+
       if (!loginSuccess) {
         alert("invalid email or password");
+      } else {
+        // update user session
+        this.props.onUserSessionUpdate(email, loginSuccess);
       }
-      this.setState({ isAuthenticated: loginSuccess });
-      console.log("authenticated: " + this.state.isAuthenticated);
     });
   }
 
@@ -38,7 +40,11 @@ export default class LoginView extends Component {
       >
         <Grid.Column style={{ maxWidth: 800 }} />
         <LoginLogo />
-        <LoginForm onLogin={this.handleLogin} />
+
+        <LoginForm
+          onLogin={this.handleLogin}
+          onLoadingLogin={this.state.loginLoading}
+        />
       </Grid>
     );
   }

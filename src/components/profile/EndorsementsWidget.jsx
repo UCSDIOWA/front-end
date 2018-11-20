@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Segment, Grid, Image, Statistic, Icon, Feed } from "semantic-ui-react";
+import { Segment, Grid, Statistic, Icon, Feed } from "semantic-ui-react";
 
 import EndorsementFeedEvent from "./EndorsementFeedEvent";
 
 import holderimage from "../../resources/holder-image.jpg";
+import paulImage from "../../resources/paul_cao.jpg";
 
 export default class EndorsementsWidget extends Component {
   constructor(props) {
@@ -17,28 +18,28 @@ export default class EndorsementsWidget extends Component {
     //populate list passing json values into props
     const testList = [
       {
-        endorser: "Ur mum",
+        endorser: "Brent Neldner",
         endorserImage: holderimage,
-        endorsee: "Daddy Gary",
-        role: "father"
+        endorsee: "Gary Gillespie",
+        role: "teacher"
       },
       {
-        endorser: "Daddy Gary",
+        endorser: "Gboo",
         endorserImage: holderimage,
-        endorsee: "Gboo",
-        role: "mad lad"
+        endorsee: "Gary Gillespie",
+        role: "teacher"
       },
       {
-        endorser: "Daddy Gary",
+        endorser: "Danny",
         endorserImage: holderimage,
-        endorsee: "Danny Gao",
-        role: "pee ehm"
+        endorsee: "Gary Gillespie",
+        role: "teacher"
       },
       {
-        endorser: "Daddy Gary",
-        endorserImage: holderimage,
-        endorsee: "Daddy Gary",
-        role: "being the fukin best"
+        endorser: "Paul Cao",
+        endorserImage: paulImage,
+        endorsee: "Gary Gillespie",
+        role: "lecturer"
       }
     ];
     for (var i = 0; i < 4; i++) {
@@ -46,7 +47,7 @@ export default class EndorsementsWidget extends Component {
         <EndorsementFeedEvent
           endorser={testList[i].endorser}
           endorsee={testList[i].endorsee}
-          endorserImage={holderimage}
+          endorserImage={testList[i].endorserImage}
           role={testList[i].role}
           key={i}
         />

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Grid, Header, Image, Segment, Form } from "semantic-ui-react";
+import { Button, Grid, Segment, Form, Message } from "semantic-ui-react";
 import { navConsts } from "../../constants";
 import { Link } from "react-router-dom";
 
@@ -10,7 +10,7 @@ export default class LoginForm extends Component {
   }
 
   render() {
-    const { SIGNUP } = navConsts;
+    const { SIGNUP, RECOVER_PASSWORD } = navConsts;
     return (
       <Form>
         <Segment stacked size="huge">
@@ -39,6 +39,7 @@ export default class LoginForm extends Component {
                 <Button
                   color="linkedin"
                   size="huge"
+                  loading={this.props.onLoadingLogin}
                   onClick={() => {
                     this.props.onLogin(this.state.sEmail, this.state.sPw);
                   }}
@@ -49,9 +50,9 @@ export default class LoginForm extends Component {
             </Grid.Row>
           </Grid>
           <Grid centered>
-            <Segment id="forgot-pw">
-              <u>Forgot password?</u>
-            </Segment>
+            <Link to={"/" + RECOVER_PASSWORD}>
+              <Message id="forgot-pw">Forgot password?</Message>
+            </Link>
           </Grid>
         </Segment>
       </Form>
