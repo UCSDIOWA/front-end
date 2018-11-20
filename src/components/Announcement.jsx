@@ -14,6 +14,7 @@ export default class Announcement extends Component {
   render() {
     return (
       <Message
+        floating
         color="teal"
         onDismiss={this.handleDismiss}
         content={this.props.content}
