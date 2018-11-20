@@ -7,7 +7,11 @@ import {
   TextArea,
   Segment,
   Button,
-  Select
+  Select,
+  Popup,
+  List,
+  Icon,
+  Container
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { navConsts } from "../constants";
@@ -34,7 +38,8 @@ export default class CreateProjectView extends Component {
       size: 10,
       isPrivate: false,
       tags: "",
-      deadline: ""
+      deadline: null,
+      calendarID: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -50,6 +55,16 @@ export default class CreateProjectView extends Component {
     this.setState({ isPrivate: !this.state.isPrivate });
   }
 
+  handleDeadline(day, { selected }) {
+    this.setState({
+      deadline: selected ? undefined : day
+    });
+  }
+
+  handleCalendar() {
+    return <Popup>simple</Popup>;
+  }
+
   handleSubmit() {
     console.log("Current Page is CreateProjectView.jsx");
     console.log("Title:", this.state.title);
@@ -58,10 +73,18 @@ export default class CreateProjectView extends Component {
     console.log("Size:", this.state.size);
     console.log("Tags:", this.state.tags);
     console.log("Deadline:", this.state.deadline);
+    console.log("CalendarID:", this.state.calendarID);
   }
 
   render() {
-    const { title, description, size, isPrivate, tags } = this.state;
+    const {
+      title,
+      description,
+      size,
+      isPrivate,
+      tags,
+      calendarID
+    } = this.state;
     return (
       <div>
         <Header style={{ fontSize: "5em" }}>Create Project</Header>
@@ -115,17 +138,49 @@ export default class CreateProjectView extends Component {
                       onChange={this.handleChange}
                     />
                   </Form.Group>
-                  <Form.Group>
-                    <Form.Field
-                      control={Select}
-                      options={tagsArray}
-                      placeholder="ex. CSE 110 Project"
-                      label="Tags"
-                      name="tags"
-                      value={tags}
-                      onChange={this.handleChange}
-                    />
-                  </Form.Group>
+                  <Popup
+                    basic
+                    on="click"
+                    trigger={
+                      <Form.Field
+                        control={Input}
+                        label="Add Google Calendar"
+                        placeholder="Copy/Paste your Calendar ID"
+                        name="calendarID"
+                        value={calendarID}
+                        onChange={this.handleChange}
+                      />
+                    }
+                    content={
+                      <Container style={{ width: 200, height: 200 }}>
+                        <List ordered>
+                          <List.Item>Go to your Google Calendar</List.Item>
+                          <List.Item>
+                            Select on <Icon name="setting" /> from the top of
+                            the page and select option "Settings"
+                          </List.Item>
+                          <List.Item>
+                            Select the Calendar you wish to add by selecting its
+                            name under "Settings for my calendars"
+                          </List.Item>
+                          <List.Item>
+                            Go to "Integrate Calendar" and copy/paste your
+                            Calendar ID here
+                          </List.Item>
+                        </List>
+                      </Container>
+                    }
+                    position="left center"
+                  />
+                  <Form.Field
+                    control={Select}
+                    options={tagsArray}
+                    placeholder="ex. CSE 110 Project"
+                    label="Tags"
+                    name="tags"
+                    value={tags}
+                    onChange={this.handleChange}
+                  />
                 </Form>
               </Grid.Row>
             </Grid.Column>
