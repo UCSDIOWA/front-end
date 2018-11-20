@@ -30,7 +30,7 @@ export default class CalendarWidget extends Component {
       return <GoogleCalendar />;
     } else {
       return (
-        <Button style={{ width: 250, height: 250 }} onClick={this.addCalendar}>
+        <Button style={{ width: 260, height: 260 }} onClick={this.addCalendar}>
           Add Calendar
         </Button>
       );
