@@ -15,8 +15,13 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { navConsts } from "../constants";
+import DayPicker from "react-day-picker/DayPickerInput";
+import "react-day-picker/lib/style.css";
+import { DateUtils } from "react-day-picker";
+import dateFnsFormat from "date-fns/format";
+import dateFnsParse from "date-fns/parse";
 
-const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT, SEARCH_PROJECT } = navConsts;
+const { GATEWAY } = navConsts;
 
 const tagsArray = [
   { key: "s", text: "Software Engineering", value: "software engineering" },
@@ -27,6 +32,20 @@ const privateOptions = [
   { key: "t", text: "Yes", value: true },
   { key: "f", text: "No", value: false }
 ];
+
+const FORMAT = "M/D/YYYY";
+
+function parseDate(str, format, locale) {
+  const parsed = dateFnsParse(str, format, { locale });
+  if (DateUtils.isDate(parsed)) {
+    return parsed;
+  }
+  return undefined;
+}
+
+function formatDate(date, format, locale) {
+  return dateFnsFormat(date, format, { locale });
+}
 
 export default class CreateProjectView extends Component {
   constructor(props) {
@@ -45,6 +64,7 @@ export default class CreateProjectView extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleIsPrivate = this.handleIsPrivate.bind(this);
+    this.handleDeadline = this.handleDeadline.bind(this);
   }
 
   handleChange(e, { name, value }) {
@@ -61,10 +81,6 @@ export default class CreateProjectView extends Component {
     });
   }
 
-  handleCalendar() {
-    return <Popup>simple</Popup>;
-  }
-
   handleSubmit() {
     console.log("Current Page is CreateProjectView.jsx");
     console.log("Title:", this.state.title);
@@ -75,7 +91,7 @@ export default class CreateProjectView extends Component {
     console.log("Deadline:", this.state.deadline);
     console.log("CalendarID:", this.state.calendarID);
   }
-
+  //width={8} floated="left" style={{ paddingLeft: 20 }}
   render() {
     const {
       title,
@@ -89,8 +105,12 @@ export default class CreateProjectView extends Component {
       <div>
         <Header style={{ fontSize: "5em" }}>Create Project</Header>
         <Segment>
-          <Grid style={{ height: "100%" }}>
-            <Grid.Column width={8} floated="left" style={{ paddingLeft: 20 }}>
+          <Grid className="create-project-grid" centered>
+            <Grid.Column
+              className="create-project-column1"
+              floated="left"
+              width="8"
+            >
               <Form>
                 <Form.Field
                   required
@@ -113,9 +133,26 @@ export default class CreateProjectView extends Component {
                 />
               </Form>
             </Grid.Column>
-            <Grid.Column width={8} floated="right" style={{ paddingRight: 50 }}>
+            <Grid.Column
+              className="create-project-column1"
+              floated="right"
+              width="6"
+            >
               <Grid.Row>
-                <Form>
+                <div>
+                  <Header size="tiny">Deadline</Header>
+                  <DayPicker
+                    placeholder="MM-DD-YYYY"
+                    formatDate={formatDate}
+                    parseDate={parseDate}
+                    format={FORMAT}
+                    hideOnDayClick
+                    inputProps={{ style: { width: 200 } }}
+                    selectedDay={this.state.selectedDay}
+                    onDayChange={this.handleDeadline}
+                  />
+                </div>
+                <Form style={{ paddingTop: 20 }}>
                   <Form.Group>
                     <Form.Field
                       required

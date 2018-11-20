@@ -22,7 +22,7 @@ const NavBar = () => (
         </Link>
       </Menu.Item>
     </Menu.Menu>
-    <Menu.Item position="right" icon="meh outline" />
+    <Menu.Item position="right" icon="user" />
     <Dropdown
       item
       simple
