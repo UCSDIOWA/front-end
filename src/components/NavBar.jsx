@@ -1,12 +1,10 @@
-
 import React from "react";
 import { Dropdown, Image, Menu, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Logo from "../resources/logo.png";
 import { navConsts } from "../constants";
 
-const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT,SEARCH_PROJECT } = navConsts;
-
+const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT, SEARCH_PROJECT } = navConsts;
 
 const NavBar = () => (
   <Menu fixed="top" inverted borderless size="large">
@@ -40,11 +38,6 @@ const NavBar = () => (
         <Dropdown.Item>
           <Link to={"/"} style={{ color: "black" }}>
             Logout
-          </Link>
-        </Dropdown.Item>
-        <Dropdown.Item>
-          <Link to={"/" + DASHBOARD} style={{ color: "black" }}>
-            Dashboard for testing
           </Link>
         </Dropdown.Item>
       </Dropdown.Menu>
