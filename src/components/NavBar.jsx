@@ -42,6 +42,11 @@ const NavBar = () => (
             Logout
           </Link>
         </Dropdown.Item>
+        <Dropdown.Item>
+          <Link to={"/" + DASHBOARD} style={{ color: "black" }}>
+            Dashboard for testing
+          </Link>
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   </Menu>

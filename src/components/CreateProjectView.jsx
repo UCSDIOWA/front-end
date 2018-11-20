@@ -86,6 +86,7 @@ export default class CreateProjectView extends Component {
                   name="description"
                   value={description}
                   onChange={this.handleChange}
+                  style={{ height: 120 }}
                 />
               </Form>
             </Grid.Column>

@@ -7,6 +7,7 @@ import ProfileView from "./profile/ProfileView";
 import { navConsts } from "../constants";
 import CreateProjectView from "./CreateProjectView";
 import SearchProjectView from "./SearchProjectView";
+import DashBoardView from "./dashboard/DashboardView";
 
 export default class Main extends Component {
   render() {
@@ -15,7 +16,8 @@ export default class Main extends Component {
       SIGNUP,
       PROFILE,
       CREATE_PROJECT,
-      SEARCH_PROJECT
+      SEARCH_PROJECT,
+      DASHBOARD
     } = navConsts;
 
     return (
@@ -25,6 +27,7 @@ export default class Main extends Component {
           <Route exact path={"/" + GATEWAY} component={GatewayView} />
           <Route exact path={"/" + SIGNUP} component={SignUpView} />
           <Route exact path={"/" + PROFILE} component={ProfileView} />
+          <Route exat path={"/" + DASHBOARD} component={DashBoardView} />
           <Route
             exact
             path={"/" + CREATE_PROJECT}
