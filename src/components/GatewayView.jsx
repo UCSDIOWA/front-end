@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 
 import { Button, Dropdown } from "semantic-ui-react";
-<<<<<<< HEAD
-=======
-
->>>>>>> 74cdd637d7dd7ab8046e87e0ab9c4e70b0719bb0
 import { navConsts } from "../constants";
 import { Link } from "react-router-dom";
 
