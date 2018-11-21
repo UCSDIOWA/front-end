@@ -10,8 +10,7 @@ export default class GoogleCalendar extends Component {
     var e = document.getElementById("embed-Calendar");
     if (e) {
       console.log("Found Google Calendar, loading id");
-      e.src =
-        e.src + "src=pn954mbosu8e0u13ra69eu8id0@group.calendar.google.com";
+      e.src = e.src + this.props.calendarID;
     } else {
       console.log("Error, could not find Google Calendar");
     }
