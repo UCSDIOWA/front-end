@@ -6,6 +6,7 @@ import UserSession from "../server/UserSession";
 import Announcement from "./Announcement";
 import { List } from "semantic-ui-react";
 import DashboardView from "./dashboard/DashboardView";
+import CreateProjectView from "./CreateProjectView";
 
 class App extends Component {
   /*
@@ -14,7 +15,7 @@ class App extends Component {
              announcements: list of announcements to display
    */
   render() {
-    return <DashboardView />;
+    return <CreateProjectView />;
   }
 }
 /*

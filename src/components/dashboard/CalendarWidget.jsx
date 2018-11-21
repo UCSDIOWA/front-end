@@ -1,17 +1,9 @@
 import React, { Component } from "react";
 import {
   Grid,
-  Feed,
-  Table,
-  Segment,
-  Header,
   Button,
   Icon,
   List,
-  Divider,
-  Embed,
-  Container,
-  Popup,
   Modal,
   Form,
   Input
