@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "../css/App.css";
 import Main from "./routing/Main";
-import NavBar from "./navBar/NavBar";
 
 import UserSession from "../server/UserSession";
 import Announcement from "./Announcement";
 import { List } from "semantic-ui-react";
+import DashboardView from "./dashboard/DashboardView";
 
 class App extends Component {
   /*
@@ -14,7 +14,7 @@ class App extends Component {
              announcements: list of announcements to display
    */
   render() {
-    return <Main />;
+    return <DashboardView />;
   }
 }
 /*

@@ -20,11 +20,10 @@ export default class Main extends Component {
       DASHBOARD
     } = navConsts;
 
-    return <DashboardView />;
-    /*
     return (
       <main className="App-container">
         <Switch>
+          <Route exact path="/" component={LoginView} />
           <Route exact path={"/" + GATEWAY} component={GatewayView} />
           <Route exact path={"/" + SIGNUP} component={SignUpView} />
           <Route exact path={"/" + PROFILE} component={ProfileView} />
@@ -41,6 +40,6 @@ export default class Main extends Component {
           <Route exact path={"/" + DASHBOARD} component={DashboardView} />
         </Switch>
       </main>
-    ); */
+    );
   }
 }

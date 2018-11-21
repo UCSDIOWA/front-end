@@ -24,7 +24,7 @@ export default class GoogleCalendar extends Component {
       <div>
         <iframe
           id="embed-Calendar"
-          src="https://calendar.google.com/calendar/embed?showPrint=0&amp;showTabs=0&amp;showTz=0&amp;mode=AGENDA&amp;wkst=1&amp;bgcolor=%2300cccc&amp;"
+          src="https://calendar.google.com/calendar/embed?showPrint=0&amp;showTabs=0&amp;showTz=0&amp;mode=AGENDA&amp;wkst=1&amp;bgcolor=%2300cccc&amp;src="
           width="260"
           height="260"
         />
