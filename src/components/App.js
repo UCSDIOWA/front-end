@@ -13,6 +13,11 @@ class App extends Component {
              isAuthenticated: verify if authenticated login
              announcements: list of announcements to display
    */
+  render() {
+    return <Main />;
+  }
+}
+/*
   constructor(props) {
     super(props);
     // handle mounting in case of refresh
@@ -96,7 +101,6 @@ class App extends Component {
         />
       </div>
     );
-  }
-}
+  } */
 
 export default App;
