@@ -6,6 +6,9 @@ export default class GoogleCalendar extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
+  /* I use this to add the project's calendar id to the iframe's src below. This 
+  function is executed immediately after the component is rendered.
+  */
   componentDidMount() {
     var e = document.getElementById("embed-Calendar");
     if (e) {
