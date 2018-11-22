@@ -9,13 +9,14 @@ import {
   Icon
 } from "semantic-ui-react";
 
-export default class EditProjectView extends Component {
+export default class EditProjectForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       Name: null,
       Deadline: null,
-      Members: ["gary", "garee", "garcon", "gariella"],
+      TeamSize: 0,
+      Members: ["Darrell", "Brent", "Erica", "Ashley"],
       MembersViewer: [],
       pendingMembers: [
         "so",
@@ -34,17 +35,29 @@ export default class EditProjectView extends Component {
   }
 
   populateMembers() {
-    this.state.MembersViewer = [];
+    var temp = [];
     for (var i = 0; i < this.state.Members.length; i++) {
-      this.state.MembersViewer.push(
-        <Segment vertical>{this.state.Members[i]}</Segment>
+      temp.push(
+        <Segment vertical>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={13}>{this.state.Members[i]}</Grid.Column>
+              <Grid.Column>
+                <Button color="red" size="mini">
+                  Remove
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Segment>
       );
     }
+    this.setState({ MembersView: temp });
   }
   populatePendingMembers() {
-    this.state.pendingMembersViewer = [];
+    var temp = [];
     for (var i = 0; i < this.state.pendingMembers.length; i++) {
-      this.state.pendingMembersViewer.push(
+      temp.push(
         <Grid>
           <Grid.Row>
             <Segment vertical>{this.state.Members[i]}</Segment>
@@ -54,55 +67,71 @@ export default class EditProjectView extends Component {
         </Grid>
       );
     }
+    this.setState({ pendingMembersView: temp });
   }
-  closeform() {}
 
   render() {
     this.populateMembers();
+    this.populatePendingMembers();
     return (
       <Form>
         <Form.Field>
           <label>Name</label>
           <input
-            placeholder="Project Name"
+            placeholder="Current Group Name"
             onChange={e => this.setState({ Name: e.target.value })}
           />
         </Form.Field>
         <Form.Field>
           <label>Deadline</label>
           <input
-            placeholder="Deadline"
+            placeholder="11/29/18"
             onChange={e => this.setState({ Deadline: e.target.value })}
+          />
+        </Form.Field>
+        <Form.Field>
+          <label>Team Size</label>
+          <input
+            placeholder="10"
+            type="number"
+            onChange={e => this.setState({ TeamSize: e.target.value })}
           />
         </Form.Field>
         <Segment>
           <Header>Current Members</Header>
           {this.state.MembersViewer}
         </Segment>
-        <Form.Field>
-          <Modal
-            trigger={
-              <Button color="green" onClick={this.props.closeform}>
-                Member Requests
-              </Button>
-            }
-            size="small"
-          >
-            <Header icon="address card" content="Member Requests" />
-            <Modal.Content>{this.state.pendingMembersView}</Modal.Content>
-            <Modal.Actions>
-              <Button basic color="red" inverted>
-                <Icon name="remove" /> Cancel
-              </Button>
-              <Button color="linkedin" inverted>
-                <Icon name="checkmark" /> Confirm
-              </Button>
-            </Modal.Actions>
-          </Modal>
-        </Form.Field>
-        <Form.Field>
-          <Button negative>Leave Group</Button>
-        </Form.Field>
+        <Segment.Group horizontal>
+          <Segment textAlign="center">
+            {" "}
+            <Form.Field>
+              <Modal
+                trigger={
+                  <Button color="green" onClick={this.props.closeform}>
+                    Member Requests
+                  </Button>
+                }
+                size="small"
+              >
+                <Header icon="address card" content="Member Requests" />
+                <Modal.Content>{this.state.pendingMembersView}</Modal.Content>
+                <Modal.Actions>
+                  <Button basic color="red" inverted>
+                    <Icon name="remove" /> Cancel
+                  </Button>
+                  <Button color="linkedin" inverted>
+                    <Icon name="checkmark" /> Confirm
+                  </Button>
+                </Modal.Actions>
+              </Modal>
+            </Form.Field>
+          </Segment>
+          <Segment textAlign="center">
+            <Form.Field>
+              <Button negative>Leave Group</Button>
+            </Form.Field>
+          </Segment>
+        </Segment.Group>
       </Form>
     );
   }

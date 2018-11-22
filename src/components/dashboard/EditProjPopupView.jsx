@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Icon, Button, Popup } from "semantic-ui-react";
+import { Icon, Button, Modal, Header } from "semantic-ui-react";
 //import EditProjectView from "./EditProjectView";
 import EditProjForm from "./EditProjForm";
 
@@ -23,19 +23,20 @@ export default class EditProjectView extends Component {
   render() {
     return (
       <div>
-        <Popup
+        <Modal
           trigger={
             <Button icon labelPosition="left">
               <Icon name="settings" />
               Edit Project
             </Button>
           }
-          content={<EditProjForm closepopup={this.handleClose} />}
-          open={this.state.isOpen}
-          onClose={this.handleClose}
-          onOpen={this.handleOpen}
-          on="click"
-        />
+          size="small"
+        >
+          <Header icon="settings" content="Project Settings" />
+          <Modal.Content>
+            <EditProjForm />
+          </Modal.Content>
+        </Modal>
       </div>
     );
   }
