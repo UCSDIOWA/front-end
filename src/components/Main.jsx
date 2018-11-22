@@ -7,6 +7,7 @@ import ProfileView from "./profile/ProfileView";
 import { navConsts } from "../constants";
 import CreateProjectView from "./CreateProjectView";
 import SearchProjectView from "./SearchProjectView";
+import ProjectDashboardView from "./dashboard/ProjectDashboardView";
 
 export default class Main extends Component {
   render() {
@@ -35,6 +36,11 @@ export default class Main extends Component {
             exact
             path={"/" + SEARCH_PROJECT}
             component={SearchProjectView}
+          />
+          <Route
+            exact
+            path={"/" + DASHBOARD}
+            component={ProjectDashboardView}
           />
         </Switch>
       </main>

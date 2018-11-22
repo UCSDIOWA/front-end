@@ -96,6 +96,9 @@
   color: blue;
 }
 
+#description_a {
+  max-width: 420px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -11,7 +11,7 @@ import ForgotPasswordView from "../login/ForgotPasswordView";
 import ProtectedRoute from "./ProtectedRoute";
 import HomeRedirect from "./HomeRedirect";
 import NotFound from "../NotFound";
-import TestPage from "../dashboard/TestPage";
+import ProjectDashboardView from "../dashboard/ProjectDashboardView";
 
 export default class Main extends Component {
   render() {
@@ -24,7 +24,8 @@ export default class Main extends Component {
       CREATE_PROJECT,
       SEARCH_PROJECT,
       LOGIN,
-      RECOVER_PASSWORD
+      RECOVER_PASSWORD,
+      DASHBOARD
     } = navConsts;
 
     const AUTHENTICATED = this.props.isAuthenticated;
@@ -90,8 +91,8 @@ export default class Main extends Component {
             isAuthenticated={AUTHENTICATED}
           />
           <ProtectedRoute
-            path={"/" + "TEST_PAGE"}
-            component={TestPage}
+            path={"/" + DASHBOARD}
+            component={ProjectDashboardView}
             isAuthenticated={AUTHENTICATED}
           />
 
