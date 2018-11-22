@@ -19,17 +19,18 @@ export default class ProjectDashboardView extends Component {
   }
 
   handleAddMilestone(milestoneName) {
-    //TODO possible promise?
-    var list = this.state.milestoneArray;
-    list.push(
+    //TODO include sending new Milestone object to backend
+    var newMilestone = (
       <MilestonesViewEvent milestone={milestoneName} key={milestoneName} />
     );
-    this.setState({ milestoneArray: list });
+    this.setState({
+      milestoneArray: [...this.state.milestoneArray, newMilestone]
+    });
   }
   render() {
     //TODO have call to repopulate list from backend
     const list = this.state.milestoneArray;
-    console.log(list.length);
+
     return (
       <div>
         <Segment>

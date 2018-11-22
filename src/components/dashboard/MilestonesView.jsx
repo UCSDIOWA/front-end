@@ -16,7 +16,6 @@ export default class MilestonesView extends Component {
   }
 
   render() {
-    console.log("msview: " + this.props.milestoneArray.length);
     return (
       <Segment>
         <Header size="medium">Milestones View</Header>
