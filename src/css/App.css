@@ -63,6 +63,27 @@
 .profile-columns4 {
   width: 28rem;
 }
+
+.create-project-grid {
+  width: 60rem;
+}
+.create-project-column {
+  padding-left: 200em;
+}
+.create-project-isPrivate {
+  width: 10%;
+}
+
+.rbc-calendar {
+  min-height: 200px;
+  min-width: 100px;
+}
+
+.dashboard-calendar {
+  width: 300px;
+  height: 200px;
+}
+
 #login_tea {
   font-size: 4em;
   font-weight: bold;
@@ -75,6 +96,9 @@
   color: blue;
 }
 
+#description_a {
+  max-width: 420px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -42,6 +42,7 @@ export default class EndorsementsWidget extends Component {
         role: "lecturer"
       }
     ];
+    this.state.endorsements = [];
     for (var i = 0; i < 4; i++) {
       this.state.endorsements.push(
         <EndorsementFeedEvent

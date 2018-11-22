@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 
 import { Button, Dropdown } from "semantic-ui-react";
-
 import { navConsts } from "../constants";
 import { Link } from "react-router-dom";
 
-const { CREATE_PROJECT, SEARCH_PROJECT } = navConsts;
+const {
+  GATEWAY,
+  SIGNUP,
+  PROFILE,
+  CREATE_PROJECT,
+  SEARCH_PROJECT,
+  DASHBOARD
+} = navConsts;
 
 const options = [
   { key: "angular", text: "Angular", value: "angular" },
@@ -53,6 +59,9 @@ export default class GatewayView extends Component {
           selection
           options={options}
         />
+        <Link to={"/" + DASHBOARD}>
+          <Button color="green">Project Dashboard</Button>
+        </Link>
       </div>
     );
   }
