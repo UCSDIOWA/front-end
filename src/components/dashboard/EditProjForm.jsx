@@ -19,14 +19,14 @@ export default class EditProjectForm extends Component {
       Members: ["Darrell", "Brent", "Erica", "Ashley"],
       MembersViewer: [],
       pendingMembers: [
-        "so",
-        "wake",
-        "up",
-        "the",
-        "members",
-        "of",
-        "my",
-        "nation"
+        "Timmy",
+        "Jimmy",
+        "Danny",
+        "Naruto",
+        "Uzumaki",
+        "Senpai",
+        "Gibby",
+        "Drake"
       ],
       pendingMembersView: []
     };
@@ -35,16 +35,21 @@ export default class EditProjectForm extends Component {
   }
 
   populateMembers() {
-    var temp = [];
+    //var temp = [];
     for (var i = 0; i < this.state.Members.length; i++) {
-      temp.push(
+      this.state.MembersViewer.push(
         <Segment vertical>
           <Grid>
             <Grid.Row>
-              <Grid.Column width={13}>{this.state.Members[i]}</Grid.Column>
-              <Grid.Column>
+              <Grid.Column width={12}>{this.state.Members[i]}</Grid.Column>
+              <Grid.Column width={2}>
                 <Button color="red" size="mini">
-                  Remove
+                  Remove Member
+                </Button>
+              </Grid.Column>
+              <Grid.Column>
+                <Button color="facebook" size="mini">
+                  Make Leader
                 </Button>
               </Grid.Column>
             </Grid.Row>
@@ -52,22 +57,33 @@ export default class EditProjectForm extends Component {
         </Segment>
       );
     }
-    this.setState({ MembersView: temp });
+    //this.setState({ MembersView: temp });
   }
   populatePendingMembers() {
-    var temp = [];
     for (var i = 0; i < this.state.pendingMembers.length; i++) {
-      temp.push(
-        <Grid>
-          <Grid.Row>
-            <Segment vertical>{this.state.Members[i]}</Segment>
-            <Button color="red">Reject</Button>
-            <Button color="green">Accept</Button>
-          </Grid.Row>
-        </Grid>
+      this.state.pendingMembersView.push(
+        <Segment vertical>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={12}>
+                {this.state.pendingMembers[i]}
+              </Grid.Column>
+              <Grid.Column width={2}>
+                <Button color="green" size="mini">
+                  Accept Member
+                </Button>
+              </Grid.Column>
+              <Grid.Column>
+                <Button color="youtube" size="mini">
+                  Reject Member
+                </Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Segment>
       );
     }
-    this.setState({ pendingMembersView: temp });
+    //this.setState({ pendingMembersView: temp });
   }
 
   render() {
