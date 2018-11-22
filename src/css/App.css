@@ -29,6 +29,8 @@
   justify-content: center;
   /* font-size: calc(10px + 2vmin); */
   color: black;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .App-link {
@@ -62,8 +64,29 @@
   width: 28rem;
 }
 
+<<<<<<< HEAD
 #test {
   justify-content: center;
+=======
+.create-project-grid {
+  width: 60rem;
+}
+.create-project-column {
+  padding-left: 200em;
+}
+.create-project-isPrivate {
+  width: 10%;
+}
+
+.rbc-calendar {
+  min-height: 200px;
+  min-width: 100px;
+}
+
+.dashboard-calendar {
+  width: 300px;
+  height: 200px;
+>>>>>>> 8ab241dafc613d6988fd367171f0782b153d864f
 }
 
 #login_tea {
