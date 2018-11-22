@@ -8,6 +8,7 @@ import {
   Header,
   Popup
 } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 export default class SignUpForm extends Component {
   constructor(props) {
@@ -18,16 +19,6 @@ export default class SignUpForm extends Component {
       sEmail: "",
       sPw: ""
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit() {
-    this.props.handleSubmit(
-      this.state.sEmail,
-      this.state.sPw,
-      this.state.sFirstName,
-      this.state.sLastName
-    );
   }
 
   render() {
@@ -70,14 +61,29 @@ export default class SignUpForm extends Component {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column width={10} />
+              <Grid.Column width={6} position="left">
+                <Link to="/">
+                  <Button color="red" size="large">
+                    Back
+                  </Button>
+                </Link>
+              </Grid.Column>
+              <Grid.Column width={4} />
               <Grid.Column width={6}>
                 <Popup
                   trigger={
                     <Button
                       color="teal"
                       size="large"
-                      onClick={this.handleSubmit}
+                      loading={this.props.onSignUpLoading}
+                      onClick={() => {
+                        this.props.onSignUp(
+                          this.state.sEmail,
+                          this.state.sPw,
+                          this.state.sFirstName,
+                          this.state.sLastName
+                        );
+                      }}
                     >
                       Sign Up
                     </Button>

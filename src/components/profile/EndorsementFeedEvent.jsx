@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Segment, Grid, Image, Statistic, Icon, Feed } from "semantic-ui-react";
+import { Feed } from "semantic-ui-react";
 
 export default class EndorsementFeedEvent extends Component {
   constructor(props) {
