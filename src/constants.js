@@ -7,5 +7,7 @@ export const navConsts = {
   PROFILE: "profile",
   CREATE_PROJECT: "home/create-project",
   SEARCH_PROJECT: "home/search-project",
-  LOGIN: "login"
+  DASHBOARD: "home/dashboard",
+  LOGIN: "login",
+  RECOVER_PASSWORD: "recover-password"
 };

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Logo from "../resources/logo.png";
 import { navConsts } from "../constants";
 
-const { GATEWAY, PROFILE } = navConsts;
+const { GATEWAY, SIGNUP, PROFILE, CREATE_PROJECT, SEARCH_PROJECT } = navConsts;
 
 const NavBar = () => (
   <Menu fixed="top" inverted borderless size="large">

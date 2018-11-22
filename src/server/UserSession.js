@@ -1,15 +1,15 @@
 var UserSession = (function() {
   var getEmail = function() {
-    return localStorage.getItem("email");
+    return sessionStorage.getItem("email");
   };
   var setEmail = function(email) {
-    localStorage.setItem("email", email);
+    sessionStorage.setItem("email", email);
   };
   var getAuthenticated = function() {
-    return localStorage.getItem("isAuthenticated") === "true";
+    return sessionStorage.getItem("isAuthenticated") === "true";
   };
   var setAuthenticated = function(isAuthenticated) {
-    localStorage.setItem("isAuthenticated", isAuthenticated);
+    sessionStorage.setItem("isAuthenticated", isAuthenticated);
   };
   return {
     getEmail: getEmail,
