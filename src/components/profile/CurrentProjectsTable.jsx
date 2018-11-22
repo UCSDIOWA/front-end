@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { Segment, Header, Image, Table } from "semantic-ui-react";
 import ProjectTileEvent from "./ProjectTileEvent";
 
-
 export default class CurrentProjectsTable extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +11,7 @@ export default class CurrentProjectsTable extends Component {
   }
 
   tableGenerate() {
+    this.state.tableRows = [];
     for (var i = 0; i < this.state.numberViews; i++) {
       this.state.tableRows.push(
         <tbody key={i}>
