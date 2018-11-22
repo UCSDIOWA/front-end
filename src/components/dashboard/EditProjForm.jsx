@@ -32,10 +32,12 @@ export default class EditProjectForm extends Component {
     };
     this.populateMembers = this.populateMembers.bind(this);
     this.populatePendingMembers = this.populatePendingMembers.bind(this);
+
+    this.populateMembers();
+    this.populatePendingMembers();
   }
 
   populateMembers() {
-    //var temp = [];
     for (var i = 0; i < this.state.Members.length; i++) {
       this.state.MembersViewer.push(
         <Segment vertical>
@@ -87,8 +89,6 @@ export default class EditProjectForm extends Component {
   }
 
   render() {
-    this.populateMembers();
-    this.populatePendingMembers();
     return (
       <Form>
         <Form.Field>
