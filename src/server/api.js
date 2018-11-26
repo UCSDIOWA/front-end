@@ -45,8 +45,10 @@ export function sendRecoverPasswordEmail(email) {
   return true;
 }
 
-export function getProfileData(userEmail) {
-  let url = "https://tea-user-profile-api.herokuapp.com/userprofile";
+/** User profile API  **/
+
+export function getUserProfile(userEmail) {
+  let url = "https://tea-user-profile-api.herokuapp.com/getuserprofile";
   let data = {};
   return fetch(url, {
     method: "POST",
@@ -57,4 +59,82 @@ export function getProfileData(userEmail) {
       console.log("login post error: ");
       console.log(error);
     });
+}
+
+export function updateUserProfile(userEmail) {
+
+}
+
+/** Project Information API **/
+
+//{ project_name: string, percentage_done: float, group_size: int, 
+//       user_roles: list[user_email, string], tags: list }
+//TODO replace with actual project information
+export function getProjectListings(userEmail) {
+  return [
+          {
+            title: "temp project name1", 
+            project_leader: "project leader 1",
+            percentage_done: 10.0, 
+            group_size: 10, 
+            user_roles: [{user_email: "test_email1.1", user_role: "test_role1.1"},
+                         {user_email: "test_email1.2", user_role: "test_role1.2"}],
+            tags: ["tag1.1", "tag1.2", "tag1.3"],
+            project_description: "description"
+          },
+          { 
+            title: "temp project name2", 
+            project_leader: "project leader 2",
+            percentage_done: 20.0, 
+            group_size: 20, 
+            user_roles: [{user_email: "test_email2.1", user_role: "test_role2.1"},
+                         {user_email: "test_email2.2", user_role: "test_role2.2"}],
+            tags: ["tag2.1", "tag2.2", "tag2.3"],
+            project_description: "description"
+
+          },
+          { 
+            title: "temp project name3", 
+            project_leader: "project leader 3",
+            percentage_done: 30.0, 
+            group_size: 30, 
+            user_roles: [{user_email: "test_email3.1", user_role: "test_role3.1"},
+                         {user_email: "test_email3.2", user_role: "test_role3.2"}],
+            tags: ["tag3.1", "tag3.2", "tag3.3"],
+            project_description: "description"
+
+          },
+          { 
+            title: "temp project name1", 
+            project_leader: "project leader 4",
+            percentage_done: 10.0, 
+            group_size: 10, 
+            user_roles: [{user_email: "test_email1.1", user_role: "test_role1.1"},
+                         {user_email: "test_email1.2", user_role: "test_role1.2"}],
+            tags: ["tag1.1", "tag1.2", "tag1.3"],
+            project_description: "description1"
+          },
+          { 
+            title: "temp project name2", 
+            project_leader: "project leader 5",
+            percentage_done: 20.0, 
+            group_size: 20, 
+            user_roles: [{user_email: "test_email2.1", user_role: "test_role2.1"},
+                         {user_email: "test_email2.2", user_role: "test_role2.2"}],
+            tags: ["tag2.1", "tag2.2", "tag2.3"],
+            project_description: "description"
+
+          },
+          { 
+            title: "temp project name3", 
+            project_leader: "project leader 6",
+            percentage_done: 30.0, 
+            group_size: 30, 
+            user_roles: [{user_email: "test_email3.1", user_role: "test_role3.1"},
+                         {user_email: "test_email3.2", user_role: "test_role3.2"}],
+            tags: ["tag3.1", "tag3.2", "tag3.3"],
+            project_description: "description"
+
+          }
+         ]
 }

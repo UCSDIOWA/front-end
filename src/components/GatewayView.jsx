@@ -4,14 +4,7 @@ import { Button, Dropdown } from "semantic-ui-react";
 import { navConsts } from "../constants";
 import { Link } from "react-router-dom";
 
-const {
-  GATEWAY,
-  SIGNUP,
-  PROFILE,
-  CREATE_PROJECT,
-  SEARCH_PROJECT,
-  DASHBOARD
-} = navConsts;
+
 
 const options = [
   { key: "angular", text: "Angular", value: "angular" },
@@ -35,7 +28,17 @@ const options = [
 ];
 
 export default class GatewayView extends Component {
+
   render() {
+    const {
+      GATEWAY,
+      SIGNUP,
+      PROFILE,
+      CREATE_PROJECT,
+      SEARCH_PROJECT,
+      DASHBOARD,
+      PROJECT_LISTINGS
+    } = navConsts;
     return (
       <div>
         <Link to={"/" + CREATE_PROJECT}>
@@ -44,7 +47,7 @@ export default class GatewayView extends Component {
           </Button>
         </Link>
 
-        <Link to={"/" + SEARCH_PROJECT}>
+        <Link to={"/" + PROJECT_LISTINGS}>
           <Button id="search_project" color="green" size="huge">
             Search Project
           </Button>

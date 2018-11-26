@@ -9,5 +9,6 @@ export const navConsts = {
   SEARCH_PROJECT: "home/search-project",
   DASHBOARD: "home/dashboard",
   LOGIN: "login",
-  RECOVER_PASSWORD: "recover-password"
+  RECOVER_PASSWORD: "recover-password",
+  PROJECT_LISTINGS: "projects-listings"
 };
