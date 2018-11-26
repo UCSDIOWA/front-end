@@ -51,8 +51,8 @@ export default class ProjectListingsContainer extends Component {
             totalPages={this.props.projectListings.length}
           />
         </Grid.Row>
-        <Grid.Row >
-          <Card.Group style={{width: '100%'}}>
+        <Grid.Row>
+          <Card.Group centered style={{width: '100%'}}>
             {toReturn}
           </Card.Group>  
         </Grid.Row>

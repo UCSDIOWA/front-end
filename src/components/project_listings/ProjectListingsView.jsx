@@ -13,6 +13,7 @@ import _ from 'lodash';
  *    description: string, tags: list[string] }
 }
  */
+var listings = []
 export default class ProjectListingsView extends Component {
   constructor(props) {
     // listings is the list of all listings, 
@@ -20,7 +21,6 @@ export default class ProjectListingsView extends Component {
     // searchListings is whats displayed in the cards layout
     super(props);
     this.state = {
-      listings : [],
       searchResults: [],
       searchListings: []
     }
@@ -40,9 +40,10 @@ export default class ProjectListingsView extends Component {
 
     this.convertToPages(listingData,
       () => {
+        listings = listingData;
         this.setState((prevState) => {
-        return {listings: listingData, searchResults: []};
-      });
+          return {searchResults: []};
+        });
     })
     
   }
@@ -61,7 +62,7 @@ export default class ProjectListingsView extends Component {
 
   // when search is cleared
   handleSearchResultsReset() {
-    this.convertToPages(this.state.listings,
+    this.convertToPages(listings,
       () => {
         this.setState((prevState) => {
         return {searchResults: []};
@@ -76,12 +77,12 @@ export default class ProjectListingsView extends Component {
   }
 
   handleSearchChange(isMatch) {
-    var searchResults = _.filter(this.state.listings, isMatch)
+    var searchResults = _.filter(listings, isMatch)
     this.convertToPages(searchResults,
       () => {
         this.setState((prevState) => {
-        return {searchResults: searchResults};
-      });
+          return {searchResults: searchResults};
+        });
     })
   }
 
@@ -92,7 +93,7 @@ export default class ProjectListingsView extends Component {
         <Grid.Row style={{height:'10%'}}>
           <Grid.Column width={16}>
             <ProjectNameSearch 
-              projectListings={this.state.listings}
+              projectListings={listings}
               onSearchResultsReset={this.handleSearchResultsReset}
               onSearchChange={this.handleSearchChange}
               onSearchResultsSelect={this.handleSearchResultsSelect}

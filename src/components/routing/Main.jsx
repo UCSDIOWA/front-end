@@ -6,7 +6,6 @@ import SignUpView from "../signup/SignUpView";
 import ProfileView from "../profile/ProfileView";
 import { navConsts } from "../../constants";
 import CreateProjectView from "../CreateProjectView";
-import SearchProjectView from "../SearchProjectView";
 import ForgotPasswordView from "../login/ForgotPasswordView";
 import ProtectedRoute from "./ProtectedRoute";
 import HomeRedirect from "./HomeRedirect";
@@ -23,7 +22,6 @@ export default class Main extends Component {
       SIGNUP,
       PROFILE,
       CREATE_PROJECT,
-      SEARCH_PROJECT,
       LOGIN,
       RECOVER_PASSWORD,
       DASHBOARD,
@@ -85,11 +83,6 @@ export default class Main extends Component {
           <ProtectedRoute
             path={"/" + CREATE_PROJECT}
             component={CreateProjectView}
-            isAuthenticated={AUTHENTICATED}
-          />
-          <ProtectedRoute
-            path={"/" + SEARCH_PROJECT}
-            component={SearchProjectView}
             isAuthenticated={AUTHENTICATED}
           />
           <ProtectedRoute
