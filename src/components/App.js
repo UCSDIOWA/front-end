@@ -44,8 +44,6 @@ class App extends Component {
 
     // filter out index of array while waiting to update state, can do with callback
     this.setState({
-      name: this.state.name,
-      isAuthenticated: this.state.isAuthenticated,
       announcements: this.state.announcements.filter((_, i) => i !== index)
     });
   }
@@ -53,11 +51,14 @@ class App extends Component {
   handleAnnoucementCreate(content) {
     console.log("Creating a new announcement");
     // insert into announcements
-    this.setState({
-      name: this.state.name,
-      isAuthenticated: this.state.isAuthenticated,
-      announcements: [...this.state.announcements, content]
+    this.setState((prevState, curProps) => {
+      return {
+        name: prevState.name,
+        isAuthenticated: prevState.isAuthenticated,
+        announcements: [...prevState.announcements, content]
+      }
     });
+
   }
 
   render() {
@@ -68,7 +69,7 @@ class App extends Component {
       (announcement, index) => (
         <List.Item key={index}>
           {
-            <Announcement
+            <Announcement className="Announcement"
               onAnnouncementDismiss={this.handleAnnouncementDismiss}
               content={announcement}
               index={index}
@@ -80,15 +81,18 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="App">
-          <List>{announcementsItems}</List>
-        </div>
+
+        <div>
         {this.state.isAuthenticated && (
           <NavBar
             onUserSessionUpdate={this.handleUserSessionUpdate}
             name={this.state.name}
           />
         )}
+        </div>
+        <div>
+          <List >{announcementsItems}</List>
+        </div>
         <Main
           onUserSessionUpdate={this.handleUserSessionUpdate}
           onAnnouncement={this.handleAnnoucementCreate}

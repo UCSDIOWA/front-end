@@ -17,7 +17,7 @@ export default class NavBar extends Component {
   render() {
     const { GATEWAY, PROFILE } = navConsts;
     return (
-      <Menu fixed="top" inverted borderless size="large">
+      <Menu inverted borderless size="large">
         <Menu.Menu position="left">
           <Menu.Item>
             <Link to={"/"}>

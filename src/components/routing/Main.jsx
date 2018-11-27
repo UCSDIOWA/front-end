@@ -6,11 +6,12 @@ import SignUpView from "../signup/SignUpView";
 import ProfileView from "../profile/ProfileView";
 import { navConsts } from "../../constants";
 import CreateProjectView from "../CreateProjectView";
-import SearchProjectView from "../SearchProjectView";
 import ForgotPasswordView from "../login/ForgotPasswordView";
 import ProtectedRoute from "./ProtectedRoute";
 import HomeRedirect from "./HomeRedirect";
 import NotFound from "../NotFound";
+import ProjectDashboardView from "../project_dashboard/ProjectDashboardView";
+import ProjectListingsView from "../project_listings/ProjectListingsView";
 
 export default class Main extends Component {
   render() {
@@ -21,9 +22,10 @@ export default class Main extends Component {
       SIGNUP,
       PROFILE,
       CREATE_PROJECT,
-      SEARCH_PROJECT,
       LOGIN,
-      RECOVER_PASSWORD
+      RECOVER_PASSWORD,
+      DASHBOARD,
+      PROJECT_LISTINGS
     } = navConsts;
 
     const AUTHENTICATED = this.props.isAuthenticated;
@@ -84,8 +86,14 @@ export default class Main extends Component {
             isAuthenticated={AUTHENTICATED}
           />
           <ProtectedRoute
-            path={"/" + SEARCH_PROJECT}
-            component={SearchProjectView}
+            path={"/" + DASHBOARD}
+            component={ProjectDashboardView}
+            isAuthenticated={AUTHENTICATED}
+          />
+
+          <ProtectedRoute
+            path={"/" + PROJECT_LISTINGS}
+            component={ProjectListingsView}
             isAuthenticated={AUTHENTICATED}
           />
 

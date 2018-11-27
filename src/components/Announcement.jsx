@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Message, Container } from "semantic-ui-react";
+import { Message } from "semantic-ui-react";
 
 export default class Announcement extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class Announcement extends Component {
   // this.prop.announcements should be an array
   render() {
     return (
-      <Message
+      <Message className={this.props.className}
         color="teal"
         onDismiss={this.handleDismiss}
         content={this.props.content}
