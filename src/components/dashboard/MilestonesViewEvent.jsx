@@ -11,12 +11,13 @@ import {
 export default class MilestonesViewEvent extends Component {
   constructor(props) {
     super(props);
+    this.state = { canRemove: this.props.canRemove };
   }
 
   render() {
     return (
       <Segment vertical>
-        <Icon name="check circle outline" />
+        <Icon name={this.state.canRemove ? "delete" : "check circle outline"} />
         <Button>{this.props.milestone}</Button>
       </Segment>
     );

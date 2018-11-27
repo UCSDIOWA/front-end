@@ -23,7 +23,7 @@ export default class MilestonesView extends Component {
         {this.props.milestoneArray}
         <Segment vertical>
           <Segment vertical>
-            <Button inverted color="red">
+            <Button inverted color="red" onClick={this.props.removeFunc}>
               Remove milestone
             </Button>
           </Segment>

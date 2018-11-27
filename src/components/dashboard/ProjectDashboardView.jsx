@@ -14,14 +14,24 @@ import MilestonesViewEvent from "./MilestonesViewEvent";
 export default class ProjectDashboardView extends Component {
   constructor(props) {
     super(props);
-    this.state = { milestoneArray: [] };
+    this.state = { milestoneArray: [], canRemoveMS: false };
     this.handleAddMilestone = this.handleAddMilestone.bind(this);
+    this.handleAllowRemoveMS = this.handleAllowRemoveMS.bind(this);
+  }
+
+  handleAllowRemoveMS() {
+    this.setState({ canRemoveMS: !this.state.canRemoveMS });
+    console.log("canremove");
   }
 
   handleAddMilestone(milestoneName) {
     //TODO include sending new Milestone object to backend
     var newMilestone = (
-      <MilestonesViewEvent milestone={milestoneName} key={milestoneName} />
+      <MilestonesViewEvent
+        milestone={milestoneName}
+        key={milestoneName}
+        canRemove={this.canRemoveMS}
+      />
     );
     this.setState({
       milestoneArray: [...this.state.milestoneArray, newMilestone]
@@ -41,6 +51,7 @@ export default class ProjectDashboardView extends Component {
                 <MilestonesView
                   handleAddMilestone={this.handleAddMilestone}
                   milestoneArray={list}
+                  removeFunc={this.handeAllowRemoveMS}
                 />
               </Grid.Column>
               <Grid.Column className="profile-columns3">

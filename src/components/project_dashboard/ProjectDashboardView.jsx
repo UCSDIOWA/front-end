@@ -5,11 +5,13 @@ import {
   Header,
   Icon,
   Button,
-  Grid
+  Grid,
+  GridRow
 } from "semantic-ui-react";
 import MilestonesView from "./MilestonesView";
 import CalendarModule from "./CalendarModule";
 import MilestonesViewEvent from "./MilestonesViewEvent";
+import CalendarWidget from "./CalendarWidget";
 
 export default class ProjectDashboardView extends Component {
   constructor(props) {
@@ -44,7 +46,10 @@ export default class ProjectDashboardView extends Component {
                 />
               </Grid.Column>
               <Grid.Column className="profile-columns3">
-                <CalendarModule />
+                <Grid.Row>Calendar</Grid.Row>
+                <Grid.Row>
+                  <CalendarWidget />
+                </Grid.Row>
               </Grid.Column>
             </Grid.Row>
           </Grid>
