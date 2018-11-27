@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-
+import { getUserProfileInfo } from "../../server/api";
 import { Grid, Image } from "semantic-ui-react";
 
-import holderimage from "../../resources/holder-image.jpg";
+//import holderimage from "../../resources/holder-image.jpg";
 import CurrentProjectsTable from "./CurrentProjectsTable";
 import PreviousProjectsTable from "./PreviousProjectsTable";
 import EndorsementsWidget from "./EndorsementsWidget";
@@ -11,6 +11,34 @@ import paulImage from "../../resources/paul_cao.jpg";
 export default class ProfileView extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      profileImage: null,
+      profileDescription: null,
+      endorsements: null,
+      currentProjects: null,
+      previousProjects: null
+    };
+    this.getUserProfileInfo = this.getUserProfileInfo.bind(this);
+  }
+
+  componentDidMount() {
+    this.getUserProfileInfo(this.props.username);
+  }
+
+  getUserProfileInfo(useremail) {
+    const profDataPromise = getUserProfileInfo(useremail);
+    profDataPromise.then(response => {
+      console.log("profile response: ");
+      console.log(response);
+
+      this.setState({
+        profileImage: response.toString().profileImage,
+        profileDescription: response.toString().profileDescription,
+        endorsements: response.toString().endorsements,
+        currentProjects: response.toString().currentProjects,
+        previousProjects: response.toString().previousProjects
+      });
+    });
   }
 
   render() {
@@ -38,8 +66,8 @@ export default class ProfileView extends Component {
                 <PreviousProjectsTable />
               </Grid.Column>
               <Grid.Column className="profile-columns3">
-                <ProfileDescriptionWidget profileDescription={testDesc} />
-                <EndorsementsWidget numEndorse={48} />
+                <ProfileDescriptionWidget />
+                <EndorsementsWidget />
               </Grid.Column>
             </Grid.Row>
           </Grid>

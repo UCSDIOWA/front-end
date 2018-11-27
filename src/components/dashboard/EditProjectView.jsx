@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Icon, Button, Modal, Header } from "semantic-ui-react";
-//import EditProjectView from "./EditProjectView";
 import EditProjForm from "./EditProjForm";
 
 export default class EditProjectView extends Component {
