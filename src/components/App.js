@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import "../css/App.css";
 import Main from "./routing/Main";
-import NavBar from "./navBar/NavBar";
 
 import UserSession from "../server/UserSession";
 import Announcement from "./Announcement";
 import { List } from "semantic-ui-react";
+import DashboardView from "./dashboard/DashboardView";
+import CreateProjectView from "./CreateProjectView";
 
 class App extends Component {
   /*
@@ -13,6 +14,11 @@ class App extends Component {
              isAuthenticated: verify if authenticated login
              announcements: list of announcements to display
    */
+  render() {
+    return <CreateProjectView />;
+  }
+}
+/*
   constructor(props) {
     super(props);
     // handle mounting in case of refresh
@@ -100,7 +106,6 @@ class App extends Component {
         />
       </div>
     );
-  }
-}
+  } */
 
 export default App;

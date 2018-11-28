@@ -47,6 +47,9 @@ function formatDate(date, format, locale) {
   return dateFnsFormat(date, format, { locale });
 }
 
+const DEFAULT_SIZE = 10;
+const DEFAULT_PRIVATE = false;
+const DEFAULT_DEADLINE = null;
 export default class CreateProjectForm extends Component {
   constructor(props) {
     super(props);
@@ -54,10 +57,10 @@ export default class CreateProjectForm extends Component {
     this.state = {
       title: "",
       description: "",
-      size: 10,
-      isPrivate: false,
+      size: DEFAULT_SIZE,
+      isPrivate: DEFAULT_PRIVATE,
       tags: "",
-      deadline: null,
+      deadline: DEFAULT_DEADLINE,
       calendarID: ""
     };
 
@@ -91,7 +94,6 @@ export default class CreateProjectForm extends Component {
     console.log("Deadline:", this.state.deadline);
     console.log("CalendarID:", this.state.calendarID);
   }
-  //width={8} floated="left" style={{ paddingLeft: 20 }}
   render() {
     const {
       title,
@@ -189,23 +191,28 @@ export default class CreateProjectForm extends Component {
                       />
                     }
                     content={
-                      <Container style={{ width: 200, height: 200 }}>
-                        <List ordered>
-                          <List.Item>Go to your Google Calendar</List.Item>
-                          <List.Item>
-                            Select on <Icon name="setting" /> from the top of
-                            the page and select option "Settings"
-                          </List.Item>
-                          <List.Item>
-                            Select the Calendar you wish to add by selecting its
-                            name under "Settings for my calendars"
-                          </List.Item>
-                          <List.Item>
-                            Go to "Integrate Calendar" and copy/paste your
-                            Calendar ID here
-                          </List.Item>
-                        </List>
-                      </Container>
+                      <Grid style={{ width: 250, height: 210 }}>
+                        <Grid.Row style={{ paddingBottom: 0 }}>
+                          <List ordered>
+                            <List.Item>Go to your Google Calendar</List.Item>
+                            <List.Item>
+                              Select on <Icon name="setting" /> from the top of
+                              the page and select option "Settings"
+                            </List.Item>
+                            <List.Item>
+                              Select the Calendar you wish to add by selecting
+                              its name under "Settings for my calendars"
+                            </List.Item>
+                            <List.Item>
+                              Go to "Integrate Calendar" and copy/paste your
+                              Calendar ID here
+                            </List.Item>
+                          </List>
+                        </Grid.Row>
+                        <Grid.Row centered style={{ paddingTop: 0 }}>
+                          <p>Note: The calendar must be public</p>
+                        </Grid.Row>
+                      </Grid>
                     }
                     position="left center"
                   />
