@@ -80,7 +80,6 @@ export default class CalendarWidget extends Component {
                   name="calendarID"
                   value={calendarID}
                   onChange={this.setID}
-                  onSubmit={this.addCalendar}
                 />
               </Grid.Row>
               <Grid.Row centered style={{ paddingTop: 0 }}>
