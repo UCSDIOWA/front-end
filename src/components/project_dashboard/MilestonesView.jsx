@@ -5,10 +5,11 @@ import {
   Header,
   Icon,
   Button,
-  Modal
+  Modal,
+  Grid
 } from "semantic-ui-react";
 import AddMilestonesView from "./AddMilestonesView";
-import MilestonesViewEvent from "./MilestonesViewEvent";
+import EditProjectView from "./EditProjPopupView";
 
 export default class MilestonesView extends Component {
   constructor(props) {
@@ -18,18 +19,31 @@ export default class MilestonesView extends Component {
   render() {
     return (
       <Segment>
-        <Header size="medium">Milestones View</Header>
         <Progress percent={55}>Current Project Progress</Progress>
-        {this.props.milestoneArray}
-        <Segment vertical>
-          <Segment vertical>
-            <Button inverted color="red">
-              Remove milestone
-            </Button>
-          </Segment>
-          <Segment vertical>
-            <AddMilestonesView addMilestone={this.props.handleAddMilestone} />
-          </Segment>
+        <Header size="medium">
+          {this.props.currentProjectName} Milestones
+        </Header>
+        <Segment>{this.props.milestoneArray}</Segment>
+        <Grid centered>
+          <Grid.Row>
+            <Grid.Column style={{ width: "15rem" }}>
+              <Segment vertical>
+                <Button inverted color="red">
+                  Remove milestone
+                </Button>
+              </Segment>
+            </Grid.Column>
+            <Grid.Column style={{ width: "12rem" }}>
+              <Segment vertical>
+                <AddMilestonesView
+                  addMilestone={this.props.handleAddMilestone}
+                />
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <Segment textAlign="center" vertical>
+          <EditProjectView />
         </Segment>
       </Segment>
     );

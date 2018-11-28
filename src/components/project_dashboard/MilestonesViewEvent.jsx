@@ -15,7 +15,7 @@ export default class MilestonesViewEvent extends Component {
 
   render() {
     return (
-      <Segment vertical>
+      <Segment vertical textAlign="center">
         <Icon name="check circle outline" />
         <Button>{this.props.milestone}</Button>
       </Segment>
