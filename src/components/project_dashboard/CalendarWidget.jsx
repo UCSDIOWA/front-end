@@ -75,8 +75,8 @@ export default class CalendarWidget extends Component {
                 name="calendarID"
                 value={calendarID}
                 onChange={this.handleChange}
-                onSubmit={this.addCalendar}
               />
+              <Button color="teal">Add</Button>
             </Container>
           </Modal.Description>
         </Modal>

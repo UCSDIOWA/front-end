@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Popup, Segment, Button, Grid, GridRow } from "semantic-ui-react";
 import MilestonesView from "./MilestonesView";
-import AnnouncementsView from "./AnnouncementsView";
+import Announcement from "../Announcement";
 import MilestonesViewEvent from "./MilestonesViewEvent";
 import CalendarWidget from "./CalendarWidget";
 
@@ -45,7 +45,7 @@ export default class ProjectDashboardView extends Component {
                 <CalendarWidget />
               </Segment>
 
-              <AnnouncementsView />
+              <Announcement />
             </Grid.Column>
           </Grid.Row>
         </Grid>
