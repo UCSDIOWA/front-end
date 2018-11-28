@@ -77,7 +77,9 @@ export default class CreateProjectForm extends Component {
 
   handleDeadline(day, { selected }) {
     this.setState({
-      deadline: selected ? undefined : day
+      deadline: selected
+        ? undefined
+        : day.getMonth() + 1 + "/" + day.getDate() + "/" + day.getFullYear()
     });
   }
 
@@ -91,7 +93,6 @@ export default class CreateProjectForm extends Component {
     console.log("Deadline:", this.state.deadline);
     console.log("CalendarID:", this.state.calendarID);
   }
-  //width={8} floated="left" style={{ paddingLeft: 20 }}
   render() {
     const {
       title,

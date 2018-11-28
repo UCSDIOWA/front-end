@@ -44,7 +44,12 @@ export default class CalendarWidget extends Component {
           style={{ height: 400, width: 300 }}
           on="click"
           trigger={
-            <Button style={{ width: 260, height: 260 }}>Add Calendar</Button>
+            <Button
+              style={{ width: 260, height: 260, fontSize: 25 }}
+              color="teal"
+            >
+              Add Calendar
+            </Button>
           }
           closeIcon
         >
