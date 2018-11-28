@@ -20,6 +20,7 @@ import "react-day-picker/lib/style.css";
 import { DateUtils } from "react-day-picker";
 import dateFnsFormat from "date-fns/format";
 import dateFnsParse from "date-fns/parse";
+import UserSession from "../server/UserSession";
 
 const { GATEWAY } = navConsts;
 
@@ -56,8 +57,8 @@ export default class CreateProjectForm extends Component {
       description: "",
       size: 10,
       isPrivate: false,
-      tags: "",
-      deadline: null,
+      tags: [],
+      deadline: "",
       calendarID: ""
     };
 
@@ -92,6 +93,18 @@ export default class CreateProjectForm extends Component {
     console.log("Tags:", this.state.tags);
     console.log("Deadline:", this.state.deadline);
     console.log("CalendarID:", this.state.calendarID);
+    this.props.onCreateProject(
+      this.state.title,
+      UserSession.getEmail(),
+      0,
+      this.state.size,
+      this.state.isPrivate,
+      this.state.tags,
+      this.state.deadline,
+      this.state.calendar_id,
+      this.state.description,
+      UserSession.getEmail()
+    );
   }
   render() {
     const {
