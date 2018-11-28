@@ -76,7 +76,11 @@ export default class CalendarWidget extends Component {
                 value={calendarID}
                 onChange={this.handleChange}
               />
-              <Button color="teal">Add</Button>
+              <Grid>
+                <Grid.Row>
+                  <Button color="teal">Add</Button>
+                </Grid.Row>
+              </Grid>
             </Container>
           </Modal.Description>
         </Modal>
