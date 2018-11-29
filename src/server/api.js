@@ -41,6 +41,11 @@ export function sendRecoverPasswordEmail(email) {
   return true;
 }
 
+/** Notifications **/
+export function getNotifications(email) {
+  return ["test invite", "test request"];
+}
+
 /** User profile API  **/
 
 export function getUserProfile(userEmail) {
@@ -149,6 +154,9 @@ export function getProjectListings(userEmail) {
  
   ];
 }
+
+
+
 
 /* Create Project API
  */

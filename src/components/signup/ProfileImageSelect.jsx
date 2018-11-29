@@ -14,7 +14,8 @@ export default class ProfileImageSelect extends Component {
   constructor(props) {
     super(props);
     this.state = {images: [
-      oolongTea, greenTea, blackTea,lemonTea, chineseTea, coffee, bobaTea, betterLemonTea, holderImage
+      oolongTea, greenTea, blackTea,lemonTea, chineseTea, coffee, 
+      bobaTea, betterLemonTea, holderImage
     ]}
   }
 

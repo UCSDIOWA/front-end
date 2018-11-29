@@ -91,13 +91,11 @@ class App extends Component {
     const systemMessageItems = this.state.systemMessages.map(
       (systemMessage, index) => (
         <List.Item key={index}>
-          {
-            <SystemMessage
-              onMessageDismiss={this.handleSystemMessageDismiss}
-              content={systemMessage}
-              index={index}
-            />
-          }
+          <SystemMessage
+            onMessageDismiss={this.handleSystemMessageDismiss}
+            content={systemMessage}
+            index={index}
+          />
         </List.Item>
       )
     );

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Segment, Pagination, Table } from "semantic-ui-react";
+import { Segment, Pagination, Table, Grid } from "semantic-ui-react";
 import GatewayProjectTileEvent from "./GatewayProjectTileEvent";
 
 export default class GatewayProjectTable extends Component {
@@ -67,7 +67,6 @@ export default class GatewayProjectTable extends Component {
       i++
     ) {
       list.push(
-        <tbody key={i}>
           <GatewayProjectTileEvent
             isFinished={false}
             projName={this.state.testList[i].projName}
@@ -77,7 +76,7 @@ export default class GatewayProjectTable extends Component {
             tags={this.state.testList[i].tags}
             key={i}
           />
-        </tbody>
+  
       );
     }
     this.setState({ tableRows: list, activePage: activePage });
@@ -90,9 +89,8 @@ export default class GatewayProjectTable extends Component {
   render() {
     return (
       <Segment>
-        <Table celled>{this.state.tableRows}</Table>
+        <Segment.Group style={{width:'50vh'}} >{this.state.tableRows}</Segment.Group>
         <Pagination
-          defaultActivePage={1}
           totalPages={Math.ceil(
             this.props.totalProjs / this.state.projsPerPage
           )}

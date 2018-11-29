@@ -7,7 +7,9 @@ import {
   Accordion,
   Header,
   Icon,
-  Button
+  Button,
+  Table,
+  Grid
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { navConsts } from "../../constants";
@@ -38,7 +40,7 @@ export default class GatewayProjectTileEvent extends Component {
     } = navConsts;
     const { activeIndex, isVis } = this.state;
     return (
-      <Segment>
+      <Segment style={{width: '100%', height:'100%'}}>
         <Accordion>
           <Accordion.Title
             active={activeIndex === 0}
