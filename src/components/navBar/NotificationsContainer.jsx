@@ -10,9 +10,8 @@ export default class NotificationsContainer extends Component {
 
   // update states upon mounting
   componentDidMount() {
-    //make rest call to backend
+    //make rest call to backend to get notifications
     let notifications = getProjectListings();
-    // map a key to each listing and a description for search display
   }
 
   render() {

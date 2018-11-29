@@ -57,7 +57,7 @@ export default class Main extends Component {
             exact
             path={"/" + SIGNUP}
             render={() => (
-              <SignUpView onAnnouncement={this.props.onAnnouncement} />
+              <SignUpView onSystemMessage={this.props.onSystemMessage} />
             )}
           />
 
@@ -65,7 +65,7 @@ export default class Main extends Component {
             exact
             path={"/" + RECOVER_PASSWORD}
             render={() => (
-              <ForgotPasswordView onAnnouncement={this.props.onAnnouncement} />
+              <ForgotPasswordView onSystemMessage={this.props.onSystemMessage} />
             )}
           />
 

@@ -19,7 +19,7 @@ export default class NavBar extends Component {
   render() {
     const {
       PROFILE,
-    } = navConsts;    
+    } = navConsts;
     return (
       <Menu inverted borderless size="large">
         

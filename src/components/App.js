@@ -4,7 +4,7 @@ import Main from "./routing/Main";
 import NavBar from "./navBar/NavBar";
 
 import UserSession from "../server/UserSession";
-import Announcement from "./Announcement";
+import SystemMessage from "./SystemMessage";
 import { List } from "semantic-ui-react";
 
 import holderImage from "./../resources/profile_images/holder-image.jpg";
@@ -21,11 +21,11 @@ class App extends Component {
       name: "",
       profileImage: "",
       isAuthenticated: false,
-      announcements: []
+      systemMessages: []
     };
     this.handleUserSessionUpdate = this.handleUserSessionUpdate.bind(this);
-    this.handleAnnoucementCreate = this.handleAnnoucementCreate.bind(this);
-    this.handleAnnouncementDismiss = this.handleAnnouncementDismiss.bind(this);
+    this.handleSystemMessageCreate = this.handleSystemMessageCreate.bind(this);
+    this.handleSystemMessageDismiss = this.handleSystemMessageDismiss.bind(this);
   }
 
   componentDidMount() {
@@ -44,7 +44,7 @@ class App extends Component {
       name: priorName,
       profileImage: priorProfileImage,
       isAuthenticated: priorAuthenticate,
-      announcements: []
+      systemMessages: []
     });
   }
 
@@ -61,24 +61,24 @@ class App extends Component {
     this.setState({ name: name, isAuthenticated: isAuthenticated, profileImage: profileImage });
   }
 
-  handleAnnouncementDismiss(index) {
+  handleSystemMessageDismiss(index) {
     // remove element based of index
     console.log("Removing an announcement");
 
     // filter out index of array while waiting to update state, can do with callback
     this.setState({
-      announcements: this.state.announcements.filter((_, i) => i !== index)
+      systemMessages: this.state.systemMessages.filter((_, i) => i !== index)
     });
   }
 
-  handleAnnoucementCreate(content) {
-    console.log("Creating a new announcement");
+  handleSystemMessageCreate(content) {
+    console.log("Creating a new system message");
     // insert into announcements
     this.setState((prevState, curProps) => {
       return {
         name: prevState.name,
         isAuthenticated: prevState.isAuthenticated,
-        announcements: [...prevState.announcements, content]
+        systemMessages: [...prevState.systemMessages, content]
       }
     });
 
@@ -88,13 +88,13 @@ class App extends Component {
     console.log("Rerendering App");
     // console.log(this.state.announcements);
     // list of announcement referenced by a key of themselves
-    const announcementsItems = this.state.announcements.map(
-      (announcement, index) => (
+    const systemMessageItems = this.state.systemMessages.map(
+      (systemMessage, index) => (
         <List.Item key={index}>
           {
-            <Announcement className="Announcement"
-              onAnnouncementDismiss={this.handleAnnouncementDismiss}
-              content={announcement}
+            <SystemMessage
+              onMessageDismiss={this.handleSystemMessageDismiss}
+              content={systemMessage}
               index={index}
             />
           }
@@ -115,11 +115,11 @@ class App extends Component {
         )}
         </div>
         <div>
-          <List >{announcementsItems}</List>
+          <List >{systemMessageItems}</List>
         </div>
         <Main
           onUserSessionUpdate={this.handleUserSessionUpdate}
-          onAnnouncement={this.handleAnnoucementCreate}
+          onSystemMessage={this.handleSystemMessageCreate}
           isAuthenticated={this.state.isAuthenticated}
         />
       </div>

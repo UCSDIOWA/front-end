@@ -150,7 +150,6 @@ export function getProjectListings(userEmail) {
   ];
 }
 
-
 /* Create Project API
  */
 export function createProject(

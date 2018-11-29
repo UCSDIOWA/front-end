@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Message } from "semantic-ui-react";
 
-export default class Announcement extends Component {
+export default class SystemMessage extends Component {
   constructor(props) {
     super(props);
     this.handleDismiss = this.handleDismiss.bind(this);
   }
   handleDismiss() {
-    this.props.onAnnouncementDismiss(this.props.index);
+    this.props.onMessageDismiss(this.props.index);
   }
 
   // this.prop.announcements should be an array

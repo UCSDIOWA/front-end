@@ -23,9 +23,9 @@ export default class SignUpView extends Component {
       signupSuccess = response.success;
       this.setState({ isSubmittedLoading: false });
       if (!signupSuccess) {
-        this.props.onAnnouncement("Email Already Registered, please try again.");
+        this.props.onSystemMessage("Email Already Registered, please try again.");
       } else {
-        this.props.onAnnouncement("Sign Up Successful");
+        this.props.onSystemMessage("Sign Up Successful");
       }
       this.setState({ isSubmittedSuccess: signupSuccess });
     });
