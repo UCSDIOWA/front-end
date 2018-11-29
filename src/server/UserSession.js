@@ -11,11 +11,28 @@ var UserSession = (function() {
   var setAuthenticated = function(isAuthenticated) {
     sessionStorage.setItem("isAuthenticated", isAuthenticated);
   };
+  var getName = function() {
+    return sessionStorage.getItem("name");
+  };
+  var setName = function(name) {
+    sessionStorage.setItem("name", name);
+  };
+  var getProfileImage = function() {
+    return sessionStorage.getItem("profileImage");
+  };
+  var setProfileImage = function(profileImage) {
+    sessionStorage.setItem("profileImage", profileImage);
+  };
+
   return {
     getEmail: getEmail,
     setEmail: setEmail,
     getAuthenticated: getAuthenticated,
-    setAuthenticated: setAuthenticated
+    setAuthenticated: setAuthenticated,
+    getName: getName,
+    setName: setName,
+    getProfileImage: getProfileImage,
+    setProfileImage: setProfileImage
   };
 })();
 

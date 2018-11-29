@@ -1,12 +1,13 @@
 import UserSession from "./UserSession";
 
-export function signup(email, password, first_name, last_name) {
+export function signup(email, password, first_name, last_name, imageStr) {
   let url = "https://tea-login-api.herokuapp.com/signup";
   let data = {
     email: email,
     password: password,
     first_name: first_name,
-    last_name: last_name
+    last_name: last_name,
+    profile_image: imageStr
   };
   return fetch(url, {
     method: "POST",
@@ -36,11 +37,6 @@ export function login(email, password) {
     });
 }
 
-export function logout() {
-  UserSession.setAuthenticated(false);
-  UserSession.setEmail(null);
-}
-
 export function sendRecoverPasswordEmail(email) {
   return true;
 }
@@ -59,10 +55,6 @@ export function getUserProfile(userEmail) {
       console.log("login post error: ");
       console.log(error);
     });
-}
-
-export function updateUserProfile(userEmail) {
-
 }
 
 /** Project Information API **/
@@ -128,6 +120,17 @@ export function getProjectListings(userEmail) {
           { 
             title: "temp project name3", 
             project_leader: "project leader 6",
+            percentage_done: 30.0, 
+            group_size: 30, 
+            user_roles: [{user_email: "test_email3.1", user_role: "test_role3.1"},
+                         {user_email: "test_email3.2", user_role: "test_role3.2"}],
+            tags: ["tag3.1", "tag3.2", "tag3.3"],
+            project_description: "description"
+
+          },
+          { 
+            title: "temp project name3", 
+            project_leader: "project leader 7",
             percentage_done: 30.0, 
             group_size: 30, 
             user_roles: [{user_email: "test_email3.1", user_role: "test_role3.1"},

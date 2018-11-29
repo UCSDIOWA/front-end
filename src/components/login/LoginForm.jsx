@@ -30,11 +30,6 @@ export default class LoginForm extends Component {
           <Grid>
             <Grid.Row>
               <Grid.Column>
-                <Link to={"/" + SIGNUP}>
-                  <Button color="teal" size="huge">
-                    Sign Up
-                  </Button>
-                </Link>
 
                 <Button
                   color="linkedin"
@@ -46,6 +41,14 @@ export default class LoginForm extends Component {
                 >
                   Login
                 </Button>
+
+                <Link to={"/" + SIGNUP}>
+                  <Button color="teal" size="huge">
+                    Sign Up
+                  </Button>
+                </Link>
+
+
               </Grid.Column>
             </Grid.Row>
           </Grid>

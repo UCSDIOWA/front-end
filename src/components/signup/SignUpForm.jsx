@@ -6,9 +6,12 @@ import {
   Form,
   Input,
   Header,
-  Popup
+  Popup,
+  Image
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import ProfileImageSelect from "./ProfileImageSelect";
+import holderImage from "../../resources/profile_images/tulsi-green-tea.jpg";
 
 export default class SignUpForm extends Component {
   constructor(props) {
@@ -17,13 +20,18 @@ export default class SignUpForm extends Component {
       sFirstName: "",
       sLastName: "",
       sEmail: "",
-      sPw: ""
+      sPw: "",
+      sImage: holderImage
     };
+    this.handleImageSelect = this.handleImageSelect.bind(this);
+  }
+
+  handleImageSelect(e) {
+    this.setState({sImage: e.target.src});
   }
 
   render() {
     return (
-      <div>
         <Segment piled>
           <Grid>
             <Grid.Row>
@@ -33,6 +41,7 @@ export default class SignUpForm extends Component {
             </Grid.Row>
             <Grid.Row>
               <Grid.Column>
+                
                 <Form>
                   <Form.Field
                     control={Input}
@@ -57,7 +66,25 @@ export default class SignUpForm extends Component {
                     placeholder="Last Name"
                     onChange={e => this.setState({ sLastName: e.target.value })}
                   />
+                  
+                  <Grid>
+                    <Grid.Column textAlign="left" style={{width:'25%'}}>
+                      Select a Profile Picture: 
+                    </Grid.Column>
+                    <Grid.Column style={{height:'25vh', width:'50vh'}}>
+                      <Popup
+                        style={{width:'20vh'}}
+                        trigger={ <Image rounded bordered size="small" src={this.state.sImage} />}
+                        content={
+                      <ProfileImageSelect onClick={this.handleImageSelect}/>}
+                        on='click'
+                        position="top right"
+                      />
+                    </Grid.Column>
+
+                  </Grid>
                 </Form>
+
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
@@ -81,7 +108,8 @@ export default class SignUpForm extends Component {
                           this.state.sEmail,
                           this.state.sPw,
                           this.state.sFirstName,
-                          this.state.sLastName
+                          this.state.sLastName,
+                          this.state.sImage
                         );
                       }}
                     >
@@ -94,7 +122,6 @@ export default class SignUpForm extends Component {
             </Grid.Row>
           </Grid>
         </Segment>
-      </div>
     );
   }
 }

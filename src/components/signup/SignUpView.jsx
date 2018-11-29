@@ -13,9 +13,9 @@ export default class SignUpView extends Component {
     this.handleSignUp = this.handleSignUp.bind(this);
   }
 
-  handleSignUp(email, password, firstName, lastName) {
+  handleSignUp(email, password, firstName, lastName, imageStr) {
     this.setState({ isSubmittedLoading: true });
-    const signupPromise = signup(email, password, firstName, lastName);
+    const signupPromise = signup(email, password, firstName, lastName, imageStr);
     var signupSuccess = false;
     signupPromise.then(response => {
       console.log("signup response: ");
@@ -23,7 +23,7 @@ export default class SignUpView extends Component {
       signupSuccess = response.success;
       this.setState({ isSubmittedLoading: false });
       if (!signupSuccess) {
-        this.props.onAnnouncement("Email Already Taken, please try again.");
+        this.props.onAnnouncement("Email Already Registered, please try again.");
       } else {
         this.props.onAnnouncement("Sign Up Successful");
       }

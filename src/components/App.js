@@ -7,22 +7,20 @@ import UserSession from "../server/UserSession";
 import Announcement from "./Announcement";
 import { List } from "semantic-ui-react";
 
+import holderImage from "./../resources/profile_images/holder-image.jpg";
+
 class App extends Component {
   /*
-   * States: name: name for profile welcom
+   * States: name: name for profile welcome 
              isAuthenticated: verify if authenticated login
              announcements: list of announcements to display
    */
   constructor(props) {
     super(props);
-    // handle mounting in case of refresh
-    const priorAuthenticate = UserSession.getAuthenticated() || false;
-    const priorEmail = UserSession.getEmail() || null;
-    UserSession.setEmail(priorEmail);
-    UserSession.setAuthenticated(priorAuthenticate);
     this.state = {
       name: "",
-      isAuthenticated: priorAuthenticate,
+      profileImage: "",
+      isAuthenticated: false,
       announcements: []
     };
     this.handleUserSessionUpdate = this.handleUserSessionUpdate.bind(this);
@@ -30,12 +28,37 @@ class App extends Component {
     this.handleAnnouncementDismiss = this.handleAnnouncementDismiss.bind(this);
   }
 
+  componentDidMount() {
+    console.log("Mounting App");
+    let priorEmail = UserSession.getEmail() || null;
+    let priorAuthenticate = UserSession.getAuthenticated() || false;
+    let priorName = UserSession.getName() || null;
+    let priorProfileImage = UserSession.getProfileImage() || null;
+    UserSession.setEmail(priorEmail);
+    UserSession.setName(priorName);
+    UserSession.setAuthenticated(priorAuthenticate);
+    UserSession.setProfileImage(priorProfileImage);
+    
+
+    this.setState({
+      name: priorName,
+      profileImage: priorProfileImage,
+      isAuthenticated: priorAuthenticate,
+      announcements: []
+    });
+  }
+
   handleUserSessionUpdate(email, isAuthenticated) {
     UserSession.setEmail(email);
     UserSession.setAuthenticated(isAuthenticated);
     console.log("Updating UserSession in App");
-    const name = email; // TODO fix to actual name
-    this.setState({ name: name, isAuthenticated: isAuthenticated });
+
+    const name = "TODO_NAME"; // TODO fix actual name
+    const profileImage = holderImage; // TODO fix actual profile image
+    UserSession.setName(name);
+    UserSession.setProfileImage(profileImage);
+
+    this.setState({ name: name, isAuthenticated: isAuthenticated, profileImage: profileImage });
   }
 
   handleAnnouncementDismiss(index) {
@@ -63,7 +86,7 @@ class App extends Component {
 
   render() {
     console.log("Rerendering App");
-    console.log(this.state.announcements);
+    // console.log(this.state.announcements);
     // list of announcement referenced by a key of themselves
     const announcementsItems = this.state.announcements.map(
       (announcement, index) => (
@@ -87,6 +110,7 @@ class App extends Component {
           <NavBar
             onUserSessionUpdate={this.handleUserSessionUpdate}
             name={this.state.name}
+            image={this.state.profileImage}
           />
         )}
         </div>

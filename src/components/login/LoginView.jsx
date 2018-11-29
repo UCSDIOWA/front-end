@@ -17,10 +17,10 @@ export default class LoginView extends Component {
     const loginPromise = login(email, password);
     var loginSuccess = false;
     loginPromise.then(response => {
-      console.log("login response: ");
+      //console.log("login response: ");
       console.log(response);
       loginSuccess = response.success;
-      console.log("Handle login promise");
+      //console.log("Handle login promise");
 
       if (!loginSuccess) {
         alert("invalid email or password");
