@@ -11,7 +11,8 @@ import {
   Popup,
   List,
   Icon,
-  Container
+  Container,
+  Dropdown
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { navConsts } from "../constants";
@@ -20,21 +21,53 @@ import "react-day-picker/lib/style.css";
 import { DateUtils } from "react-day-picker";
 import dateFnsFormat from "date-fns/format";
 import dateFnsParse from "date-fns/parse";
-
-const { GATEWAY } = navConsts;
-
-const tagsArray = [
-  { key: "s", text: "Software Engineering", value: "software engineering" },
-  { key: "c", text: "Computer Science", value: "computer science" }
-];
+import UserSession from "../server/UserSession";
 
 const privateOptions = [
   { key: "t", text: "Yes", value: true },
   { key: "f", text: "No", value: false }
 ];
 
+const {
+  GATEWAY,
+  SIGNUP,
+  PROFILE,
+  CREATE_PROJECT,
+  SEARCH_PROJECT,
+  DASHBOARD,
+  PROJECT_LISTINGS
+} = navConsts;
+
+const tagsList = [
+  { key: "angular", text: "Angular", value: "angular" },
+  { key: "css", text: "CSS", value: "css" },
+  { key: "design", text: "Graphic Design", value: "design" },
+  { key: "ember", text: "Ember", value: "ember" },
+  { key: "html", text: "HTML", value: "html" },
+  { key: "ia", text: "Information Architecture", value: "ia" },
+  { key: "javascript", text: "Javascript", value: "javascript" },
+  { key: "mech", text: "Mechanical Engineering", value: "mech" },
+  { key: "meteor", text: "Meteor", value: "meteor" },
+  { key: "node", text: "NodeJS", value: "node" },
+  { key: "plumbing", text: "Plumbing", value: "plumbing" },
+  { key: "python", text: "Python", value: "python" },
+  { key: "rails", text: "Rails", value: "rails" },
+  { key: "react", text: "React", value: "react" },
+  { key: "repair", text: "Kitchen Repair", value: "repair" },
+  { key: "ruby", text: "Ruby", value: "ruby" },
+  { key: "ui", text: "UI Design", value: "ui" },
+  { key: "ux", text: "User Experience", value: "ux" }
+];
+
+// for date picker
 const FORMAT = "M/D/YYYY";
 
+// default values for project creation
+const DEFAULT_SIZE = 10;
+const DEFAULT_PRIVATE = false;
+
+/* This function is for the datepicker. I have no idea what it does.
+ */
 function parseDate(str, format, locale) {
   const parsed = dateFnsParse(str, format, { locale });
   if (DateUtils.isDate(parsed)) {
@@ -43,6 +76,8 @@ function parseDate(str, format, locale) {
   return undefined;
 }
 
+/* This function is for the datepicker. I have no idea what it does.
+ */
 function formatDate(date, format, locale) {
   return dateFnsFormat(date, format, { locale });
 }
@@ -54,44 +89,103 @@ export default class CreateProjectForm extends Component {
     this.state = {
       title: "",
       description: "",
-      size: 10,
-      isPrivate: false,
-      tags: "",
-      deadline: null,
-      calendarID: ""
+      tags: [],
+      deadline: "",
+      calendarID: "",
+      // these states have default values if the user does not change them
+      size: DEFAULT_SIZE,
+      isPrivate: DEFAULT_PRIVATE,
+      // these states are for checking for blank input and displaying errors
+      missingInput: false,
+      missingTitle: false,
+      missingDescription: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleIsPrivate = this.handleIsPrivate.bind(this);
     this.handleDeadline = this.handleDeadline.bind(this);
+    this.handleTags = this.handleTags.bind(this);
+    this.handleMissingInput = this.handleMissingInput.bind(this);
   }
 
+  /* This method handles all changes to states. IF the user entered invalid information previously, 
+     then we check if they fixed the errors and remove the error messages.
+  */
   handleChange(e, { name, value }) {
     this.setState({ [name]: value });
+
+    // check if user fixed any errors (if any)
+    if (name === "title") {
+      this.setState({ missingTitle: false });
+    } else if (name === "description") {
+      this.setState({ missingDescription: false });
+    }
   }
 
+  /* Special handler for changing value of isPrivate state
+   */
   handleIsPrivate() {
     this.setState({ isPrivate: !this.state.isPrivate });
   }
 
+  // handles saving the deadline as a string any normal person would want to read
   handleDeadline(day, { selected }) {
     this.setState({
-      deadline: selected ? undefined : day
+      deadline: selected
+        ? undefined
+        : day.getMonth() + 1 + "/" + day.getDate() + "/" + day.getFullYear()
     });
   }
 
-  handleSubmit() {
-    console.log("Current Page is CreateProjectView.jsx");
-    console.log("Title:", this.state.title);
-    console.log("Description:", this.state.description);
-    console.log("isPrivate:", this.state.isPrivate);
-    console.log("Size:", this.state.size);
-    console.log("Tags:", this.state.tags);
-    console.log("Deadline:", this.state.deadline);
-    console.log("CalendarID:", this.state.calendarID);
+  // handles saving tags. Each time the user selects a new tag, we add it to the tags array
+  handleTags(e, { value }) {
+    this.setState({ tags: value });
   }
-  //width={8} floated="left" style={{ paddingLeft: 20 }}
+
+  // This handler checks if any mandatory input is missing
+  handleMissingInput() {
+    var foundError = false;
+    // check for missing title
+    if (this.state.title === "") {
+      this.setState({ missingTitle: true });
+      foundError = true;
+    }
+    // check for missing description
+    if (this.state.description === "") {
+      this.setState({ missingDescription: true });
+      foundError = true;
+    }
+    // if any error was found return true
+    return foundError ? true : false;
+  }
+
+  /* This is called when the user wants to send the project info to the database for creation.
+   */
+  handleSubmit() {
+    console.log("Tags: " + this.state.tags);
+
+    // first check if any mandatory input is missing
+    if (this.handleMissingInput()) {
+      this.setState({ missingInput: true });
+      // otherwise send info to be saved
+    } else {
+      this.props.onCreateProject(
+        this.state.title,
+        UserSession.getEmail(),
+        0,
+        this.state.size,
+        this.state.isPrivate,
+        this.state.tags,
+        this.state.deadline,
+        this.state.calendar_id,
+        this.state.description,
+        UserSession.getEmail()
+      );
+      // then go to dashboard for project
+    }
+  }
+
   render() {
     const {
       title,
@@ -112,24 +206,28 @@ export default class CreateProjectForm extends Component {
               width="8"
             >
               <Form>
+                <Header size="tiny" style={{ marginBottom: 8 }}>
+                  Title
+                </Header>
                 <Form.Field
-                  required
+                  error={this.state.missingTitle}
                   control={Input}
-                  label="Title"
                   placeholder="Title of Project..."
                   name="title"
                   value={title}
                   onChange={this.handleChange}
                 />
+                <Header size="tiny" style={{ marginBottom: 8 }}>
+                  Description
+                </Header>
                 <Form.Field
-                  required
+                  error={this.state.missingDescription}
                   control={TextArea}
-                  label="Description"
                   placeholder="Description of Project..."
                   name="description"
                   value={description}
                   onChange={this.handleChange}
-                  style={{ height: 120 }}
+                  style={{ height: 180 }}
                 />
               </Form>
             </Grid.Column>
@@ -139,8 +237,27 @@ export default class CreateProjectForm extends Component {
               width="6"
             >
               <Grid.Row>
+                <Header size="tiny" style={{ marginBottom: 8 }}>
+                  Tags
+                </Header>
+                <Dropdown
+                  fluid
+                  multiple
+                  search
+                  selection
+                  scrolling
+                  name="tags"
+                  options={tagsList}
+                  placeholder="Select Tags"
+                  onChange={this.handleTags}
+                />
                 <div>
-                  <Header size="tiny">Deadline</Header>
+                  <Header
+                    size="tiny"
+                    style={{ marginBottom: 8, marginTop: 15 }}
+                  >
+                    Deadline
+                  </Header>
                   <DayPicker
                     placeholder="MM-DD-YYYY"
                     formatDate={formatDate}
@@ -155,7 +272,6 @@ export default class CreateProjectForm extends Component {
                 <Form style={{ paddingTop: 20 }}>
                   <Form.Group>
                     <Form.Field
-                      required
                       style={{ width: "10%" }}
                       control={Select}
                       options={privateOptions}
@@ -165,7 +281,6 @@ export default class CreateProjectForm extends Component {
                       onChange={this.handleChange}
                     />
                     <Form.Field
-                      required
                       type="number"
                       style={{ width: "40%" }}
                       control={Input}
@@ -175,13 +290,15 @@ export default class CreateProjectForm extends Component {
                       onChange={this.handleChange}
                     />
                   </Form.Group>
+                  <Header size="tiny" style={{ marginBottom: 8 }}>
+                    Add Google Calendar
+                  </Header>
                   <Popup
                     basic
                     on="click"
                     trigger={
                       <Form.Field
                         control={Input}
-                        label="Add Google Calendar"
                         placeholder="Copy/Paste your Calendar ID"
                         name="calendarID"
                         value={calendarID}
@@ -208,15 +325,6 @@ export default class CreateProjectForm extends Component {
                       </Container>
                     }
                     position="left center"
-                  />
-                  <Form.Field
-                    control={Select}
-                    options={tagsArray}
-                    placeholder="ex. CSE 110 Project"
-                    label="Tags"
-                    name="tags"
-                    value={tags}
-                    onChange={this.handleChange}
                   />
                 </Form>
               </Grid.Row>

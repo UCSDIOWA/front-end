@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Icon, Button, Modal, Header } from "semantic-ui-react";
+import { Icon, Button, Modal, Header, Popup } from "semantic-ui-react";
 //import EditProjectView from "./EditProjectView";
 import EditProjForm from "./EditProjForm";
 
@@ -25,10 +25,16 @@ export default class EditProjectView extends Component {
       <div>
         <Modal
           trigger={
-            <Button icon labelPosition="left">
-              <Icon name="settings" />
-              Edit Project
-            </Button>
+            <Popup
+              trigger={
+                <Button icon labelPosition="left">
+                  <Icon name="settings" />
+                  Edit Project
+                </Button>
+              }
+              content="Edit team members, team size, project name, and other settings of your project"
+              hideOnScroll
+            />
           }
           size="small"
         >

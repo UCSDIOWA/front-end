@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-import {
-  Progress,
-  Segment,
-  Header,
-  Icon,
-  Button,
-  Grid,
-  GridRow
-} from "semantic-ui-react";
+import { Popup, Segment, Button, Grid, GridRow } from "semantic-ui-react";
 import MilestonesView from "./MilestonesView";
-import EditProjectView from "./EditProjPopupView";
+import Announcement from "../Announcement";
 import MilestonesViewEvent from "./MilestonesViewEvent";
 import CalendarWidget from "./CalendarWidget";
 
@@ -37,6 +29,9 @@ export default class ProjectDashboardView extends Component {
       <Segment>
         <Grid centered style={{ width: "60rem" }}>
           <Grid.Row>
+            <h1>Project Name</h1>
+          </Grid.Row>
+          <Grid.Row>
             <Grid.Column className="profile-columns3">
               <MilestonesView
                 handleAddMilestone={this.handleAddMilestone}
@@ -49,6 +44,8 @@ export default class ProjectDashboardView extends Component {
                 <h1>Calendar</h1>
                 <CalendarWidget />
               </Segment>
+
+              <Announcement />
             </Grid.Column>
           </Grid.Row>
         </Grid>
