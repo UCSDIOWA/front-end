@@ -140,7 +140,7 @@ export default class CreateProjectForm extends Component {
 
   // handles saving tags. Each time the user selects a new tag, we add it to the tags array
   handleTags(e, { value }) {
-    this.setState({ tags: [...this.state.tags, value[value.length - 1]] });
+    this.setState({ tags: value });
   }
 
   // This handler checks if any mandatory input is missing
@@ -163,6 +163,8 @@ export default class CreateProjectForm extends Component {
   /* This is called when the user wants to send the project info to the database for creation.
    */
   handleSubmit() {
+    console.log("Tags: " + this.state.tags);
+
     // first check if any mandatory input is missing
     if (this.handleMissingInput()) {
       this.setState({ missingInput: true });
@@ -341,13 +343,3 @@ export default class CreateProjectForm extends Component {
     );
   }
 }
-
-/* <Form.Field
-                    control={Select}
-                    options={tagsArray}
-                    placeholder="ex. CSE 110 Project"
-                    label="Tags"
-                    name="tags"
-                    value={tags}
-                    onChange={this.handleChange}
-                  /> */
