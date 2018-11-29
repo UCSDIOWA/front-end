@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import LoginView from "../login/LoginView";
-import GatewayView from "../GatewayView";
+import GatewayView from "../gateway/GatewayView";
 import SignUpView from "../signup/SignUpView";
 import ProfileView from "../profile/ProfileView";
 import { navConsts } from "../../constants";

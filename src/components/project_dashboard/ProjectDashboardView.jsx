@@ -44,8 +44,6 @@ export default class ProjectDashboardView extends Component {
                 <h1>Calendar</h1>
                 <CalendarWidget />
               </Segment>
-
-              <Announcement />
             </Grid.Column>
           </Grid.Row>
         </Grid>
