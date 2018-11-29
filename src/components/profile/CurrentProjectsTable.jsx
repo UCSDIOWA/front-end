@@ -6,14 +6,19 @@ import { getProjectInfo } from "../../server/api";
 export default class CurrentProjectsTable extends Component {
   constructor(props) {
     super(props);
+    console.log("current projects is: " + this.props.currentProjects);
     this.state = {
-      tableRows: []
+      tableRows: this.props.currentProjects
     };
+    console.log("length: ");
+    console.log(this.props.currentProjects.length);
   }
 
-  getProjects(projHolder) {
-    for (var i = 0; i < this.props.currProj.length; i++) {
-      const profDataPromise = getProjectInfo(this.props.currProj[i]);
+  /* getProjects(projHolder) {
+    console.log("prop is: ");
+    console.log(this.props.currentProjects);
+    for (var i = 0; i < this.props.currentProjects.length; i++) {
+      const profDataPromise = getProjectInfo(this.props.currentProjects[i]);
       profDataPromise.then(response => {
         console.log("project response: ");
         console.log(response);
@@ -28,10 +33,10 @@ export default class CurrentProjectsTable extends Component {
         <tbody key={i}>
           <ProjectTileEvent
             isFinished={false}
-            projName={projectInfoList[i].project_name}
-            groupSize={projectInfoList[i].group_size}
+            projName={projHolder[i].project_name}
+            groupSize={projHolder[i].group_size}
             projRole="Software Architect"
-            percentDone={projectInfoList[i].percent_done}
+            percentDone={projHolder[i].percent_done}
           />
         </tbody>
       );
@@ -40,19 +45,25 @@ export default class CurrentProjectsTable extends Component {
   }
 
   componentDidMount() {
-    projHolder = [];
+    var projHolder = [];
     this.getProjects(projHolder);
-    tempTable = [];
+    var tempTable = [];
     this.fillTable(tempTable, projHolder, () => {
       this.setState({ tableRows: tempTable });
     });
+  } */
+
+  componentDidMount() {
+    this.setState({ tableRows: this.props.currentProjects });
+    console.log("table rows is " + this.state.tableRows);
   }
 
   render() {
     return (
       <Segment className="profile-columns1">
         <Header>Current Project(s)</Header>
-        <Table celled>{tableRows}</Table> />
+        {this.props.currentProjects}
+        {/* <Table celled>{this.state.tableRows[0]}</Table> */}
       </Segment>
     );
   }

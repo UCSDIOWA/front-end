@@ -74,7 +74,7 @@ export function getProjectInfo(project_id) {
 }
 
 export function updateUserProfile(valueList) {
-  let url = "https://tea-user-profile-api.herokuapp.com/getuserprofile";
+  let url = "https://tea-user-profile-api.herokuapp.com/updateuserprofile";
   let data = {
     email: valueList.email,
     profile_image: valueList.profile_image,
