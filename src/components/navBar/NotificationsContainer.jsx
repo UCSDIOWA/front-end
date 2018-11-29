@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Popup, Button, List, Segment } from "semantic-ui-react";
+import { Popup, Label, Segment, Icon, Menu } from "semantic-ui-react";
 import { getNotifications } from "../../server/api";
 import Notification from "./Notification";
 import UserSession from "../../server/UserSession";
@@ -31,7 +31,7 @@ export default class NotificationsContainer extends Component {
   }
 
   handleOpen = () => {
-    this.setState({ isOpen: true });
+    this.setState({ isOpen: true, redirect: false });
   }
 
   handleClose = () => {
@@ -41,7 +41,9 @@ export default class NotificationsContainer extends Component {
   render() {
     const {LOGIN} = navConsts
 
-    const notificationsList = this.state.notifications.map(
+    const notificationsList = 
+    this.state.notifications.length != 0 ?
+    this.state.notifications.map(
       (notification, index) => (
         <Notification 
           key={index} 
@@ -50,16 +52,31 @@ export default class NotificationsContainer extends Component {
           onViewNotification={this.handleViewNotification} 
           index={index}
         />
-    ))
+    )) : (<Segment>No Notifications</Segment>);
 
-    return (
+    const notificationButton = 
+    this.state.notifications.length != 0 ?
+    (
+      <Menu.Item color='black'>
+          <Icon fitted name='bell' size='large'color='black' inverted />
+          <Label color='red' floating >
+            {this.state.notifications.length}
+          </Label> 
+      </Menu.Item>
+    ) : (<Menu.Item color='black'>          
+          <Icon fitted name='bell' size='large'color='black' inverted /> 
+        </Menu.Item>
+    );
+
+    return ( 
       <div>
       <Popup
-        trigger={<Button color='black' icon='bell' />}
+        trigger={notificationButton}
         content={<Segment.Group style={{width:'40vh'}}>{notificationsList}</Segment.Group>}
-        open={this.state.isOpen}
         on='click'
+        open={this.state.isOpen}
         onOpen={this.handleOpen}
+        onClose={this.handleClose}
         position='bottom left'
       />
       {this.state.redirect && <Redirect to={LOGIN}/> }

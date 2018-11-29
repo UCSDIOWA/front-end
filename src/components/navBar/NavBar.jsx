@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, Menu, Message } from "semantic-ui-react";
+import { Image, Menu, Message, Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Logo from "../../resources/logo.png";
 import NotificationsContainer from "./NotificationsContainer";
@@ -44,6 +44,7 @@ export default class NavBar extends Component {
 
           <Menu.Item position="right">
             <NotificationsContainer/>
+
           </Menu.Item>
 
           <NavBarDropDownMenu onLogout={this.handleLogout} />
