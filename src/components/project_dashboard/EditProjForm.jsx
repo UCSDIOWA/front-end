@@ -6,7 +6,8 @@ import {
   Grid,
   Modal,
   Header,
-  Icon
+  Icon,
+  Confirm
 } from "semantic-ui-react";
 
 export default class EditProjectForm extends Component {

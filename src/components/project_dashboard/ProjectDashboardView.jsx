@@ -1,15 +1,8 @@
 import React, { Component } from "react";
-import {
-  Progress,
-  Segment,
-  Header,
-  Icon,
-  Button,
-  Grid
-} from "semantic-ui-react";
+import { Popup, Segment, Button, Grid, GridRow } from "semantic-ui-react";
 import MilestonesView from "./MilestonesView";
-import CalendarModule from "./CalendarModule";
 import MilestonesViewEvent from "./MilestonesViewEvent";
+import CalendarWidget from "./CalendarWidget";
 
 export default class ProjectDashboardView extends Component {
   constructor(props) {
@@ -32,24 +25,28 @@ export default class ProjectDashboardView extends Component {
     const list = this.state.milestoneArray;
 
     return (
-      <div>
-        <Segment>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column className="profile-columns3">
-                TestProjectDashboard
-                <MilestonesView
-                  handleAddMilestone={this.handleAddMilestone}
-                  milestoneArray={list}
-                />
-              </Grid.Column>
-              <Grid.Column className="profile-columns3">
-                <CalendarModule />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Segment>
-      </div>
+      <Segment>
+        <Grid centered style={{ width: "60rem" }}>
+          <Grid.Row>
+            <h1>Project Name</h1>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column className="profile-columns3">
+              <MilestonesView
+                handleAddMilestone={this.handleAddMilestone}
+                milestoneArray={list}
+                currentProjectName="{Project Name}"
+              />
+            </Grid.Column>
+            <Grid.Column className="profile-columns3">
+              <Segment textAlign="center">
+                <h1>Calendar</h1>
+                <CalendarWidget />
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
     );
   }
 }

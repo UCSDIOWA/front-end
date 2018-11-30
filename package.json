@@ -5,12 +5,14 @@
   "dependencies": {
     "axios": "^0.18.0",
     "date-fns": "^1.29.0",
+    "elemental": "^0.6.1",
     "fetch": "^1.1.0",
     "fullcalendar": "^3.9.0",
     "fullcalendar-reactwrapper": "^1.0.7",
     "googleapis": "^27.0.0",
     "jquery": "^3.3.1",
     "moment-range": "^4.0.1",
+    "node-sass": "^4.10.0",
     "react": "^16.5.2",
     "react-big-calendar": "^0.20.2",
     "react-calendar": "^2.17.5",
@@ -23,6 +25,7 @@
     "react-modern-datepicker": "^0.7.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
+    "react-tag-input": "^6.1.0",
     "semantic-ui": "^2.4.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.83.0"
@@ -41,5 +44,11 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "css-loader": "^1.0.1",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "style-loader": "^0.23.1"
+  }
 }

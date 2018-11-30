@@ -10,9 +10,9 @@ export default class PreviousProjectsTable extends Component {
   }
 
   tableGenerate() {
-    this.state.tableRows = [];
+    var list = [];
     for (var i = 0; i < this.state.numberViews; i++) {
-      this.state.tableRows.push(
+      list.push(
         <tbody key={i}>
           <ProjectTileEvent
             isFinished={true}
@@ -23,10 +23,13 @@ export default class PreviousProjectsTable extends Component {
         </tbody>
       );
     }
+    this.setState({ tableRows: list });
   }
 
-  render() {
+  componentDidMount() {
     this.tableGenerate();
+  }
+  render() {
     return (
       <Segment className="profile-columns1">
         <Header>Previous Project(s)</Header>

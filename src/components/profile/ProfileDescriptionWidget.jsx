@@ -10,7 +10,7 @@ export default class ProfileDescriptionWidget extends Component {
     return (
       <Grid>
         <Grid.Row>
-          <Segment classname="profile-columns3">
+          <Segment className="profile-columns3">
             <Header>About Me</Header>
             <p>{this.props.profileDescription}</p>
           </Segment>

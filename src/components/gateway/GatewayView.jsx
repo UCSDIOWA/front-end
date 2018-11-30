@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 
-import { Button, Dropdown } from "semantic-ui-react";
-import { navConsts } from "../constants";
+import { Button, Segment } from "semantic-ui-react";
+import { navConsts } from "../../constants";
 import { Link } from "react-router-dom";
-
-
+import GatewayProjectTable from "./GatewayProjectTable";
 
 const options = [
   { key: "angular", text: "Angular", value: "angular" },
@@ -28,7 +27,6 @@ const options = [
 ];
 
 export default class GatewayView extends Component {
-
   render() {
     const {
       GATEWAY,
@@ -52,19 +50,9 @@ export default class GatewayView extends Component {
             Search Project
           </Button>
         </Link>
-
         <hr />
         <h1>My Projects</h1>
-        <Dropdown
-          placeholder="My Projects"
-          fluid
-          search
-          selection
-          options={options}
-        />
-        <Link to={"/" + DASHBOARD}>
-          <Button color="green">Project Dashboard</Button>
-        </Link>
+        <GatewayProjectTable totalProjs={5} />
       </div>
     );
   }

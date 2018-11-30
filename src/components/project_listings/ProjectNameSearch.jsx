@@ -45,18 +45,7 @@ export default class ProjectNameSearch extends Component {
 
   render() {
     const { isLoading, value } = this.state;
-    /*
-    const showProps = (
-    <Grid.Column width={10}>
-    <Segment>
-      <Header>State</Header>
-      <pre style={{ overflowX: 'auto' }}>{JSON.stringify(this.state, null, 2)}</pre>
-      <Header>Options</Header>
-      <pre style={{ overflowX: 'auto' }}>{JSON.stringify(this.state.source, null, 2)}</pre>
-    </Segment>
-    </Grid.Column>
-    )
-  */
+
     return (
       <Search
         align="left"

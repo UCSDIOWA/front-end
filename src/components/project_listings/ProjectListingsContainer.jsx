@@ -13,8 +13,8 @@ export default class ProjectListingsContainer extends Component {
 
   handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
 
-  requestButton = (projectListing) => (
-    <Button primary floated='right' onClick={() => {
+  requestButton = () => (
+    <Button inverted color="blue" primary floated='right' onClick={() => {
         alert('Request sent!');
       }}>
       Request to Join
@@ -36,11 +36,10 @@ export default class ProjectListingsContainer extends Component {
         groupSize={projectListing.group_size}
         projectDescription={projectListing.project_description}
         tags={projectListing.tags}
-        extra={this.requestButton(projectListing)}
+        extra={this.requestButton()}
       />
     ))
     }
-
   
     return (
       <Grid centered padded>

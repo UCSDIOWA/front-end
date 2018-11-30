@@ -1,12 +1,13 @@
 import UserSession from "./UserSession";
 
-export function signup(email, password, first_name, last_name) {
+export function signup(email, password, first_name, last_name, imageStr) {
   let url = "https://tea-login-api.herokuapp.com/signup";
   let data = {
     email: email,
     password: password,
     first_name: first_name,
-    last_name: last_name
+    last_name: last_name,
+    profile_image: imageStr
   };
   return fetch(url, {
     method: "POST",
@@ -36,16 +37,18 @@ export function login(email, password) {
     });
 }
 
-export function logout() {
-  UserSession.setAuthenticated(false);
-  UserSession.setEmail(null);
-}
-
 export function sendRecoverPasswordEmail(email) {
   return true;
 }
 
-export function getUserProfileInfo(email) {
+/** Notifications **/
+export function getNotifications(email) {
+  return ["test invite", "test request"];
+}
+
+/** User profile API  **/
+
+export function getUserProfile(userEmail) {
   let url = "https://tea-user-profile-api.herokuapp.com/getuserprofile";
   let data = { email: email };
   return fetch(url, {
@@ -172,6 +175,56 @@ export function getProjectListings(userEmail) {
       ],
       tags: ["tag3.1", "tag3.2", "tag3.3"],
       project_description: "description"
+    },
+    {
+      title: "temp project name3",
+      project_leader: "project leader 7",
+      percentage_done: 30.0,
+      group_size: 30,
+      user_roles: [
+        { user_email: "test_email3.1", user_role: "test_role3.1" },
+        { user_email: "test_email3.2", user_role: "test_role3.2" }
+      ],
+      tags: ["tag3.1", "tag3.2", "tag3.3"],
+      project_description: "description"
     }
   ];
+}
+
+/* Create Project API
+ */
+export function createProject(
+  title,
+  project_leader,
+  percent_done,
+  group_size,
+  isPrivate,
+  tags,
+  deadline,
+  calendar_id,
+  description,
+  members_list
+) {
+  let url = "https://tea-project-handler-api.herokuapp.com/createproject";
+  let data = {
+    title: title,
+    project_leader: project_leader,
+    percent_done: percent_done,
+    group_size: group_size,
+    isPrivate: isPrivate,
+    tags: tags,
+    deadline: deadline,
+    calendar_id: calendar_id,
+    description: description,
+    members_list: members_list
+  };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("createproject post error: ");
+      console.log(error);
+    });
 }

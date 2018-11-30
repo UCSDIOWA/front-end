@@ -9,7 +9,7 @@ import _ from 'lodash';
 /**
  * View of project listings and search 
  *   { title: string, project_leader: string, percentage_done: float, 
- *    group_size: int, user_roles: list[{user_email: string, user_role: string}], 
+ *    group_size: int, 
  *    description: string, tags: list[string] }
 }
  */
@@ -37,35 +37,35 @@ export default class ProjectListingsView extends Component {
     listingData = listingData.map(s => ({ ...s, key: s.title + s.project_leader }));
     listingData = listingData.map(s => ({...s, description: s.project_leader}));
     
-
-    this.convertToPages(listingData,
+    listings = listingData;
+    var newSearchListings = [];
+    this.convertToPages(listingData, newSearchListings,
       () => {
-        listings = listingData;
         this.setState((prevState) => {
-          return {searchResults: []};
+          return {searchResults: [], searchListings: newSearchListings};
         });
     })
     
   }
 
   // callback to ensure conversion for search listings
-  convertToPages(pagesListings, callback) {
+  convertToPages(pagesListings, newSearchListings, callback) {
     var tempArr = pagesListings.slice();
-    var newPagesListings = []
-    while(tempArr.length) {
-      newPagesListings.push(tempArr.splice(0,3));
-    }
-    this.setState({searchListings: newPagesListings});
-    callback();
 
+    while(tempArr.length) {
+      newSearchListings.push(tempArr.splice(0,3));
+    }
+
+    callback();
   }
 
   // when search is cleared
   handleSearchResultsReset() {
-    this.convertToPages(listings,
+    var newSearchListings = [];
+    this.convertToPages(listings, newSearchListings,
       () => {
         this.setState((prevState) => {
-        return {searchResults: []};
+        return {searchResults: [], searchListings: newSearchListings};
       });
     })
   }
@@ -77,11 +77,12 @@ export default class ProjectListingsView extends Component {
   }
 
   handleSearchChange(isMatch) {
-    var searchResults = _.filter(listings, isMatch)
-    this.convertToPages(searchResults,
+    var searchResults = _.filter(listings, isMatch);
+    var newSearchListings = [];
+    this.convertToPages(searchResults, newSearchListings,
       () => {
         this.setState((prevState) => {
-          return {searchResults: searchResults};
+          return {searchResults: searchResults, searchListings: newSearchListings};
         });
     })
   }
