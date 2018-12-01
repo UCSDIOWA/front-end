@@ -9,14 +9,10 @@ export default class EndorsementFeedEvent extends Component {
   render() {
     return (
       <Feed.Event>
-        <Feed.Label>
-          <img src={this.props.endorserImage} />
-        </Feed.Label>
         <Feed.Content>
           <Feed.Summary>
             <Feed.User>{this.props.endorser}</Feed.User> endorses{" "}
-            <Feed.User>{this.props.endorsee}</Feed.User> for the role{" "}
-            <a>{this.props.role}</a>
+            <Feed.User>{this.props.endorsee}</Feed.User>
           </Feed.Summary>
         </Feed.Content>
       </Feed.Event>
