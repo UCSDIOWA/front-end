@@ -25,16 +25,10 @@ export default class EditProjectView extends Component {
       <div>
         <Modal
           trigger={
-            <Popup
-              trigger={
-                <Button icon labelPosition="left">
-                  <Icon name="settings" />
-                  Edit Project
-                </Button>
-              }
-              content="Edit team members, team size, project name, and other settings of your project"
-              hideOnScroll
-            />
+            <Button icon labelPosition="left">
+              <Icon name="settings" />
+              Edit Project
+            </Button>
           }
           size="small"
         >

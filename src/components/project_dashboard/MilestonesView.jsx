@@ -14,8 +14,13 @@ import EditProjectView from "./EditProjPopupView";
 export default class MilestonesView extends Component {
   constructor(props) {
     super(props);
+    this.state = { isEdit: false };
+    this.handleEditMilestone = this.handleEditMilestone.bind(this);
   }
 
+  handleEditMilestone() {
+    this.setState({ isEdit: !this.state.isEdit });
+  }
   render() {
     return (
       <Segment>
@@ -23,13 +28,16 @@ export default class MilestonesView extends Component {
         <Header size="medium">
           {this.props.currentProjectName} Milestones
         </Header>
-        <Segment>{this.props.milestoneArray}</Segment>
+        <Segment>
+          {(!this.state.isEdit && this.props.milestoneArray) ||
+            (this.state.isEdit && this.props.editMilestoneArray)}
+        </Segment>
         <Grid centered>
           <Grid.Row>
             <Grid.Column style={{ width: "15rem" }}>
               <Segment vertical>
-                <Button inverted color="red">
-                  Remove milestone
+                <Button inverted color="red" onClick={this.handleEditMilestone}>
+                  Edit milestones
                 </Button>
               </Segment>
             </Grid.Column>
