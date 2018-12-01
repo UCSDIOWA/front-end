@@ -21,9 +21,20 @@ export default class ProjectTileEvent extends Component {
     const { activeIndex } = this.state;
     const newIndex = activeIndex === index ? -1 : index;
 
-    this.setState({ activeIndex: newIndex, isVis: !this.state.isVis });
+    this.setState({
+      activeIndex: newIndex,
+      isVis: !this.state.isVis
+    });
   };
   render() {
+    var tagsDisplay;
+    if (this.props.tags.length != 0) {
+      for (let i = 0; i < this.props.tags.length; i++) {
+        tagsDisplay = tagsDisplay + ", " + this.props.tags[i];
+      }
+    } else {
+      tagsDisplay = "No tags";
+    }
     const { activeIndex, isVis } = this.state;
     return (
       <Segment>
@@ -48,18 +59,24 @@ export default class ProjectTileEvent extends Component {
                   <List.Item>
                     <List.Icon name="group" />
                     <List.Content>
+                      Description: {this.props.description}
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Icon name="chess king" />
+                    <List.Content>
+                      Project Leader: {this.props.projectleader}
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Icon name="user" />
+                    <List.Content>
                       Group Size: {this.props.groupSize}
                     </List.Content>
                   </List.Item>
                   <List.Item>
-                    <List.Icon name="id badge outline" />
-                    <List.Content>Role: {this.props.projRole}</List.Content>
-                  </List.Item>
-                  <List.Item>
                     <List.Icon name="tags" />
-                    <List.Content>
-                      Tags: Software, Workflow, CSE110
-                    </List.Content>
+                    <List.Content>Tags: {tagsDisplay}</List.Content>
                   </List.Item>
                 </List>
               </Accordion.Content>
