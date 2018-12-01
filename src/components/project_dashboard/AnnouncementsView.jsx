@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Segment, Comment, Icon, Grid, Input, Modal } from "semantic-ui-react";
 import holderimage from "../../resources/holder-image.jpg";
-
-export default class AnnouncementsView extends Component {
+ export default class AnnouncementsView extends Component {
   render() {
     return (
       <Segment textAlign="center">
@@ -15,8 +14,7 @@ export default class AnnouncementsView extends Component {
                 <Comment.Author as="a">Gary</Comment.Author>
                 <Comment.Metadata>
                   <div> Pinned Yesterday at 5:00pm</div>
-
-                  <div>
+                   <div>
                     <Icon name="hand lizard" />
                     x12 Acknowledgements
                   </div>

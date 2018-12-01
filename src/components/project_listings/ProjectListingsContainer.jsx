@@ -23,7 +23,7 @@ export default class ProjectListingsContainer extends Component {
   );
 
   render() {
-    const noProjectListingFound = <Header >No Project Found</Header>;
+    const noProjectListingFound = <Segment style={{height:'100%'}} >No Project Found</Segment>;
     if (this.props.projectListings.length === 0) {
       var toReturn = noProjectListingFound;
     }
