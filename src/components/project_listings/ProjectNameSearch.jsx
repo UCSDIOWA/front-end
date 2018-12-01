@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from "react";
-import {Grid, Search, Segment, Header} from "semantic-ui-react";
+import {Search} from "semantic-ui-react";
 
 export default class ProjectNameSearch extends Component {
   constructor(props) {

@@ -4,6 +4,7 @@ import ProjectListingsContainer from "./ProjectListingsContainer";
 import ProjectNameSearch from "./ProjectNameSearch";
 import { Grid } from "semantic-ui-react";
 import _ from 'lodash';
+import UserSession from "../../server/UserSession";
 
 
 /**
@@ -22,7 +23,8 @@ export default class ProjectListingsView extends Component {
     super(props);
     this.state = {
       searchResults: [],
-      searchListings: []
+      searchListings: [],
+      isLoading: false
     }
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchResultsReset = this.handleSearchResultsReset.bind(this);
@@ -31,20 +33,37 @@ export default class ProjectListingsView extends Component {
 
   // update states upon mounting
   componentDidMount() {
-    //make rest call to backend
-    var listingData = getProjectListings();
-    // map a key to each listing and a description for search display
-    listingData = listingData.map(s => ({ ...s, key: s.title + s.project_leader }));
-    listingData = listingData.map(s => ({...s, description: s.project_leader}));
-    
-    listings = listingData;
-    var newSearchListings = [];
-    this.convertToPages(listingData, newSearchListings,
-      () => {
-        this.setState((prevState) => {
-          return {searchResults: [], searchListings: newSearchListings};
-        });
+    const listingsPromise = getProjectListings(UserSession.getEmail());
+    this.setState({isLoading: true});
+    listingsPromise.then(response => {
+      console.log("get listings response: ");
+      console.log(response);
+      let successful = response.success;
+      if (!successful) {
+        alert("Error loading projects")
+      }
+      // should be the second value in the aray
+      return response.projects;
     })
+      .then((listingData)=> {
+        this.setState({isLoading: false});
+
+        listingData = listingData.map(s => ({ ...s, key: s.xid }));
+        listingData = listingData.map(s => ({...s, description: s.project_leader}));
+        
+        listings = listingData;
+        let newSearchListings = [];
+        this.convertToPages(listingData, newSearchListings,
+          () => {
+            this.setState((prevState) => {
+              return {searchResults: [], searchListings: newSearchListings};
+            });
+        })
+      })
+      .catch(error => {
+        console.log("set listings error: ");
+        console.log(error);
+      })
     
   }
 
@@ -91,7 +110,7 @@ export default class ProjectListingsView extends Component {
     
     return (
       <Grid padded style={{height: '100vh', width: '100vh'}}>
-        <Grid.Row style={{height:'10%'}}>
+        <Grid.Row style={{height:'15%'}}>
           <Grid.Column width={16}>
             <ProjectNameSearch 
               projectListings={listings}
@@ -102,9 +121,12 @@ export default class ProjectListingsView extends Component {
             />
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row style={{height:'90%'}}>
+        <Grid.Row style={{height:'85%'}}>
           <Grid.Column width={16}>
-            <ProjectListingsContainer projectListings={this.state.searchListings}/>
+            <ProjectListingsContainer 
+              isLoading={this.state.isLoading} 
+              projectListings={this.state.searchListings}
+            />
           </Grid.Column>
         </Grid.Row>
       </Grid>

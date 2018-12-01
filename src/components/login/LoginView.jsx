@@ -17,16 +17,17 @@ export default class LoginView extends Component {
     const loginPromise = login(email, password);
     var loginSuccess = false;
     loginPromise.then(response => {
-      //console.log("login response: ");
       console.log(response);
       loginSuccess = response.success;
-      //console.log("Handle login promise");
+      let name = response.firstname + " " + response.lastname;
+      let profileImage = response.profileimage;
 
+      this.setState({ loginLoading: false });
       if (!loginSuccess) {
         alert("invalid email or password");
       } else {
         // update user session
-        this.props.onUserSessionUpdate(email, loginSuccess);
+        this.props.onUserSessionUpdate(email, loginSuccess, name, profileImage);
       }
     });
   }

@@ -39,8 +39,8 @@ export default class NotificationsContainer extends Component {
   }
 
   render() {
-    const {LOGIN} = navConsts
-
+    const {GATEWAY} = navConsts
+    console.log("Rerendering notifications");
     const notificationsList = 
     this.state.notifications.length != 0 ?
     this.state.notifications.map(
@@ -52,19 +52,19 @@ export default class NotificationsContainer extends Component {
           onViewNotification={this.handleViewNotification} 
           index={index}
         />
-    )) : (<Segment>No Notifications</Segment>);
+    )) : (<Segment>No New Notifications</Segment>);
 
     const notificationButton = 
     this.state.notifications.length != 0 ?
     (
       <Menu.Item color='black'>
-          <Icon fitted name='bell' size='large'color='black' inverted />
+          <Icon fitted name='bell' size='large' />
           <Label color='red' floating >
             {this.state.notifications.length}
           </Label> 
       </Menu.Item>
     ) : (<Menu.Item color='black'>          
-          <Icon fitted name='bell' size='large'color='black' inverted /> 
+          <Icon fitted name='bell' size='large' /> 
         </Menu.Item>
     );
 
@@ -79,7 +79,7 @@ export default class NotificationsContainer extends Component {
         onClose={this.handleClose}
         position='bottom left'
       />
-      {this.state.redirect && <Redirect to={LOGIN}/> }
+      {this.state.redirect && <Redirect to={GATEWAY}/> }
       </div>
     );
     

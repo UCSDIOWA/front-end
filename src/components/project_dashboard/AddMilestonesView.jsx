@@ -14,7 +14,13 @@ import MilestonesViewEvent from "./MilestonesViewEvent";
 export default class AddMilestonesView extends Component {
   constructor(props) {
     super(props);
-    this.state = { modalOpen: false, msName: "" };
+    this.state = {
+      modalOpen: false,
+      msName: "",
+      msWeight: 0,
+      msDeadline: "",
+      msDescription: ""
+    };
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,7 +31,12 @@ export default class AddMilestonesView extends Component {
   handleClose = () => this.setState({ modalOpen: false });
 
   handleSubmit() {
-    this.props.addMilestone(this.state.msName);
+    this.props.addMilestone(
+      this.state.msName,
+      this.state.msWeight,
+      this.state.msDeadline,
+      this.state.msDescription
+    );
     this.handleClose();
   }
 
@@ -53,11 +64,24 @@ export default class AddMilestonesView extends Component {
           </Segment>
           <Segment vertical>
             <Icon name="weight" />
-            <Input placeholder="Weight" />
+            <Input
+              placeholder="Weight (Integer)"
+              onChange={e => this.setState({ msWeight: e.target.value })}
+            />
           </Segment>
           <Segment vertical>
             <Icon name="heartbeat" />
-            <Input placeholder="Deadline" />
+            <Input
+              placeholder="Deadline"
+              onChange={e => this.setState({ msDeadline: e.target.value })}
+            />
+          </Segment>
+          <Segment vertical>
+            <Icon name="heartbeat" />
+            <Input
+              placeholder="Description"
+              onChange={e => this.setState({ msDescription: e.target.value })}
+            />
           </Segment>
           <Segment vertical>
             <Button inverted color="red" onClick={this.handleClose}>
