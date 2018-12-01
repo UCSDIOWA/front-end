@@ -1,45 +1,69 @@
 import React, { Component } from "react";
-
 import { Segment, Header, Table } from "semantic-ui-react";
 import ProjectTileEvent from "./ProjectTileEvent";
+import { getProjectInfo } from "../../server/api";
 
 export default class CurrentProjectsTable extends Component {
   constructor(props) {
     super(props);
-    this.tableGenerate = this.tableGenerate.bind(this);
-    //TODO GRAB NUMBER OF PROJECTS FROM BACKEND
-    this.state = { numberViews: 4, tableRows: [] };
+    console.log("current projects is: " + this.props.currentProjects);
+    this.state = {
+      tableRows: this.props.currentProjects
+    };
+    console.log("length: ");
+    console.log(this.props.currentProjects.length);
   }
 
-  tableGenerate() {
-    var list = [];
-    //loop through retrieved current projects and grab each
-    for (var i = 0; i < this.state.numberViews; i++) {
-      list.push(
+  /* getProjects(projHolder) {
+    console.log("prop is: ");
+    console.log(this.props.currentProjects);
+    for (var i = 0; i < this.props.currentProjects.length; i++) {
+      const profDataPromise = getProjectInfo(this.props.currentProjects[i]);
+      profDataPromise.then(response => {
+        console.log("project response: ");
+        console.log(response);
+        projHolder.push(response.toString());
+      });
+    }
+  }
+
+  fillTable(tempTable, projHolder, callback) {
+    for (var i = 0; i < projHolder.length; i++) {
+      tempTable.push(
         <tbody key={i}>
           <ProjectTileEvent
             isFinished={false}
-            projName="Gary's CSE110 Group"
-            groupSize={5}
+            projName={projHolder[i].project_name}
+            groupSize={projHolder[i].group_size}
             projRole="Software Architect"
-            percentDone={30}
-            key={i}
+            percentDone={projHolder[i].percent_done}
           />
         </tbody>
       );
     }
-    this.setState({ tableRows: list });
+    callback();
   }
 
-  //calls on every re-render
   componentDidMount() {
-    this.tableGenerate();
+    var projHolder = [];
+    this.getProjects(projHolder);
+    var tempTable = [];
+    this.fillTable(tempTable, projHolder, () => {
+      this.setState({ tableRows: tempTable });
+    });
+  } */
+
+  componentDidMount() {
+    this.setState({ tableRows: this.props.currentProjects });
+    console.log("table rows is " + this.state.tableRows);
   }
+
   render() {
     return (
       <Segment className="profile-columns1">
         <Header>Current Project(s)</Header>
-        <Table celled>{this.state.tableRows}</Table>
+        {this.props.currentProjects}
+        {/* <Table celled>{this.state.tableRows[0]}</Table> */}
       </Segment>
     );
   }

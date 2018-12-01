@@ -3,6 +3,7 @@ import { Popup, Segment, Button, Grid, GridRow } from "semantic-ui-react";
 import MilestonesView from "./MilestonesView";
 import MilestonesViewEvent from "./MilestonesViewEvent";
 import CalendarWidget from "./CalendarWidget";
+import AnnouncementsView from "./AnnouncementsView";
 
 export default class ProjectDashboardView extends Component {
   constructor(props) {
@@ -37,6 +38,9 @@ export default class ProjectDashboardView extends Component {
                 milestoneArray={list}
                 currentProjectName="{Project Name}"
               />
+              <Segment>
+              <AnnouncementsView />
+              </Segment>
             </Grid.Column>
             <Grid.Column className="profile-columns3">
               <Segment textAlign="center">

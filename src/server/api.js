@@ -52,9 +52,44 @@ export function getNotifications(email) {
 
 /** User profile API  **/
 
-export function getUserProfile(userEmail) {
+export function getUserProfileInfo(userEmail) {
   let url = "https://tea-user-profile-api.herokuapp.com/getuserprofile";
-  let data = {};
+  let data = { email: userEmail };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("get profile post error: ");
+      console.log(error);
+    });
+}
+
+export function getProjectInfo(project_id) {
+  let url = "https://tea-user-profile-api.herokuapp.com/getuserprofile";
+  let data = { project_id: project_id };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("get project info error: ");
+      console.log(error);
+    });
+}
+
+export function updateUserProfile(valueList) {
+  let url = "https://tea-user-profile-api.herokuapp.com/updateuserprofile";
+  let data = {
+    email: valueList.email,
+    profile_image: valueList.profile_image,
+    profile_description: valueList.profile_description,
+    endorsements: valueList.endorsements,
+    current_projects: valueList.current_projects,
+    previous_projects: valueList.previous_projects
+  };
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data)
@@ -163,23 +198,21 @@ export function getProjectListings(userEmail) {
       tags: ["tag3.1", "tag3.2", "tag3.3"],
       project_description: "description"
     },
-    { 
-      title: "temp project name3", 
+    {
+      title: "temp project name3",
       project_leader: "project leader 7",
-      percentage_done: 30.0, 
-      group_size: 30, 
-      user_roles: [{user_email: "test_email3.1", user_role: "test_role3.1"},
-                 {user_email: "test_email3.2", user_role: "test_role3.2"}],
+      percentage_done: 30.0,
+      group_size: 30,
+      user_roles: [
+        { user_email: "test_email3.1", user_role: "test_role3.1" },
+        { user_email: "test_email3.2", user_role: "test_role3.2" }
+      ],
       tags: ["tag3.1", "tag3.2", "tag3.3"],
       project_description: "description"
     }
- 
   ];
   */
 }
-
-
-
 
 /* Create Project API
  */
