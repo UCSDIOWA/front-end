@@ -86,6 +86,7 @@ export default class AnnouncementsView extends Component {
         text: ''
       }));
     */
+    
     }
   }
   
@@ -94,7 +95,7 @@ export default class AnnouncementsView extends Component {
       return (
         //need to use a sorted list below here instead of a map
         <div> 
-          {this.props.items.map(item => (
+          {this.props.items.reverse().map(item => (
             <div key={item.id}>{item.text}</div>
           ))}
         </div>
