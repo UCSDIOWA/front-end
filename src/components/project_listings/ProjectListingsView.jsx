@@ -48,7 +48,7 @@ export default class ProjectListingsView extends Component {
       .then((listingData)=> {
         this.setState({isLoading: false});
 
-        listingData = listingData.map(s => ({ ...s, key: s.title + s.project_leader }));
+        listingData = listingData.map(s => ({ ...s, key: s.xid }));
         listingData = listingData.map(s => ({...s, description: s.project_leader}));
         
         listings = listingData;
