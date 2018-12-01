@@ -28,10 +28,25 @@ export default class SignUpView extends Component {
         this.props.onSystemMessage("Sign Up Successful");
       }
       this.setState({ isSubmittedSuccess: signupSuccess });
-    });
+      return signupSuccess;
+    })
+      .then((successfulSignup)=> {
+        if (successfulSignup) {
+         // update user info in db
+        }
+      })
+      .catch(error => {
+        console.log("update user info post error: ");
+        console.log(error);
+        this.setState({ isSubmittedLoading: false });
+
+      })
+
+    
   }
 
   render() {
+    // go back to login upon successful sign up
     return this.state.isSubmittedSuccess ? (
       <Redirect to={"/"} />
     ) : (

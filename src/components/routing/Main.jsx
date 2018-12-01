@@ -5,7 +5,7 @@ import GatewayView from "../gateway/GatewayView";
 import SignUpView from "../signup/SignUpView";
 import ProfileView from "../profile/ProfileView";
 import { navConsts } from "../../constants";
-import CreateProjectView from "../CreateProjectView";
+import CreateProjectView from "../create_project/CreateProjectView";
 import ForgotPasswordView from "../login/ForgotPasswordView";
 import ProtectedRoute from "./ProtectedRoute";
 import HomeRedirect from "./HomeRedirect";

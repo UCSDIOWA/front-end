@@ -48,15 +48,12 @@ class App extends Component {
     });
   }
 
-  handleUserSessionUpdate(email, isAuthenticated) {
+  handleUserSessionUpdate(email, isAuthenticated, name, profileImage) {
     UserSession.setEmail(email);
     UserSession.setAuthenticated(isAuthenticated);
-    console.log("Updating UserSession in App");
-
-    const name = "TODO_NAME"; // TODO fix actual name
-    const profileImage = holderImage; // TODO fix actual profile image
     UserSession.setName(name);
     UserSession.setProfileImage(profileImage);
+    console.log("Updating UserSession in App");
 
     this.setState({ name: name, isAuthenticated: isAuthenticated, profileImage: profileImage });
   }

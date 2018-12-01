@@ -15,13 +15,14 @@ import {
   Dropdown
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { navConsts } from "../constants";
+import { navConsts } from "../../constants";
 import DayPicker from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import { DateUtils } from "react-day-picker";
 import dateFnsFormat from "date-fns/format";
 import dateFnsParse from "date-fns/parse";
-import UserSession from "../server/UserSession";
+import UserSession from "../../server/UserSession";
+import CurrentTags from "./CurrentTags";
 
 const privateOptions = [
   { key: "t", text: "Yes", value: true },
@@ -30,34 +31,8 @@ const privateOptions = [
 
 const {
   GATEWAY,
-  SIGNUP,
-  PROFILE,
-  CREATE_PROJECT,
-  SEARCH_PROJECT,
-  DASHBOARD,
-  PROJECT_LISTINGS
 } = navConsts;
 
-const tagsList = [
-  { key: "angular", text: "Angular", value: "angular" },
-  { key: "css", text: "CSS", value: "css" },
-  { key: "design", text: "Graphic Design", value: "design" },
-  { key: "ember", text: "Ember", value: "ember" },
-  { key: "html", text: "HTML", value: "html" },
-  { key: "ia", text: "Information Architecture", value: "ia" },
-  { key: "javascript", text: "Javascript", value: "javascript" },
-  { key: "mech", text: "Mechanical Engineering", value: "mech" },
-  { key: "meteor", text: "Meteor", value: "meteor" },
-  { key: "node", text: "NodeJS", value: "node" },
-  { key: "plumbing", text: "Plumbing", value: "plumbing" },
-  { key: "python", text: "Python", value: "python" },
-  { key: "rails", text: "Rails", value: "rails" },
-  { key: "react", text: "React", value: "react" },
-  { key: "repair", text: "Kitchen Repair", value: "repair" },
-  { key: "ruby", text: "Ruby", value: "ruby" },
-  { key: "ui", text: "UI Design", value: "ui" },
-  { key: "ux", text: "User Experience", value: "ux" }
-];
 
 // for date picker
 const FORMAT = "M/D/YYYY";
@@ -89,6 +64,7 @@ export default class CreateProjectForm extends Component {
     this.state = {
       title: "",
       description: "",
+      tagForm: "",
       tags: [],
       deadline: "",
       calendarID: "",
@@ -105,7 +81,8 @@ export default class CreateProjectForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleIsPrivate = this.handleIsPrivate.bind(this);
     this.handleDeadline = this.handleDeadline.bind(this);
-    this.handleTags = this.handleTags.bind(this);
+    this.handleAddTags = this.handleAddTags.bind(this);
+    this.handleRemoveTag = this.handleRemoveTag.bind(this);
     this.handleMissingInput = this.handleMissingInput.bind(this);
   }
 
@@ -139,8 +116,22 @@ export default class CreateProjectForm extends Component {
   }
 
   // handles saving tags. Each time the user selects a new tag, we add it to the tags array
-  handleTags(e, { value }) {
-    this.setState({ tags: value });
+  handleAddTags() {
+    if (this.state.tagForm != "" ) {
+      this.setState((prevState) => {
+        if (this.state.tags.includes(this.state.tagForm)) {
+          return {
+            tagForm: ""
+          }
+        }
+        else {
+          return {
+            tagForm: "",
+            tags: [...prevState.tags, prevState.tagForm],
+          }
+        }
+      });
+    }
   }
 
   // This handler checks if any mandatory input is missing
@@ -151,11 +142,7 @@ export default class CreateProjectForm extends Component {
       this.setState({ missingTitle: true });
       foundError = true;
     }
-    // check for missing description
-    if (this.state.description === "") {
-      this.setState({ missingDescription: true });
-      foundError = true;
-    }
+    
     // if any error was found return true
     return foundError ? true : false;
   }
@@ -178,12 +165,19 @@ export default class CreateProjectForm extends Component {
         this.state.isPrivate,
         this.state.tags,
         this.state.deadline,
-        this.state.calendar_id,
+        this.state.calendarId,
         this.state.description,
-        UserSession.getEmail()
+        [UserSession.getEmail()]
       );
       // then go to dashboard for project
     }
+  }
+
+  handleRemoveTag(index) {
+    this.setState((prevState) => {
+      return {
+        tags: prevState.tags.filter((_, i) => i !== index) }
+    });
   }
 
   render() {
@@ -198,6 +192,8 @@ export default class CreateProjectForm extends Component {
     return (
       <div>
         <Header style={{ fontSize: "5em" }}>Create Project</Header>
+          <Form loading={this.props.isSubmitting}>
+
         <Segment>
           <Grid className="create-project-grid" centered>
             <Grid.Column
@@ -236,39 +232,46 @@ export default class CreateProjectForm extends Component {
               floated="right"
               width="6"
             >
+
               <Grid.Row>
                 <Header size="tiny" style={{ marginBottom: 8 }}>
                   Tags
                 </Header>
-                <Dropdown
-                  fluid
-                  multiple
-                  search
-                  selection
-                  scrolling
-                  name="tags"
-                  options={tagsList}
-                  placeholder="Select Tags"
-                  onChange={this.handleTags}
-                />
                 <div>
-                  <Header
-                    size="tiny"
-                    style={{ marginBottom: 8, marginTop: 15 }}
-                  >
-                    Deadline
-                  </Header>
-                  <DayPicker
-                    placeholder="MM-DD-YYYY"
-                    formatDate={formatDate}
-                    parseDate={parseDate}
-                    format={FORMAT}
-                    hideOnDayClick
-                    inputProps={{ style: { width: 200 } }}
-                    selectedDay={this.state.selectedDay}
-                    onDayChange={this.handleDeadline}
-                  />
+                <Form.Input
+                  icon="tags"
+                  iconPosition="left"
+                  placeholder="Enter tags for this project"
+                  onChange={e => this.setState({ tagForm: e.target.value })}
+                  value={this.state.tagForm}
+                />
+                <Button
+                  color="linkedin"
+                  onClick={this.handleAddTags}
+                >
+                  Add Tag
+                </Button>
+
                 </div>
+                  <CurrentTags onRemoveTag={this.handleRemoveTag} tags={this.state.tags} />
+                <div>
+                <Header
+                  size="tiny"
+                  style={{ marginBottom: 8, marginTop: 15 }}
+                >
+                  Deadline
+                </Header>
+                <DayPicker
+                  placeholder="MM-DD-YYYY"
+                  formatDate={formatDate}
+                  parseDate={parseDate}
+                  format={FORMAT}
+                  hideOnDayClick
+                  inputProps={{ style: { width: 200 } }}
+                  selectedDay={this.state.selectedDay}
+                  onDayChange={this.handleDeadline}
+                />
+              </div>
                 <Form style={{ paddingTop: 20 }}>
                   <Form.Group>
                     <Form.Field
@@ -339,6 +342,7 @@ export default class CreateProjectForm extends Component {
             </Grid.Row>
           </Grid>
         </Segment>
+        </Form>
       </div>
     );
   }

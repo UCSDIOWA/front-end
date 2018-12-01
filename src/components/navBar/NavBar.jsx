@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Image, Menu, Message, Label } from "semantic-ui-react";
+import { Image, Menu, Message, Label, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Logo from "../../resources/logo.png";
 import NotificationsContainer from "./NotificationsContainer";
 import NavBarDropDownMenu from "./NavBarDropDownMenu";
 import { navConsts } from "../../constants";
+import "../../css/App.css";
 
 export default class NavBar extends Component {
   constructor(props) {
@@ -20,8 +21,9 @@ export default class NavBar extends Component {
     const {
       PROFILE,
     } = navConsts;
+ 
     return (
-      <Menu inverted borderless size="large">
+      <Menu color="blue" inverted borderless size="large">
         
         <Menu.Menu position="left">
           <Menu.Item>
@@ -33,7 +35,7 @@ export default class NavBar extends Component {
         
         <Menu.Menu position="right">
           <Menu.Item position="right">
-            <Message color="black">Welcome back, {this.props.name} </Message>
+            <Segment inverted color="blue">Welcome back,  {this.props.name} </Segment>
           </Menu.Item>
           
           <Menu.Item position="right">
@@ -44,7 +46,6 @@ export default class NavBar extends Component {
 
           <Menu.Item position="right">
             <NotificationsContainer/>
-
           </Menu.Item>
 
           <NavBarDropDownMenu onLogout={this.handleLogout} />
