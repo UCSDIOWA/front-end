@@ -48,9 +48,9 @@ export function getNotifications(email) {
 
 /** User profile API  **/
 
-export function getUserProfile(userEmail) {
+export function getUserProfileInfo(userEmail) {
   let url = "https://tea-user-profile-api.herokuapp.com/getuserprofile";
-  let data = { email: email };
+  let data = { email: userEmail };
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data)
