@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getUserProfileInfo } from "../../server/api";
+import { getUserProfile } from "../../server/api";
 import { Grid, Image } from "semantic-ui-react";
 
 //import holderimage from "../../resources/holder-image.jpg";
@@ -22,7 +22,7 @@ export default class ProfileView extends Component {
   }
 
   componentDidMount() {
-    const profDataPromise = getUserProfileInfo(UserSession.getEmail());
+    const profDataPromise = getUserProfile(UserSession.getEmail());
     profDataPromise.then(response => {
       //console.log(response);
       //console.log("curr proj is: ");
