@@ -3,6 +3,7 @@ import { signup } from "../../server/api";
 import { Redirect } from "react-router-dom";
 import SignUpForm from "./SignUpForm";
 import { updateUserProfile } from "../../server/api";
+import UserSession from "../../server/UserSession";
 
 export default class SignUpView extends Component {
   constructor(props) {
@@ -37,11 +38,14 @@ export default class SignUpView extends Component {
         this.props.onSystemMessage("Sign Up Successful");
         var emptyProfile = {
           email: email,
-          profile_image: "asdf",
-          profile_description: "fasd",
-          endorsements: ["name1", "name2", "name3"],
-          current_projects: ["1"],
-          previous_projects: ["2"]
+          profileimage: UserSession.getProfileImage(),
+          profiledescription: "hnnnng",
+          endorsements: ["wot", "the", "shenme"],
+          currentprojects: [
+            "5c00e4b7d0961e0004c2d880",
+            "5c00e921754a780004855663"
+          ],
+          previousprojects: ["5c022cc6231ff4000486bd81"]
         };
         var returned = updateUserProfile(emptyProfile);
         if (!returned) {

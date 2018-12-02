@@ -5,35 +5,32 @@ import ProjectTileEvent from "./ProjectTileEvent";
 export default class PreviousProjectsTable extends Component {
   constructor(props) {
     super(props);
-    this.tableGenerate = this.tableGenerate.bind(this);
-    this.state = { numberViews: 4, tableRows: [] };
   }
 
-  tableGenerate() {
-    var list = [];
-    for (var i = 0; i < this.state.numberViews; i++) {
-      list.push(
-        <tbody key={i}>
+  render() {
+    const noPreviousProjectsFound = <Header>No Previous Projects Found</Header>;
+    var Rows;
+    if (this.props.previousProjects.length === 0) {
+      Rows = noPreviousProjectsFound;
+    } else {
+      Rows = this.props.previousProjects.map(previousProject => (
+        <tbody>
           <ProjectTileEvent
             isFinished={true}
-            projName="Gary's CSE110 Group"
-            groupSize={6}
-            projRole="Software Architect"
+            description={previousProject.description}
+            projectleader={previousProject.projectleader}
+            projName={previousProject.title}
+            groupSize={previousProject.groupsize}
+            tags={previousProject.tags}
           />
         </tbody>
-      );
+      ));
     }
-    this.setState({ tableRows: list });
-  }
 
-  componentDidMount() {
-    this.tableGenerate();
-  }
-  render() {
     return (
       <Segment className="profile-columns1">
         <Header>Previous Project(s)</Header>
-        <Table celled>{this.state.tableRows}</Table>
+        <Table celled>{Rows}</Table>
       </Segment>
     );
   }

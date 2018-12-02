@@ -52,23 +52,26 @@ export function getNotifications(email) {
 
 /** User profile API  **/
 
-export function getUserProfileInfo(userEmail) {
+export function getUserProfile(email) {
   let url = "https://tea-user-profile-api.herokuapp.com/getuserprofile";
-  let data = { email: userEmail };
+  let data = { email: email };
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data)
   })
-    .then(response => response.json())
+    .then(response => {
+      console.log(response);
+      return response.json();
+    })
     .catch(error => {
       console.log("get profile post error: ");
       console.log(error);
     });
 }
 
-export function getProjectInfo(project_id) {
-  let url = "https://tea-user-profile-api.herokuapp.com/getuserprofile";
-  let data = { project_id: project_id };
+export function getProjectInfo(projectid) {
+  let url = "https://tea-project-handler-api.herokuapp.com/getprojects";
+  let data = { xid: projectid };
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data)
@@ -84,11 +87,11 @@ export function updateUserProfile(valueList) {
   let url = "https://tea-user-profile-api.herokuapp.com/updateuserprofile";
   let data = {
     email: valueList.email,
-    profile_image: valueList.profile_image,
-    profile_description: valueList.profile_description,
+    profileimage: valueList.profileimage,
+    profiledescription: valueList.profiledescription,
     endorsements: valueList.endorsements,
-    current_projects: valueList.current_projects,
-    previous_projects: valueList.previous_projects
+    currentprojects: valueList.currentprojects,
+    previousprojects: valueList.previousprojects
   };
   return fetch(url, {
     method: "POST",
