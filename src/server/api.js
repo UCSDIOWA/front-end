@@ -155,7 +155,8 @@ export function createProject(
     calendarid: calendar_id,
     description: description,
     memberslist: members_list,
-    done: false
+    done: false,
+    email: project_leader
   };
   console.log(data);
 

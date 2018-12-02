@@ -28,7 +28,7 @@ export default class ProjectTileEvent extends Component {
   };
   render() {
     var tagsDisplay;
-    if (this.props.tags.length != 0) {
+    if (this.props.tags != undefined && this.props.tags.length != 0) {
       for (let i = 0; i < this.props.tags.length; i++) {
         tagsDisplay = tagsDisplay + ", " + this.props.tags[i];
       }
