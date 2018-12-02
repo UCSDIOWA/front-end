@@ -4,6 +4,7 @@ import MilestonesView from "./MilestonesView";
 import MilestonesViewEvent from "./MilestonesViewEvent";
 import CalendarWidget from "./CalendarWidget";
 import AnnouncementsView from "./AnnouncementsView";
+import InviteUserView from "./InviteUserView";
 
 export default class ProjectDashboardView extends Component {
   constructor(props) {
@@ -132,6 +133,9 @@ export default class ProjectDashboardView extends Component {
                 editMilestoneArray={list2}
                 currentProjectName="{Project Name}"
               />
+              <Segment>
+                <InviteUserView />
+              </Segment>
             </Grid.Column>
             <Grid.Column className="profile-columns3">
               <Segment textAlign="center">

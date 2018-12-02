@@ -29,10 +29,21 @@ export default class ProfileView extends Component {
       console.log(response);
       console.log(response.currentprojects);
       console.log(response.previousprojects);
-      var allProjectIDs = response.currentprojects.concat(
-        response.previousprojects
-      );
-      this.fillAllProjects(allProjectIDs, response.currentprojects.length);
+      if (
+        response.currentprojects != undefined ||
+        response.previousprojects != undefined
+      ) {
+        console.log("reached boi");
+        let allProjectIDs = undefined;
+        allProjectIDs = response.currentprojects.concat(
+          response.previousprojects
+        );
+        //if (allProjectIDs != undefined) {
+        console.log(allProjectIDs);
+        this.fillAllProjects(allProjectIDs, response.currentprojects.length);
+        //}
+      }
+
       this.setState({
         profileImage: response.profileimage,
         profileDescription: response.profiledescription,
@@ -50,8 +61,9 @@ export default class ProfileView extends Component {
       console.log(response);
       let allProjects = response.projects;
       console.log(allProjects);
-      console.log(typeof allProjects);
       console.log(allProjects[0]);
+      console.log(allProjects.slice(0, currentProjectsIndex));
+      console.log(allProjects.slice(currentProjectsIndex, response.length));
       this.setState({
         currentProjects: allProjects.slice(0, currentProjectsIndex),
         previousProjects: allProjects.slice(
