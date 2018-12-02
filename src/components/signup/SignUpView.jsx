@@ -25,51 +25,46 @@ export default class SignUpView extends Component {
       imageStr
     );
     var signupSuccess = false;
-    signupPromise.then(response => {
-      console.log("signup response: ");
-      console.log(response);
-      signupSuccess = response.success;
-      this.setState({ isSubmittedLoading: false });
-      if (!signupSuccess) {
-        this.props.onSystemMessage(
-          "Email Already Registered, please try again."
-        );
-      } else {
-        this.props.onSystemMessage("Sign Up Successful");
-        var emptyProfile = {
-          email: email,
-          profileimage: UserSession.getProfileImage(),
-          profiledescription: "hnnnng",
-          endorsements: ["wot", "the", "shenme"],
-          currentprojects: [
-            "5c00e4b7d0961e0004c2d880",
-            "5c00e921754a780004855663"
-          ],
-          previousprojects: ["5c022cc6231ff4000486bd81"]
-        };
-        var returned = updateUserProfile(emptyProfile);
-        if (!returned) {
-          console.log("failed to update profile");
+    signupPromise
+      .then(response => {
+        console.log("signup response: ");
+        console.log(response);
+        signupSuccess = response.success;
+        this.setState({ isSubmittedLoading: false });
+        if (!signupSuccess) {
+          this.props.onSystemMessage(
+            "Email Already Registered, please try again."
+          );
         } else {
-          console.log("success!");
+          this.props.onSystemMessage("Sign Up Successful");
+          var emptyProfile = {
+            email: email,
+            profileimage: UserSession.getProfileImage(),
+            profiledescription: "hnnnng",
+            endorsements: ["wot", "the", "shenme"],
+            currentprojects: [],
+            previousprojects: []
+          };
+          var returned = updateUserProfile(emptyProfile);
+          if (!returned) {
+            console.log("failed to update profile");
+          } else {
+            console.log("success!");
+          }
         }
-      }
-      this.setState({ isSubmittedSuccess: signupSuccess });
-      return signupSuccess;
-    })
-      .then((successfulSignup)=> {
+        this.setState({ isSubmittedSuccess: signupSuccess });
+        return signupSuccess;
+      })
+      .then(successfulSignup => {
         if (successfulSignup) {
-         // update user info in db
+          // update user info in db
         }
       })
       .catch(error => {
         console.log("update user info post error: ");
         console.log(error);
         this.setState({ isSubmittedLoading: false });
-
-      })
-
-    
+      });
   }
 
   render() {

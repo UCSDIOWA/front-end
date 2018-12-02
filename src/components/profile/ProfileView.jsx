@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getUserProfile } from "../../server/api";
 import { Grid, Image, Segment } from "semantic-ui-react";
-import { getProjectInfo } from "../../server/api";
+import { getProjectInfo, updateUserProfile } from "../../server/api";
 //import holderimage from "../../resources/holder-image.jpg";
 import CurrentProjectsTable from "./CurrentProjectsTable";
 import PreviousProjectsTable from "./PreviousProjectsTable";
@@ -19,7 +19,8 @@ export default class ProfileView extends Component {
       currentProjects: [],
       previousProjects: []
     };
-    //this.fillAllProjects = this.fillAllProjects.bind(this);
+    this.handleDescriptionSubmit = this.handleDescriptionSubmit.bind(this);
+    this.fillAllProjects = this.fillAllProjects.bind(this);
   }
 
   componentDidMount() {
@@ -29,10 +30,14 @@ export default class ProfileView extends Component {
       console.log(response);
       console.log(response.currentprojects);
       console.log(response.previousprojects);
-      var allProjectIDs = response.currentprojects.concat(
+      let allProjectIDs = undefined;
+      allProjectIDs = response.currentprojects.concat(
         response.previousprojects
       );
+      //if (allProjectIDs != undefined) {
+      console.log(allProjectIDs);
       this.fillAllProjects(allProjectIDs, response.currentprojects.length);
+      //}
       this.setState({
         profileImage: response.profileimage,
         profileDescription: response.profiledescription,
@@ -61,6 +66,27 @@ export default class ProfileView extends Component {
       });
       console.log(this.state.currentProjects);
       console.log(this.state.previousProjects);
+      console.log(this.state.profileDescription);
+    });
+  }
+
+  handleDescriptionSubmit(newDescription) {
+    console.log(UserSession.getEmail());
+    console.log(UserSession.getProfileImage());
+    console.log(this.state);
+    let userList = {
+      email: UserSession.getEmail(),
+      profileimage: "asdf", //UserSession.getProfileImage(),
+      profiledescription: newDescription,
+      //endorsements: this.state.endorsements,
+      currentprojects: this.state.currentProjects,
+      previousprojects: this.state.previousProjects
+    };
+
+    const updatePromise = updateUserProfile(userList);
+    updatePromise.then(response => {
+      console.log(response);
+      this.setState({ profileDescription: newDescription });
     });
   }
 
@@ -99,7 +125,9 @@ export default class ProfileView extends Component {
                 </Grid.Column>
                 <Grid.Column className="profile-columns3">
                   <ProfileDescriptionWidget
+                    {...console.log(this.state.profileDescription)}
                     profileDescription={this.state.profileDescription}
+                    handleSubmit={this.handleDescriptionSubmit}
                   />
                   {/*  <EndorsementsWidget endorsements={this.state.endorsements} /> */}
                 </Grid.Column>
