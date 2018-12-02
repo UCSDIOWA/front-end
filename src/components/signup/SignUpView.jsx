@@ -34,7 +34,7 @@ export default class SignUpView extends Component {
           "Email Already Registered, please try again."
         );
       } else {
-        this.props.onAnnouncement("Sign Up Successful");
+        this.props.onSystemMessage("Sign Up Successful");
         var emptyProfile = {
           email: email,
           profile_image: "asdf",
