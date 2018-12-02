@@ -80,6 +80,7 @@ export default class SignUpView extends Component {
       <SignUpForm
         onSignUpLoading={this.state.isSubmittedLoading}
         onSignUp={this.handleSignUp}
+        onSystemMessage={this.props.onSystemMessage}
       />
     );
   }

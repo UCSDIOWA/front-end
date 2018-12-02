@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import ProjectListingCard from "./ProjectListingCard";
-import {Icon, Button, Card, Header, Pagination, Grid, Segment} from "semantic-ui-react";
+import { Icon, Button, Header, Pagination, Grid, Segment } from "semantic-ui-react";
 
 
 // props: image, projectTitle, projectLeader, description, extra (extra components to render)
@@ -12,15 +12,7 @@ export default class ProjectListingsContainer extends Component {
 
   handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
 
-  // TODO connect to backend
-  requestButton = () => (
-    <Button inverted color="blue" primary floated='right' onClick={() => {
-        alert('Request sent!');
-      }}>
-      Request to Join
-          <Icon name='right chevron' />
-    </Button>
-  );
+
 
   render() {
     const noProjectListingFound = <Header >No Project Found</Header>;
@@ -37,7 +29,7 @@ export default class ProjectListingsContainer extends Component {
           percentDone={projectListing.percentdone}
           projectDescription={projectListing.description}
           tags={projectListing.tags}
-          extra={this.requestButton()}
+          projectId={projectListing.xid}
         />
       ))
       var toReturn = list;

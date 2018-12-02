@@ -169,3 +169,22 @@ export function createProject(
       console.log(error);
     });
 }
+
+export function sendJoinRequest(projectId, useremail) {
+  let url = "https://tea-project-handler-api.herokuapp.com/joinprojects";
+  let data = {
+    xid: projectId,
+    email: useremail
+  };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => 
+      { console.log(response);
+        return response.json()})
+    .catch(error => {
+      console.log("send join request post error: ");
+      console.log(error);
+    });
+}

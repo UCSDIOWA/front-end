@@ -81,17 +81,20 @@ export default class Main extends Component {
             isAuthenticated={AUTHENTICATED}
           />
           <ProtectedRoute
+            exact
             path={"/" + CREATE_PROJECT}
             component={CreateProjectView}
             isAuthenticated={AUTHENTICATED}
           />
           <ProtectedRoute
+            exact
             path={"/" + DASHBOARD}
             component={ProjectDashboardView}
             isAuthenticated={AUTHENTICATED}
           />
 
           <ProtectedRoute
+            exact
             path={"/" + PROJECT_LISTINGS}
             component={ProjectListingsView}
             isAuthenticated={AUTHENTICATED}
