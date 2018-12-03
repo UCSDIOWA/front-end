@@ -95,6 +95,7 @@ export function updateUserProfile(valueList) {
     currentprojects: valueList.currentprojects,
     previousprojects: valueList.previousprojects
   };
+  console.log(data);
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data)
@@ -122,6 +123,27 @@ export function getProjectListings(userEmail) {
     body: JSON.stringify(data)
   })
     .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+      console.log("getAllProjects post error: ");
+      console.log(error);
+    });
+}
+
+export function inviteUser(xid, remail, semail) {
+  let url = "https://tea-project-handler-api.herokuapp.com/inviteuser";
+  let data = {
+    projectid: xid,
+    recipientemail: remail,
+    senderemail: semail
+  };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      //console.log(response);
       return response.json();
     })
     .catch(error => {

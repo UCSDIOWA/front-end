@@ -40,7 +40,7 @@ export default class SignUpView extends Component {
          this.props.onSystemMessage("Sign Up Successful");
          var emptyProfile = {
            email: email,
-           profileimage: UserSession.getProfileImage(),
+           profileimage: imageStr,
            profiledescription: "",
            endorsements: [],
            currentprojects: [],

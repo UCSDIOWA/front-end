@@ -12,7 +12,7 @@ export default class CreateProjectView extends Component {
   }
 
   componentDidMount() {
-    this.setState({isSubmitting: false});
+    this.setState({ isSubmitting: false });
   }
 
   handleCreateProject(
@@ -40,10 +40,10 @@ export default class CreateProjectView extends Component {
       members_list
     );
     var createProjectSuccess = false;
-    this.setState({isSubmitting: true});
+    this.setState({ isSubmitting: true });
     createProjectPromise.then(response => {
       console.log(response);
-      this.setState({isSubmitting: false});
+      this.setState({ isSubmitting: false });
       createProjectSuccess = response.success;
       if (!createProjectSuccess) {
         alert("Error creating project");
