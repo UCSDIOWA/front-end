@@ -212,7 +212,7 @@ export default class ProjectDashboardView extends Component {
               <AnnouncementsView />
               <Segment textAlign='center'>
                 <h2>UCSD Dibs</h2>
-                <a>https://ucsd.evanced.info/dibs</a>
+                <a href="https://ucsd.evanced.info/dibs" target="_blank">https://ucsd.evanced.info/dibs</a>
               </Segment>
             </Grid.Column>
           </Grid.Row>

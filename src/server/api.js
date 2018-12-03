@@ -49,7 +49,7 @@ export function sendRecoverPasswordEmail(email) {
 
 /** Notifications **/
 export function getNotifications(email) {
-  return ["test invite", "test request"];
+  return ["Welcome to Tea, " + UserSession.getName()];
 }
 
 /** User profile API  **/
