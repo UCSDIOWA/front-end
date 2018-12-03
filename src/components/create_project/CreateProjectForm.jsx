@@ -29,10 +29,7 @@ const privateOptions = [
   { key: "f", text: "No", value: false }
 ];
 
-const {
-  GATEWAY,
-} = navConsts;
-
+const { GATEWAY, DASHBOARD } = navConsts;
 
 // for date picker
 const FORMAT = "M/D/YYYY";
@@ -117,18 +114,17 @@ export default class CreateProjectForm extends Component {
 
   // handles saving tags. Each time the user selects a new tag, we add it to the tags array
   handleAddTags() {
-    if (this.state.tagForm != "" ) {
-      this.setState((prevState) => {
+    if (this.state.tagForm != "") {
+      this.setState(prevState => {
         if (this.state.tags.includes(this.state.tagForm)) {
           return {
             tagForm: ""
-          }
-        }
-        else {
+          };
+        } else {
           return {
             tagForm: "",
-            tags: [...prevState.tags, prevState.tagForm],
-          }
+            tags: [...prevState.tags, prevState.tagForm]
+          };
         }
       });
     }
@@ -142,7 +138,7 @@ export default class CreateProjectForm extends Component {
       this.setState({ missingTitle: true });
       foundError = true;
     }
-    
+
     // if any error was found return true
     return foundError ? true : false;
   }
@@ -169,14 +165,14 @@ export default class CreateProjectForm extends Component {
         this.state.description,
         [UserSession.getEmail()]
       );
-      // then go to dashboard for project
     }
   }
 
   handleRemoveTag(index) {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        tags: prevState.tags.filter((_, i) => i !== index) }
+        tags: prevState.tags.filter((_, i) => i !== index)
+      };
     });
   }
 
@@ -192,156 +188,155 @@ export default class CreateProjectForm extends Component {
     return (
       <div>
         <Header style={{ fontSize: "5em" }}>Create Project</Header>
-          <Form loading={this.props.isSubmitting}>
-
-        <Segment>
-          <Grid className="create-project-grid" centered>
-            <Grid.Column
-              className="create-project-column1"
-              floated="left"
-              width="8"
-            >
-              <Form>
-                <Header size="tiny" style={{ marginBottom: 8 }}>
-                  Title
-                </Header>
-                <Form.Field
-                  error={this.state.missingTitle}
-                  control={Input}
-                  placeholder="Title of Project..."
-                  name="title"
-                  value={title}
-                  onChange={this.handleChange}
-                />
-                <Header size="tiny" style={{ marginBottom: 8 }}>
-                  Description
-                </Header>
-                <Form.Field
-                  error={this.state.missingDescription}
-                  control={TextArea}
-                  placeholder="Description of Project..."
-                  name="description"
-                  value={description}
-                  onChange={this.handleChange}
-                  style={{ height: 180 }}
-                />
-              </Form>
-            </Grid.Column>
-            <Grid.Column
-              className="create-project-column1"
-              floated="right"
-              width="6"
-            >
-
-              <Grid.Row>
-                <Header size="tiny" style={{ marginBottom: 8 }}>
-                  Tags
-                </Header>
-                <div>
-                <Form.Input
-                  icon="tags"
-                  iconPosition="left"
-                  placeholder="Enter tags for this project"
-                  onChange={e => this.setState({ tagForm: e.target.value })}
-                  value={this.state.tagForm}
-                />
-                <Button
-                  color="linkedin"
-                  onClick={this.handleAddTags}
-                >
-                  Add Tag
-                </Button>
-
-                </div>
-                  <CurrentTags onRemoveTag={this.handleRemoveTag} tags={this.state.tags} />
-                <div>
-                <Header
-                  size="tiny"
-                  style={{ marginBottom: 8, marginTop: 15 }}
-                >
-                  Deadline
-                </Header>
-                <DayPicker
-                  placeholder="MM-DD-YYYY"
-                  formatDate={formatDate}
-                  parseDate={parseDate}
-                  format={FORMAT}
-                  hideOnDayClick
-                  inputProps={{ style: { width: 200 } }}
-                  selectedDay={this.state.selectedDay}
-                  onDayChange={this.handleDeadline}
-                />
-              </div>
-                <Form style={{ paddingTop: 20 }}>
-                  <Form.Group>
-                    <Form.Field
-                      style={{ width: "10%" }}
-                      control={Select}
-                      options={privateOptions}
-                      label="Private"
-                      name="isPrivate"
-                      value={isPrivate}
-                      onChange={this.handleChange}
-                    />
-                    <Form.Field
-                      type="number"
-                      style={{ width: "40%" }}
-                      control={Input}
-                      label="Size"
-                      name="size"
-                      value={size}
-                      onChange={this.handleChange}
-                    />
-                  </Form.Group>
+        <Form loading={this.props.isSubmitting}>
+          <Segment>
+            <Grid className="create-project-grid" centered>
+              <Grid.Column
+                className="create-project-column1"
+                floated="left"
+                width="8"
+              >
+                <Form>
                   <Header size="tiny" style={{ marginBottom: 8 }}>
-                    Add Google Calendar
+                    Title
                   </Header>
-                  <Popup
-                    basic
-                    on="click"
-                    trigger={
-                      <Form.Field
-                        control={Input}
-                        placeholder="Copy/Paste your Calendar ID"
-                        name="calendarID"
-                        value={calendarID}
-                        onChange={this.handleChange}
-                      />
-                    }
-                    content={
-                      <Container style={{ width: 200, height: 200 }}>
-                        <List ordered>
-                          <List.Item>Go to your Google Calendar</List.Item>
-                          <List.Item>
-                            Select on <Icon name="setting" /> from the top of
-                            the page and select option "Settings"
-                          </List.Item>
-                          <List.Item>
-                            Select the Calendar you wish to add by selecting its
-                            name under "Settings for my calendars"
-                          </List.Item>
-                          <List.Item>
-                            Go to "Integrate Calendar" and copy/paste your
-                            Calendar ID here
-                          </List.Item>
-                        </List>
-                      </Container>
-                    }
-                    position="left center"
+                  <Form.Field
+                    error={this.state.missingTitle}
+                    control={Input}
+                    placeholder="Title of Project..."
+                    name="title"
+                    value={title}
+                    onChange={this.handleChange}
+                  />
+                  <Header size="tiny" style={{ marginBottom: 8 }}>
+                    Description
+                  </Header>
+                  <Form.Field
+                    error={this.state.missingDescription}
+                    control={TextArea}
+                    placeholder="Description of Project..."
+                    name="description"
+                    value={description}
+                    onChange={this.handleChange}
+                    style={{ height: 180 }}
                   />
                 </Form>
+              </Grid.Column>
+              <Grid.Column
+                className="create-project-column1"
+                floated="right"
+                width="6"
+              >
+                <Grid.Row>
+                  <Header size="tiny" style={{ marginBottom: 8 }}>
+                    Tags
+                  </Header>
+                  <div>
+                    <Form.Input
+                      icon="tags"
+                      iconPosition="left"
+                      placeholder="Enter tags for this project"
+                      onChange={e => this.setState({ tagForm: e.target.value })}
+                      value={this.state.tagForm}
+                    />
+                    <Button color="linkedin" onClick={this.handleAddTags}>
+                      Add Tag
+                    </Button>
+                  </div>
+                  <CurrentTags
+                    onRemoveTag={this.handleRemoveTag}
+                    tags={this.state.tags}
+                  />
+                  <div>
+                    <Header
+                      size="tiny"
+                      style={{ marginBottom: 8, marginTop: 15 }}
+                    >
+                      Deadline
+                    </Header>
+                    <DayPicker
+                      placeholder="MM-DD-YYYY"
+                      formatDate={formatDate}
+                      parseDate={parseDate}
+                      format={FORMAT}
+                      hideOnDayClick
+                      inputProps={{ style: { width: 200 } }}
+                      selectedDay={this.state.selectedDay}
+                      onDayChange={this.handleDeadline}
+                    />
+                  </div>
+                  <Form style={{ paddingTop: 20 }}>
+                    <Form.Group>
+                      <Form.Field
+                        style={{ width: "10%" }}
+                        control={Select}
+                        options={privateOptions}
+                        label="Private"
+                        name="isPrivate"
+                        value={isPrivate}
+                        onChange={this.handleChange}
+                      />
+                      <Form.Field
+                        type="number"
+                        style={{ width: "40%" }}
+                        control={Input}
+                        label="Size"
+                        name="size"
+                        value={size}
+                        onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                    <Header size="tiny" style={{ marginBottom: 8 }}>
+                      Add Google Calendar
+                    </Header>
+                    <Popup
+                      basic
+                      on="click"
+                      trigger={
+                        <Form.Field
+                          control={Input}
+                          placeholder="Copy/Paste your Calendar ID"
+                          name="calendarID"
+                          value={calendarID}
+                          onChange={this.handleChange}
+                        />
+                      }
+                      content={
+                        <Container style={{ width: 200, height: 200 }}>
+                          <List ordered>
+                            <List.Item>Go to your Google Calendar</List.Item>
+                            <List.Item>
+                              Select on <Icon name="setting" /> from the top of
+                              the page and select option "Settings"
+                            </List.Item>
+                            <List.Item>
+                              Select the Calendar you wish to add by selecting
+                              its name under "Settings for my calendars"
+                            </List.Item>
+                            <List.Item>
+                              Go to "Integrate Calendar" and copy/paste your
+                              Calendar ID here
+                            </List.Item>
+                          </List>
+                        </Container>
+                      }
+                      position="left center"
+                    />
+                  </Form>
+                </Grid.Row>
+              </Grid.Column>
+              <Grid.Row centered>
+                <Link to={"/" + DASHBOARD}>
+                  <Button color="teal" onClick={this.handleSubmit}>
+                    Create
+                  </Button>
+                </Link>
+                <Link to={"/" + GATEWAY}>
+                  <Button color="red">Cancel</Button>
+                </Link>
               </Grid.Row>
-            </Grid.Column>
-            <Grid.Row centered>
-              <Button color="teal" onClick={this.handleSubmit}>
-                Create
-              </Button>
-              <Link to={"/" + GATEWAY}>
-                <Button color="red">Cancel</Button>
-              </Link>
-            </Grid.Row>
-          </Grid>
-        </Segment>
+            </Grid>
+          </Segment>
         </Form>
       </div>
     );

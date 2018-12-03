@@ -23,7 +23,7 @@ export default class MilestonesViewEvent extends Component {
   }
   handleDelete() {
     //TODO include backend call to send deleted milestone id
-    this.props.deleteFunc(this.props.msName);
+    this.props.deleteFunc(this.props.msName, this.props.msWeight);
   }
 
   handleFinishConfirm() {
@@ -32,6 +32,11 @@ export default class MilestonesViewEvent extends Component {
   }
 
   handleFinishMS() {
+    if (this.state.isFinish == false) {
+      this.props.updateProgFunc(this.props.msWeight);
+    } else {
+      this.props.decrementProgFunc(this.props.msWeight);
+    }
     //TODO handle call to backend to send completion for MS id
     this.setState({
       isFinish: !this.state.isFinish,

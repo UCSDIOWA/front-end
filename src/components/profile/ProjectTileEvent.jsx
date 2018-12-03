@@ -6,8 +6,11 @@ import {
   List,
   Accordion,
   Header,
-  Icon
+  Icon,
+  Button
 } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { navConsts } from "../../constants";
 
 export default class ProjectTileEvent extends Component {
   constructor(props) {
@@ -27,8 +30,9 @@ export default class ProjectTileEvent extends Component {
     });
   };
   render() {
+    const { DASHBOARD } = navConsts;
     var tagsDisplay;
-    if (this.props.tags.length != 0) {
+    if (this.props.tags != undefined && this.props.tags.length != 0) {
       for (let i = 0; i < this.props.tags.length; i++) {
         tagsDisplay = tagsDisplay + ", " + this.props.tags[i];
       }
@@ -77,6 +81,12 @@ export default class ProjectTileEvent extends Component {
                   <List.Item>
                     <List.Icon name="tags" />
                     <List.Content>Tags: {tagsDisplay}</List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Icon name="location arrow" />
+                    <List.Content>
+                      <Link to={"/" + DASHBOARD}>Go to Dashboard</Link>
+                    </List.Content>
                   </List.Item>
                 </List>
               </Accordion.Content>

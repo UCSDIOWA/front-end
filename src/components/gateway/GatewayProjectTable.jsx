@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-
-import { Segment, Pagination, Table, Grid } from "semantic-ui-react";
+import { getProjectInfo, getUserProfile } from "../../server/api";
+import { Segment, Pagination, Header, Grid } from "semantic-ui-react";
 import GatewayProjectTileEvent from "./GatewayProjectTileEvent";
+import UserSession from "../../server/UserSession";
 
 export default class GatewayProjectTable extends Component {
   constructor(props) {
@@ -10,10 +11,12 @@ export default class GatewayProjectTable extends Component {
     this.handlePaginationChange = this.handlePaginationChange.bind(this);
     //TODO GRAB NUMBER OF PROJECTS FROM BACKEND
     this.state = {
+      empty: false,
       projsPerPage: 4,
       tableRows: [],
       activePage: 1,
-      testList: [
+      projectList: []
+      /* testList: [
         {
           projName: "name1",
           groupSize: 5,
@@ -49,8 +52,32 @@ export default class GatewayProjectTable extends Component {
           percentDone: 34,
           tags: "Hello, my, name, jeff"
         }
-      ]
+      ] */
     };
+  }
+  componentDidMount() {
+    const userProfilePromise = getUserProfile(UserSession.getEmail());
+    userProfilePromise.then(response => {
+      console.log(response);
+      var idArray = response.currentprojects;
+      console.log(idArray);
+      if (idArray !== undefined) {
+        const projDataPromise = getProjectInfo(idArray);
+        projDataPromise
+          .then(response => {
+            console.log(response);
+            console.log(response.projects);
+            this.setState({ projectList: response.projects });
+            return response;
+          })
+          .then(response => {
+            console.log(this.state.projectList);
+            this.tableGenerate(this.state.activePage);
+          });
+      } else {
+        this.setState({ empty: true });
+      }
+    });
   }
 
   handlePaginationChange = (e, { activePage }) => {
@@ -59,45 +86,53 @@ export default class GatewayProjectTable extends Component {
 
   tableGenerate(activePage) {
     var list = [];
+    //console.log("herro");
+    //console.log(this.state.projectList);
+    //console.log(this.state.projectList.length);
     //loop through retrieved current projects and grab each based on active page index
     for (
       //grabs up to 4 total projects to populate a page of the pagination
       var i = (activePage - 1) * this.state.projsPerPage;
-      i < activePage * this.state.projsPerPage && i < this.props.totalProjs;
+      i < activePage * this.state.projsPerPage &&
+      i < this.state.projectList.length;
       i++
     ) {
       list.push(
-          <GatewayProjectTileEvent
-            isFinished={false}
-            projName={this.state.testList[i].projName}
-            groupSize={this.state.testList[i].groupSize}
-            projRole={this.state.testList[i].projRole}
-            percentDone={this.state.testList[i].percentDone}
-            tags={this.state.testList[i].tags}
-            key={i}
-          />
-  
+        <GatewayProjectTileEvent
+          isFinished={false}
+          projName={this.state.projectList[i].title}
+          groupSize={this.state.projectList[i].groupsize}
+          //projRole={this.state.projectList[i].projRole}
+          percentDone={30}
+          tags={this.state.projectList[i].tags}
+          key={i}
+        />
       );
     }
+    console.log(list);
     this.setState({ tableRows: list, activePage: activePage });
+    console.log(this.state.tableRows);
   }
 
-  //calls on every re-render
-  componentDidMount() {
-    this.tableGenerate(this.state.activePage);
-  }
   render() {
     return (
       <Segment>
-        <Segment.Group style={{width:'50vh'}} >{this.state.tableRows}</Segment.Group>
-        <Pagination
-          totalPages={Math.ceil(
-            this.props.totalProjs / this.state.projsPerPage
-          )}
-          boundaryRange={0}
-          activePage={this.state.activePage}
-          onPageChange={this.handlePaginationChange}
-        />
+        {!this.state.empty && (
+          <Segment>
+            <Segment.Group style={{ width: "50vh" }}>
+              {this.state.tableRows}
+            </Segment.Group>
+            <Pagination
+              totalPages={Math.ceil(
+                this.props.totalProjs / this.state.projsPerPage
+              )}
+              boundaryRange={0}
+              activePage={this.state.activePage}
+              onPageChange={this.handlePaginationChange}
+            />
+          </Segment>
+        )}
+        {this.state.empty && <Header>No Current Projects Found</Header>}
       </Segment>
     );
   }

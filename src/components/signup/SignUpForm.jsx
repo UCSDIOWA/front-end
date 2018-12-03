@@ -7,7 +7,8 @@ import {
   Input,
   Header,
   Popup,
-  Image
+  Image,
+  Message
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import ProfileImageSelect from "./ProfileImageSelect";
@@ -21,7 +22,8 @@ export default class SignUpForm extends Component {
       sLastName: "",
       sEmail: "",
       sPw: "",
-      sImage: holderImage
+      sImage: holderImage,
+      isUCSDEmail: false
     };
     this.handleImageSelect = this.handleImageSelect.bind(this);
   }
@@ -42,11 +44,11 @@ export default class SignUpForm extends Component {
             <Grid.Row>
               <Grid.Column>
                 
-                <Form>
+                <Form error>
                   <Form.Field
                     control={Input}
                     placeholder="UCSD Email"
-                    onChange={e => this.setState({ sEmail: e.target.value })}
+                    onChange={e => this.setState({ sEmail: e.target.value, isUCSDEmail: e.target.value.includes("ucsd.edu") })}
                   />
                   <Form.Field
                     control={Input}
@@ -104,13 +106,17 @@ export default class SignUpForm extends Component {
                       size="large"
                       loading={this.props.onSignUpLoading}
                       onClick={() => {
-                        this.props.onSignUp(
-                          this.state.sEmail,
-                          this.state.sPw,
-                          this.state.sFirstName,
-                          this.state.sLastName,
-                          this.state.sImage
-                        );
+                        if (this.state.isUCSDEmail) {
+                          this.props.onSignUp(
+                            this.state.sEmail,
+                            this.state.sPw,
+                            this.state.sFirstName,
+                            this.state.sLastName,
+                            this.state.sImage
+                          );
+                        } else {
+                          this.props.onSystemMessage("Must use ucsd email");
+                        }
                       }}
                     >
                       Sign Up

@@ -17,6 +17,7 @@ export default class LoginView extends Component {
     const loginPromise = login(email, password);
     var loginSuccess = false;
     loginPromise.then(response => {
+      console.log("Login response");
       console.log(response);
       loginSuccess = response.success;
       let name = response.firstname + " " + response.lastname;

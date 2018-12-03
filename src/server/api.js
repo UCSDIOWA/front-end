@@ -2,6 +2,7 @@ import UserSession from "./UserSession";
 
 export function signup(email, password, first_name, last_name, imageStr) {
   let url = "https://tea-login-api.herokuapp.com/signup";
+  console.log(imageStr);
   let data = {
     email: email,
     password: password,
@@ -9,6 +10,7 @@ export function signup(email, password, first_name, last_name, imageStr) {
     lastname: last_name,
     profileimage: imageStr
   };
+  console.log(data);
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data)
@@ -93,6 +95,7 @@ export function updateUserProfile(valueList) {
     currentprojects: valueList.currentprojects,
     previousprojects: valueList.previousprojects
   };
+  console.log(data);
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data)
@@ -120,6 +123,26 @@ export function getProjectListings(userEmail) {
     body: JSON.stringify(data)
   })
     .then(response => {
+      return response.json();
+    })
+    .catch(error => {
+      console.log("getAllProjects post error: ");
+      console.log(error);
+    });
+}
+
+export function inviteUser(xid, remail, semail) {
+  let url = "https://tea-project-handler-api.herokuapp.com/inviteuser";
+  let data = {
+    projectid: xid,
+    recipientemail: remail,
+    senderemail: semail
+  };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
       //console.log(response);
       return response.json();
     })
@@ -127,94 +150,6 @@ export function getProjectListings(userEmail) {
       console.log("getAllProjects post error: ");
       console.log(error);
     });
-
-  /*return [
-    {
-      title: "temp project name1",
-      project_leader: "project leader 1",
-      percentage_done: 10.0,
-      group_size: 10,
-      user_roles: [
-        { user_email: "test_email1.1", user_role: "test_role1.1" },
-        { user_email: "test_email1.2", user_role: "test_role1.2" }
-      ],
-      tags: ["tag1.1", "tag1.2", "tag1.3"],
-      project_description: "description"
-    },
-    {
-      title: "temp project name2",
-      project_leader: "project leader 2",
-      percentage_done: 20.0,
-      group_size: 20,
-      user_roles: [
-        { user_email: "test_email2.1", user_role: "test_role2.1" },
-        { user_email: "test_email2.2", user_role: "test_role2.2" }
-      ],
-      tags: ["tag2.1", "tag2.2", "tag2.3"],
-      project_description: "description"
-    },
-    {
-      title: "temp project name3",
-      project_leader: "project leader 3",
-      percentage_done: 30.0,
-      group_size: 30,
-      user_roles: [
-        { user_email: "test_email3.1", user_role: "test_role3.1" },
-        { user_email: "test_email3.2", user_role: "test_role3.2" }
-      ],
-      tags: ["tag3.1", "tag3.2", "tag3.3"],
-      project_description: "description"
-    },
-    {
-      title: "temp project name1",
-      project_leader: "project leader 4",
-      percentage_done: 10.0,
-      group_size: 10,
-      user_roles: [
-        { user_email: "test_email1.1", user_role: "test_role1.1" },
-        { user_email: "test_email1.2", user_role: "test_role1.2" }
-      ],
-      tags: ["tag1.1", "tag1.2", "tag1.3"],
-      project_description: "description1"
-    },
-    {
-      title: "temp project name2",
-      project_leader: "project leader 5",
-      percentage_done: 20.0,
-      group_size: 20,
-      user_roles: [
-        { user_email: "test_email2.1", user_role: "test_role2.1" },
-        { user_email: "test_email2.2", user_role: "test_role2.2" }
-      ],
-      tags: ["tag2.1", "tag2.2", "tag2.3"],
-      project_description: "description"
-    },
-    {
-      title: "temp project name3",
-      project_leader: "project leader 6",
-      percentage_done: 30.0,
-      group_size: 30,
-      user_roles: [
-        { user_email: "test_email3.1", user_role: "test_role3.1" },
-        { user_email: "test_email3.2", user_role: "test_role3.2" }
-      ],
-      tags: ["tag3.1", "tag3.2", "tag3.3"],
-      project_description: "description"
-    },
-    {
-      title: "temp project name3",
-      project_leader: "project leader 7",
-      percentage_done: 30.0,
-      group_size: 30,
-      user_roles: [
-        { user_email: "test_email3.1", user_role: "test_role3.1" },
-        { user_email: "test_email3.2", user_role: "test_role3.2" }
-      ],
-      tags: ["tag3.1", "tag3.2", "tag3.3"],
-      project_description: "description"
-    }
-  ];
-  */
 }
 // getting project info for EditProjectForm
 export function getEditProjForm(valueList) {
@@ -269,7 +204,8 @@ export function createProject(
     calendarid: calendar_id,
     description: description,
     memberslist: members_list,
-    done: false
+    done: false,
+    email: project_leader
   };
   console.log(data);
 
@@ -280,6 +216,25 @@ export function createProject(
     .then(response => response.json())
     .catch(error => {
       console.log("createproject post error: ");
+      console.log(error);
+    });
+}
+
+export function sendJoinRequest(projectId, useremail) {
+  let url = "https://tea-project-handler-api.herokuapp.com/joinprojects";
+  let data = {
+    xid: projectId,
+    email: useremail
+  };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => 
+      { console.log(response);
+        return response.json()})
+    .catch(error => {
+      console.log("send join request post error: ");
       console.log(error);
     });
 }

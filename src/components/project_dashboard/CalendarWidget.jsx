@@ -22,8 +22,11 @@ export default class CalendarWidget extends Component {
     render a Google Calendar with the state calendarID
    */
   addCalendar() {
-    this.setState({ hasCalendar: true });
-    console.log("Calendar id is " + this.state.calendarID);
+    // if no id is entered then do nothing
+    if (this.state.calendarID !== "") {
+      this.setState({ hasCalendar: true });
+      console.log("Calendar id is " + this.state.calendarID);
+    }
   }
 
   /* Sets the state calendarID to value (does not render the calendar)

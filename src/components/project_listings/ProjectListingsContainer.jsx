@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import ProjectListingCard from "./ProjectListingCard";
-import {Icon, Button, Card, Header, Pagination, Grid, Segment} from "semantic-ui-react";
+import { Icon, Button, Header, Pagination, Grid, Segment } from "semantic-ui-react";
 
 
 // props: image, projectTitle, projectLeader, description, extra (extra components to render)
@@ -12,50 +12,42 @@ export default class ProjectListingsContainer extends Component {
 
   handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
 
-  // TODO connect to backend
-  requestButton = () => (
-    <Button inverted color="blue" primary floated='right' onClick={() => {
-        alert('Request sent!');
-      }}>
-      Request to Join
-          <Icon name='right chevron' />
-    </Button>
-  );
+
 
   render() {
-    const noProjectListingFound = <Segment style={{height:'100%'}} >No Project Found</Segment>;
+    const noProjectListingFound = <Header >No Project Found</Header>;
     if (this.props.projectListings.length === 0) {
       var toReturn = noProjectListingFound;
     }
     else {
-    var toReturn = this.props.projectListings[this.state.activePage - 1].map((projectListing) => (
-      <ProjectListingCard 
-        key={projectListing.xid}  
-        projectTitle={projectListing.title}
-        projectLeader={projectListing.projectleader}
-        groupSize={projectListing.groupsize}
-        projectDescription={projectListing.description}
-        tags={projectListing.tags}
-        extra={this.requestButton()}
-      />
-    ))
+      let list = this.props.projectListings[this.state.activePage - 1].map((projectListing) => (
+        <ProjectListingCard 
+          key={projectListing.xid}
+          projectTitle={projectListing.title}
+          projectLeader={projectListing.projectleader}
+          groupSize={projectListing.groupsize}
+          percentDone={projectListing.percentdone}
+          projectDescription={projectListing.description}
+          tags={projectListing.tags}
+          projectId={projectListing.xid}
+        />
+      ))
+      var toReturn = list;
     }
   
     return (
       <Grid centered padded>
-        <Segment textAlign='center' loading={this.props.isLoading} color="blue" inverted style={{width:'100%', height:'100%'}}>
-        <Grid.Row>
-          <Pagination
-            activePage={this.state.activePage}
-            onPageChange={this.handlePaginationChange}
-            totalPages={this.props.projectListings.length}
-          />
-        </Grid.Row>
-        <Grid.Row>
-          <Card.Group centered style={{width: '100%', height:"75%"}}>
+        <Segment vertical padded loading={this.props.isLoading} style={{width:'100vh', height:'100%'}}>
+          <Segment.Group>
+            <Pagination
+              activePage={this.state.activePage}
+              onPageChange={this.handlePaginationChange}
+              totalPages={this.props.projectListings.length}
+            />
+          </Segment.Group>
+          <Segment.Group>
             {toReturn}
-          </Card.Group>  
-        </Grid.Row>
+          </Segment.Group>
         </Segment>
       </Grid>
     );

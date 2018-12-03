@@ -6,81 +6,73 @@ import { updateUserProfile } from "../../server/api";
 import UserSession from "../../server/UserSession";
 
 export default class SignUpView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSubmittedSuccess: false,
-      isSubmittedLoading: false
-    };
-    this.handleSignUp = this.handleSignUp.bind(this);
-  }
+ constructor(props) {
+   super(props);
+   this.state = {
+     isSubmittedSuccess: false,
+     isSubmittedLoading: false
+   };
+   this.handleSignUp = this.handleSignUp.bind(this);
+ }
 
-  handleSignUp(email, password, firstName, lastName, imageStr) {
-    this.setState({ isSubmittedLoading: true });
-    const signupPromise = signup(
-      email,
-      password,
-      firstName,
-      lastName,
-      imageStr
-    );
-    var signupSuccess = false;
-    signupPromise.then(response => {
-      console.log("signup response: ");
-      console.log(response);
-      signupSuccess = response.success;
-      this.setState({ isSubmittedLoading: false });
-      if (!signupSuccess) {
-        this.props.onSystemMessage(
-          "Email Already Registered, please try again."
-        );
-      } else {
-        this.props.onSystemMessage("Sign Up Successful");
-        var emptyProfile = {
-          email: email,
-          profileimage: UserSession.getProfileImage(),
-          profiledescription: "hnnnng",
-          endorsements: ["wot", "the", "shenme"],
-          currentprojects: [
-            "5c00e4b7d0961e0004c2d880",
-            "5c00e921754a780004855663"
-          ],
-          previousprojects: ["5c022cc6231ff4000486bd81"]
-        };
-        var returned = updateUserProfile(emptyProfile);
-        if (!returned) {
-          console.log("failed to update profile");
-        } else {
-          console.log("success!");
-        }
-      }
-      this.setState({ isSubmittedSuccess: signupSuccess });
-      return signupSuccess;
-    })
-      .then((successfulSignup)=> {
-        if (successfulSignup) {
-         // update user info in db
-        }
-      })
-      .catch(error => {
-        console.log("update user info post error: ");
-        console.log(error);
-        this.setState({ isSubmittedLoading: false });
+ handleSignUp(email, password, firstName, lastName, imageStr) {
+   this.setState({ isSubmittedLoading: true });
+  
+   const signupPromise = signup(
+     email,
+     password,
+     firstName,
+     lastName,
+     imageStr
+   );
+   var signupSuccess = false;
+   signupPromise
+     .then(response => {
+       console.log("signup response: ");
+       console.log(response);
+       signupSuccess = response.success;
+       this.setState({ isSubmittedLoading: false });
+       if (!signupSuccess) {
+         this.props.onSystemMessage(
+           "Email Already Registered, please try again."
+         );
+       } else {
+         this.props.onSystemMessage("Sign Up Successful");
+         var emptyProfile = {
+           email: email,
+           profileimage: imageStr,
+           profiledescription: "",
+           endorsements: [],
+           currentprojects: [],
+           previousprojects: []
+         };
+         var returned = updateUserProfile(emptyProfile);
+         if (!returned) {
+           console.log("failed to update profile");
+         } else {
+           console.log("success!");
+         }
+       }
+       this.setState({ isSubmittedSuccess: signupSuccess });
+       return signupSuccess;
+     })
+     .catch(error => {
+       console.log("update user info post error: ");
+       console.log(error);
+       this.setState({ isSubmittedLoading: false });
+     });
+ }
 
-      })
-
-    
-  }
-
-  render() {
-    // go back to login upon successful sign up
-    return this.state.isSubmittedSuccess ? (
-      <Redirect to={"/"} />
-    ) : (
-      <SignUpForm
-        onSignUpLoading={this.state.isSubmittedLoading}
-        onSignUp={this.handleSignUp}
-      />
-    );
-  }
+ render() {
+   // go back to login upon successful sign up
+   return this.state.isSubmittedSuccess ? (
+     <Redirect to={"/"} />
+   ) : (
+     <SignUpForm
+       onSignUpLoading={this.state.isSubmittedLoading}
+       onSignUp={this.handleSignUp}
+       onSystemMessage={this.props.onSystemMessage}
+     />
+   );
+ }
 }

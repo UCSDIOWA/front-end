@@ -10,6 +10,7 @@ import {
 } from "semantic-ui-react";
 import AddMilestonesView from "./AddMilestonesView";
 import EditProjectView from "./EditProjPopupView";
+import EndorseTeammatesView from "./EndorseTeammatesView";
 
 export default class MilestonesView extends Component {
   constructor(props) {
@@ -24,7 +25,22 @@ export default class MilestonesView extends Component {
   render() {
     return (
       <Segment>
-        <Progress percent={55}>Current Project Progress</Progress>
+        <Progress progress percent={this.props.currentProgress}>
+          Current Project Progress
+        </Progress>
+
+        {this.props.currentProgress == 100 && (
+          <Segment>
+            Congratulations, you've finished the project!
+            <hr />
+            <Modal trigger={<Button>Endorse Teammates</Button>} size="mini">
+              <Modal.Content>
+                <EndorseTeammatesView />
+              </Modal.Content>
+            </Modal>
+          </Segment>
+        )}
+
         <Header size="medium">
           {this.props.currentProjectName} Milestones
         </Header>
@@ -37,7 +53,8 @@ export default class MilestonesView extends Component {
             <Grid.Column style={{ width: "15rem" }}>
               <Segment vertical>
                 <Button inverted color="red" onClick={this.handleEditMilestone}>
-                  Edit milestones
+                  {(!this.state.isEdit && "Edit milestones") ||
+                    (this.state.isEdit && "Stop Editing")}
                 </Button>
               </Segment>
             </Grid.Column>
