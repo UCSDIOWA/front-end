@@ -31,6 +31,7 @@ export default class ProjectDashboardView extends Component {
 
     this.setState({ currentProgress: currProg, currentWeight: currWeight });
   }
+  
   handleIncrementProgress(updateWeight) {
     var currProg = this.state.currentProgress;
     var currWeight = this.state.currentWeight;
