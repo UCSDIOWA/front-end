@@ -14,7 +14,7 @@ export default class InviteUserView extends Component {
         </Form.Field>
         <Segment textAlign="center" vertical>
           {" "}
-          <Button type="submit" color="linkedin" onclick={this.handleSubmit}>
+          <Button type="submit" color="linkedin" onClick={this.handleSubmit}>
             Submit
           </Button>
         </Segment>

@@ -56,12 +56,22 @@ export default class GatewayProjectTable extends Component {
   }
   componentDidMount() {
     const userProfilePromise = getUserProfile(UserSession.getEmail());
-    userProfilePromise
-      .then(response => {
-        console.log(response);
-        this.setState({ projectList: response.currentprojects });
-      })
-      .then(this.tableGenerate(this.state.activePage));
+    userProfilePromise.then(response => {
+      console.log(response);
+      var idArray = response.currentprojects;
+      const projDataPromise = getProjectInfo(idArray);
+      projDataPromise
+        .then(response => {
+          console.log(response);
+          console.log(response.projects);
+          this.setState({ projectList: response.projects });
+          return response;
+        })
+        .then(response => {
+          console.log(this.state.projectList);
+          this.tableGenerate(this.state.activePage);
+        });
+    });
   }
 
   handlePaginationChange = (e, { activePage }) => {
@@ -70,26 +80,32 @@ export default class GatewayProjectTable extends Component {
 
   tableGenerate(activePage) {
     var list = [];
+    console.log("herro");
+    console.log(this.state.projectList);
+    console.log(this.state.projectList.length);
     //loop through retrieved current projects and grab each based on active page index
     for (
       //grabs up to 4 total projects to populate a page of the pagination
       var i = (activePage - 1) * this.state.projsPerPage;
-      i < activePage * this.state.projsPerPage && i < this.state.projectList;
+      i < activePage * this.state.projsPerPage &&
+      i < this.state.projectList.length;
       i++
     ) {
       list.push(
         <GatewayProjectTileEvent
           isFinished={false}
-          projName={this.state.projectList[i].projName}
-          groupSize={this.state.projectList[i].groupSize}
-          projRole={this.state.projectList[i].projRole}
-          percentDone={this.state.projectList[i].percentDone}
+          projName={this.state.projectList[i].title}
+          groupSize={this.state.projectList[i].groupsize}
+          //projRole={this.state.projectList[i].projRole}
+          percentDone={30}
           tags={this.state.projectList[i].tags}
           key={i}
         />
       );
     }
+    console.log(list);
     this.setState({ tableRows: list, activePage: activePage });
+    console.log(this.state.tableRows);
   }
 
   render() {
