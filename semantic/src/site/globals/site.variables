@@ -1,3 +1,9 @@
 /*******************************
      User Global Variables
 *******************************/
+
+@blue   : #253c78;
+@pink   : #f794a3;
+@green  : #83aa3b;
+@beige  : #ffeecf;
+@brown  : #c9a690;

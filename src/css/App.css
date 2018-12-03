@@ -10,7 +10,9 @@
 .App-container {
   padding-top: 5vh;
   width: auto;
-  background-color:lightgreen;
+  background-image: url("../resources/background.jpg");
+  background-position: center;
+  background-size: cover;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -23,7 +25,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #253c78;
 }
 
 /*profileView components */
