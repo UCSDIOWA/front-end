@@ -70,14 +70,14 @@ export default class AddMilestonesView extends Component {
             />
           </Segment>
           <Segment vertical>
-            <Icon name="heartbeat" />
+            <Icon name="calendar alternate" />
             <Input
               placeholder="Deadline"
               onChange={e => this.setState({ msDeadline: e.target.value })}
             />
           </Segment>
           <Segment vertical>
-            <Icon name="heartbeat" />
+            <Icon name="tasks" />
             <Input
               placeholder="Description"
               onChange={e => this.setState({ msDescription: e.target.value })}
