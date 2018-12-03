@@ -8,12 +8,53 @@ import AnnouncementsView from "./AnnouncementsView";
 export default class ProjectDashboardView extends Component {
   constructor(props) {
     super(props);
-    this.state = { milestoneArray: [], editMilestoneArray: [] };
+    this.state = {
+      milestoneArray: [],
+      editMilestoneArray: [],
+      currentProgress: 100,
+      currentWeight: 0,
+      totalWeight: 100
+    };
     this.handleAddMilestone = this.handleAddMilestone.bind(this);
     this.handleRemoveMilestone = this.handleRemoveMilestone.bind(this);
+    this.handleIncrementProgress = this.handleIncrementProgress.bind(this);
+    this.handleDecrementProgress = this.handleDecrementProgress.bind(this);
+  }
+
+  handleDecrementProgress(updateWeight) {
+    var currProg = this.state.currentProgress;
+    var currWeight = this.state.currentWeight;
+    currWeight = currWeight * 1 - updateWeight * 1;
+
+    currProg = Math.ceil(100 * (currWeight / this.state.totalWeight));
+
+    this.setState({ currentProgress: currProg, currentWeight: currWeight });
+  }
+  handleIncrementProgress(updateWeight) {
+    var currProg = this.state.currentProgress;
+    var currWeight = this.state.currentWeight;
+
+    //update current weight
+    currWeight = currWeight * 1 + updateWeight * 1;
+
+    currProg = Math.ceil(100 * (currWeight / this.state.totalWeight));
+
+    this.setState({ currentProgress: currProg, currentWeight: currWeight });
   }
 
   handleAddMilestone(msName, msWeight, msDeadline, msDescription) {
+    //handles adding weight from total milestones weight
+    var totalWeight = this.state.totalWeight;
+    var currWeight = this.state.currentWeight;
+    console.log("old total: " + totalWeight);
+    totalWeight = totalWeight * 1 + msWeight * 1;
+    console.log("new total: " + totalWeight);
+
+    this.setState({
+      currentProgress: Math.ceil(100 * (currWeight / totalWeight)),
+      totalWeight: totalWeight,
+      currentWeight: currWeight
+    });
     //TODO include sending new Milestone object to backend
     var newMilestone1 = (
       <MilestonesViewEvent
@@ -23,6 +64,8 @@ export default class ProjectDashboardView extends Component {
         msDescription={msDescription}
         key={msName}
         isDelete={false}
+        updateProgFunc={this.handleIncrementProgress}
+        decrementProgFunc={this.handleDecrementProgress}
       />
     );
     var newMilestone2 = (
@@ -34,6 +77,7 @@ export default class ProjectDashboardView extends Component {
         key={msName}
         isDelete={true}
         deleteFunc={this.handleRemoveMilestone}
+        decrementProgFunc={this.handleDecrementProgress}
       />
     );
     this.setState({
@@ -42,7 +86,19 @@ export default class ProjectDashboardView extends Component {
     });
   }
 
-  handleRemoveMilestone(msName) {
+  handleRemoveMilestone(msName, msWeight) {
+    //handles removing weight from total milestones weight
+    var totalWeight = this.state.totalWeight;
+    var currWeight = this.state.currentWeight;
+    totalWeight -= msWeight;
+
+    this.setState({
+      currentProgress: Math.ceil(100 * (currWeight / totalWeight)),
+      totalWeight: totalWeight,
+      currentWeight: currWeight
+    });
+
+    //handles removing from display
     var list = [];
     var list2 = [];
     for (var i = 0; i < this.state.milestoneArray.length; i++) {
@@ -60,56 +116,85 @@ export default class ProjectDashboardView extends Component {
       milestoneArray: [
         <MilestonesViewEvent
           msName="testmilestone1"
-          msWeight={69}
+          msWeight={25}
           msDeadline="never"
           msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
           key="testmilestone1"
           isDelete={false}
+          updateProgFunc={this.handleIncrementProgress}
+          decrementProgFunc={this.handleDecrementProgress}
         />,
         <MilestonesViewEvent
           msName="testmilestone2"
-          msWeight={69}
+          msWeight={25}
           msDeadline="never"
           msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
           key="testmilestone2"
           isDelete={false}
+          updateProgFunc={this.handleIncrementProgress}
+          decrementProgFunc={this.handleDecrementProgress}
         />,
         <MilestonesViewEvent
           msName="testmilestone3"
-          msWeight={69}
+          msWeight={25}
           msDeadline="never"
           msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
           key="testmilestone3"
           isDelete={false}
+          updateProgFunc={this.handleIncrementProgress}
+          decrementProgFunc={this.handleDecrementProgress}
+        />,
+        <MilestonesViewEvent
+          msName="testmilestone4"
+          msWeight={25}
+          msDeadline="never"
+          msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
+          key="testmilestone4"
+          isDelete={false}
+          updateProgFunc={this.handleIncrementProgress}
+          decrementProgFunc={this.handleDecrementProgress}
         />
       ],
       editMilestoneArray: [
         <MilestonesViewEvent
           msName="testmilestone1"
-          msWeight={69}
+          msWeight={25}
           msDeadline="never"
           msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
           key="testmilestone1"
           isDelete={true}
           deleteFunc={this.handleRemoveMilestone}
+          decrementProgFunc={this.handleDecrementProgress}
         />,
         <MilestonesViewEvent
           msName="testmilestone2"
-          msWeight={69}
+          msWeight={25}
           msDeadline="never"
           msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
           key="testmilestone2"
           isDelete={true}
           deleteFunc={this.handleRemoveMilestone}
+          decrementProgFunc={this.handleDecrementProgress}
         />,
         <MilestonesViewEvent
           msName="testmilestone3"
-          msWeight={69}
+          msWeight={25}
           msDeadline="never"
           msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
           key="testmilestone3"
           isDelete={true}
           deleteFunc={this.handleRemoveMilestone}
+          decrementProgFunc={this.handleDecrementProgress}
+        />,
+        <MilestonesViewEvent
+          msName="testmilestone4"
+          msWeight={25}
+          msDeadline="never"
+          msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
+          key="testmilestone4"
+          isDelete={true}
+          deleteFunc={this.handleRemoveMilestone}
+          decrementProgFunc={this.handleDecrementProgress}
         />
       ]
     });
@@ -130,7 +215,8 @@ export default class ProjectDashboardView extends Component {
                 handleAddMilestone={this.handleAddMilestone}
                 milestoneArray={list}
                 editMilestoneArray={list2}
-                currentProjectName="{Project Name}"
+                currentProjectName="Project Name"
+                currentProgress={this.state.currentProgress}
               />
             </Grid.Column>
             <Grid.Column className="profile-columns3">
