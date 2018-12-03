@@ -30,8 +30,8 @@ export default class ProfileView extends Component {
       console.log(response.currentprojects);
       console.log(response.previousprojects);
       if (
-        response.currentprojects != undefined ||
-        response.previousprojects != undefined
+        response.currentprojects !== undefined ||
+        response.previousprojects !== undefined
       ) {
         console.log("reached boi");
         let allProjectIDs = undefined;
@@ -60,10 +60,6 @@ export default class ProfileView extends Component {
       console.log("project response: ");
       console.log(response);
       let allProjects = response.projects;
-      console.log(allProjects);
-      console.log(allProjects[0]);
-      console.log(allProjects.slice(0, currentProjectsIndex));
-      console.log(allProjects.slice(currentProjectsIndex, response.length));
       this.setState({
         currentProjects: allProjects.slice(0, currentProjectsIndex),
         previousProjects: allProjects.slice(

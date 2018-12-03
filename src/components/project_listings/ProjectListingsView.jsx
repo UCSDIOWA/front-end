@@ -52,7 +52,7 @@ export default class ProjectListingsView extends Component {
       console.log(response);
       let successful = response.success;
       if (!successful) {
-        alert("Error loading projects")
+        alert("Error loading projects, please try again later");
       }
       return response.projects;
     })

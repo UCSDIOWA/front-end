@@ -2,6 +2,7 @@ import UserSession from "./UserSession";
 
 export function signup(email, password, first_name, last_name, imageStr) {
   let url = "https://tea-login-api.herokuapp.com/signup";
+  console.log(imageStr);
   let data = {
     email: email,
     password: password,
@@ -9,6 +10,7 @@ export function signup(email, password, first_name, last_name, imageStr) {
     lastname: last_name,
     profileimage: imageStr
   };
+  console.log(data);
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data)
@@ -120,7 +122,6 @@ export function getProjectListings(userEmail) {
     body: JSON.stringify(data)
   })
     .then(response => {
-      //console.log(response);
       return response.json();
     })
     .catch(error => {

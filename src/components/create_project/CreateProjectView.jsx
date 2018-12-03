@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import CreateProjectForm from "./CreateProjectForm";
 import { createProject } from "../../server/api";
+import {Redirect} from "react-router-dom";
+import { navConsts } from "../../constants";
 
 export default class CreateProjectView extends Component {
   constructor(props) {
     super(props);
-    this.state = {isSubmitting: false};
+    this.state = {isSubmitting: false, redirect:false};
     this.handleCreateProject = this.handleCreateProject.bind(this);
   }
 
@@ -48,16 +50,22 @@ export default class CreateProjectView extends Component {
       } else {
         // update
         alert("Successfully created project!");
+        this.setState({redirect: true});
       }
     });
   }
 
   render() {
-    return (
-      <CreateProjectForm 
-        isSubmitting={this.state.isSubmitting} 
-        onCreateProject={this.handleCreateProject} 
-      />
-    );
+    const {GATEWAY} = navConsts;
+    return this.state.redirect ?
+      (
+        <Redirect to={GATEWAY} />
+      ) : (
+        <CreateProjectForm 
+          isSubmitting={this.state.isSubmitting} 
+          onCreateProject={this.handleCreateProject} 
+        />
+      )
+      
   }
 }
