@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Segment, Grid, Button, Checkbox, Form } from "semantic-ui-react";
 
 export default class InviteUserView extends Component {
+  handleSubmit() {
+    //inviteUser()
+  }
   render() {
     return (
       <Form>
@@ -11,7 +14,7 @@ export default class InviteUserView extends Component {
         </Form.Field>
         <Segment textAlign="center" vertical>
           {" "}
-          <Button type="submit" color="linkedin">
+          <Button type="submit" color="linkedin" onclick={this.handleSubmit}>
             Submit
           </Button>
         </Segment>

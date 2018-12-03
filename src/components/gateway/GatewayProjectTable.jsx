@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-
+import { getProjectInfo, getUserProfile } from "../../server/api";
 import { Segment, Pagination, Table, Grid } from "semantic-ui-react";
 import GatewayProjectTileEvent from "./GatewayProjectTileEvent";
+import UserSession from "../../server/UserSession";
 
 export default class GatewayProjectTable extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ export default class GatewayProjectTable extends Component {
       projsPerPage: 4,
       tableRows: [],
       activePage: 1,
-      testList: [
+      projectList: []
+      /* testList: [
         {
           projName: "name1",
           groupSize: 5,
@@ -49,8 +51,17 @@ export default class GatewayProjectTable extends Component {
           percentDone: 34,
           tags: "Hello, my, name, jeff"
         }
-      ]
+      ] */
     };
+  }
+  componentDidMount() {
+    const userProfilePromise = getUserProfile(UserSession.getEmail());
+    userProfilePromise
+      .then(response => {
+        console.log(response);
+        this.setState({ projectList: response.currentprojects });
+      })
+      .then(this.tableGenerate(this.state.activePage));
   }
 
   handlePaginationChange = (e, { activePage }) => {
@@ -63,33 +74,30 @@ export default class GatewayProjectTable extends Component {
     for (
       //grabs up to 4 total projects to populate a page of the pagination
       var i = (activePage - 1) * this.state.projsPerPage;
-      i < activePage * this.state.projsPerPage && i < this.props.totalProjs;
+      i < activePage * this.state.projsPerPage && i < this.state.projectList;
       i++
     ) {
       list.push(
-          <GatewayProjectTileEvent
-            isFinished={false}
-            projName={this.state.testList[i].projName}
-            groupSize={this.state.testList[i].groupSize}
-            projRole={this.state.testList[i].projRole}
-            percentDone={this.state.testList[i].percentDone}
-            tags={this.state.testList[i].tags}
-            key={i}
-          />
-  
+        <GatewayProjectTileEvent
+          isFinished={false}
+          projName={this.state.projectList[i].projName}
+          groupSize={this.state.projectList[i].groupSize}
+          projRole={this.state.projectList[i].projRole}
+          percentDone={this.state.projectList[i].percentDone}
+          tags={this.state.projectList[i].tags}
+          key={i}
+        />
       );
     }
     this.setState({ tableRows: list, activePage: activePage });
   }
 
-  //calls on every re-render
-  componentDidMount() {
-    this.tableGenerate(this.state.activePage);
-  }
   render() {
     return (
       <Segment>
-        <Segment.Group style={{width:'50vh'}} >{this.state.tableRows}</Segment.Group>
+        <Segment.Group style={{ width: "50vh" }}>
+          {this.state.tableRows}
+        </Segment.Group>
         <Pagination
           totalPages={Math.ceil(
             this.props.totalProjs / this.state.projsPerPage

@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import GatewayProjectTable from "./GatewayProjectTable";
 
 export default class GatewayView extends Component {
-
   render() {
     const {
       GATEWAY,
@@ -32,7 +31,7 @@ export default class GatewayView extends Component {
         </Link>
         <hr />
         <h1>My Projects</h1>
-        <GatewayProjectTable totalProjs={5} />
+        <GatewayProjectTable />
       </div>
     );
   }
