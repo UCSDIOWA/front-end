@@ -17,6 +17,7 @@ import {
   Icon,
   Confirm,
   Dropdown,
+  Container,
   Label
 } from "semantic-ui-react";
 
@@ -236,7 +237,7 @@ export default class EditProjectForm extends Component {
           </Form.Field>
         </Segment>
 
-        <Segment>
+        <Segment vertical>
           <Form.Field>
            <label> Edit Tags </label>
             <Form.Input
@@ -254,10 +255,12 @@ export default class EditProjectForm extends Component {
               Add Tag
             </Button>
           </Form.Field>
-          
+
           <Form.Field>
             <label> Current Tags </label>
-            <CurrentTags onRemoveTag={this.handleRemoveTag} tags={this.state.tags} />
+            <Segment>
+              <CurrentTags onRemoveTag={this.handleRemoveTag} tags={this.state.tags} />
+            </Segment>
           </Form.Field>
         </Segment>
       </Segment.Group>
