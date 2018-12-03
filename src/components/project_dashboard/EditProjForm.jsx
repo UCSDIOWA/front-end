@@ -237,7 +237,7 @@ export default class EditProjectForm extends Component {
           </Form.Field>
         </Segment>
 
-        <Segment vertical>
+        <Segment>
           <Form.Field>
            <label> Edit Tags </label>
             <Form.Input
@@ -280,7 +280,7 @@ export default class EditProjectForm extends Component {
                     Member Requests
                   </Button>
                 }
-                size="mini"
+                size="large"
               >
                 <Header icon="address card" content="Member Requests" />
                 <Modal.Content>{this.state.pendingMembersView}</Modal.Content>
