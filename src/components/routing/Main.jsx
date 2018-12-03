@@ -28,6 +28,8 @@ export default class Main extends Component {
       PROJECT_LISTINGS
     } = navConsts;
 
+
+
     const AUTHENTICATED = this.props.isAuthenticated;
     console.log("Rendering Main, isAuthenticated = " + AUTHENTICATED);
     // hard coded a redirect to gateway if logged in and on /login, TODO fix later
@@ -87,8 +89,7 @@ export default class Main extends Component {
             isAuthenticated={AUTHENTICATED}
           />
           <ProtectedRoute
-            exact
-            path={"/" + DASHBOARD}
+            path={"/" + DASHBOARD + "/:id"}
             component={ProjectDashboardView}
             isAuthenticated={AUTHENTICATED}
           />

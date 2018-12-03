@@ -13,7 +13,7 @@ import GoogleCalendar from "./GoogleCalendar";
 export default class CalendarWidget extends Component {
   constructor(props) {
     super(props);
-    this.state = { hasCalendar: this.props.hasCalendar, calendarID: "" };
+    this.state = { hasCalendar: this.props.hasCalendar, calendarID: this.props.calendarID };
     this.addCalendar = this.addCalendar.bind(this);
     this.setID = this.setID.bind(this);
   }

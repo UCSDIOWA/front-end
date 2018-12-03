@@ -8,11 +8,7 @@ import GatewayProjectTable from "./GatewayProjectTable";
 export default class GatewayView extends Component {
   render() {
     const {
-      GATEWAY,
-      SIGNUP,
-      PROFILE,
       CREATE_PROJECT,
-      SEARCH_PROJECT,
       DASHBOARD,
       PROJECT_LISTINGS
     } = navConsts;

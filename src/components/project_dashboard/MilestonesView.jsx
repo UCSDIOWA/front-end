@@ -35,7 +35,7 @@ export default class MilestonesView extends Component {
             <hr />
             <Modal trigger={<Button>Endorse Teammates</Button>} size="mini">
               <Modal.Content>
-                <EndorseTeammatesView />
+                <EndorseTeammatesView memberslist={this.props.memberslist} />
               </Modal.Content>
             </Modal>
           </Segment>

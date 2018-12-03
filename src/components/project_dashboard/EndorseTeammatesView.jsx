@@ -16,8 +16,8 @@ export default class EndorseTeammatesView extends Component {
     super(props);
     this.state = {
       teammatesEvents: [],
-      teamSize: 5,
-      teammateNames: ["john", "bob", "urmum", "gary", "paul"]
+      teamSize: this.props.memberslist.length,
+      teammateNames: this.props.memberslist
     };
   }
 

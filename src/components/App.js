@@ -83,8 +83,7 @@ class App extends Component {
 
   render() {
     console.log("Rerendering App");
-    // console.log(this.state.announcements);
-    // list of announcement referenced by a key of themselves
+    // list of announcement referenced by a key of indices
     const systemMessageItems = this.state.systemMessages.map(
       (systemMessage, index) => (
         <List.Item key={index}>

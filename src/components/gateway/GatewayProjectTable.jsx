@@ -16,51 +16,15 @@ export default class GatewayProjectTable extends Component {
       tableRows: [],
       activePage: 1,
       projectList: []
-      /* testList: [
-        {
-          projName: "name1",
-          groupSize: 5,
-          projRole: "role1",
-          percentDone: 34,
-          tags: "Hello, my, name, jeff"
-        },
-        {
-          projName: "name2",
-          groupSize: 5,
-          projRole: "role2",
-          percentDone: 34,
-          tags: "Hello, my, name, jeff"
-        },
-        {
-          projName: "name3",
-          groupSize: 5,
-          projRole: "role3",
-          percentDone: 34,
-          tags: "Hello, my, name, jeff"
-        },
-        {
-          projName: "name4",
-          groupSize: 5,
-          projRole: "role4",
-          percentDone: 34,
-          tags: "Hello, my, name, jeff"
-        },
-        {
-          projName: "name5",
-          groupSize: 5,
-          projRole: "role5",
-          percentDone: 34,
-          tags: "Hello, my, name, jeff"
-        }
-      ] */
     };
   }
   componentDidMount() {
     const userProfilePromise = getUserProfile(UserSession.getEmail());
     userProfilePromise.then(response => {
-      console.log(response);
+      
+      //console.log(response);
       var idArray = response.currentprojects;
-      console.log(idArray);
+      //console.log(idArray);
       if (idArray !== undefined) {
         const projDataPromise = getProjectInfo(idArray);
         projDataPromise
@@ -71,7 +35,7 @@ export default class GatewayProjectTable extends Component {
             return response;
           })
           .then(response => {
-            console.log(this.state.projectList);
+            //console.log(this.state.projectList);
             this.tableGenerate(this.state.activePage);
           });
       } else {
@@ -86,9 +50,6 @@ export default class GatewayProjectTable extends Component {
 
   tableGenerate(activePage) {
     var list = [];
-    //console.log("herro");
-    //console.log(this.state.projectList);
-    //console.log(this.state.projectList.length);
     //loop through retrieved current projects and grab each based on active page index
     for (
       //grabs up to 4 total projects to populate a page of the pagination
@@ -99,19 +60,19 @@ export default class GatewayProjectTable extends Component {
     ) {
       list.push(
         <GatewayProjectTileEvent
+          projectId={this.state.projectList[i].xid}
           isFinished={false}
           projName={this.state.projectList[i].title}
           groupSize={this.state.projectList[i].groupsize}
-          //projRole={this.state.projectList[i].projRole}
           percentDone={30}
           tags={this.state.projectList[i].tags}
           key={i}
         />
       );
     }
-    console.log(list);
+    //console.log(list);
     this.setState({ tableRows: list, activePage: activePage });
-    console.log(this.state.tableRows);
+    //console.log(this.state.tableRows);
   }
 
   render() {
