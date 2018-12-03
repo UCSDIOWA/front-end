@@ -15,9 +15,9 @@ export default class ForgotPasswordView extends Component {
     const result = sendRecoverPasswordEmail(email);
     const recoverySent = result;
     if (!recoverySent) {
-      this.props.onAnnouncement("Failed to send recovery email");
+      this.props.onSystemMessage("Failed to send recovery email");
     } else {
-      this.props.onAnnouncement("Sent Recovery Email to " + email + "!");
+      this.props.onSystemMessage("Sent Recovery Email to " + email + "!");
     }
     this.setState({ isSubmissionSuccessful: result, sEmail: email });
   }

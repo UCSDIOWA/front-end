@@ -47,7 +47,7 @@ export default class GatewayProjectTileEvent extends Component {
             index={0}
             onClick={this.handleClick}
           >
-            <Link to={"/" + DASHBOARD}>
+            <Link to={"/" + DASHBOARD + "/" + this.props.projectId}>
               <Button floated="right">Go to Dashboard</Button>
             </Link>
             <Header as="h4">

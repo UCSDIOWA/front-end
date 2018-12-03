@@ -11,7 +11,7 @@ export default class ProjectListingCard extends Component {
   requestButton = () => (
     <Button inverted color="blue" primary floated='right' onClick={() => {
  
-        const joinReqPromise = sendJoinRequest(this.props.projectId, UserSession.getEmail);
+        const joinReqPromise = sendJoinRequest(this.props.projectId, UserSession.getEmail());
         var sendSuccess = false;
         joinReqPromise.then(response => {
           console.log(response);
@@ -31,7 +31,7 @@ export default class ProjectListingCard extends Component {
   render() {
 
     return (
-      <Card fluid centered style={{width:'100vh', height:'25vh'}}>
+      <Card fluid centered style={{width:'100vh'}}>
         <Card.Content>
           <List inverted>
             <List.Item>

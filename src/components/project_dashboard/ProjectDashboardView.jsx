@@ -1,39 +1,79 @@
 import React, { Component } from "react";
-import { Popup, Segment, Button, Grid, GridRow } from "semantic-ui-react";
+import { Popup, Segment, Button, Grid, Header } from "semantic-ui-react";
 import MilestonesView from "./MilestonesView";
 import MilestonesViewEvent from "./MilestonesViewEvent";
 import CalendarWidget from "./CalendarWidget";
 import AnnouncementsView from "./AnnouncementsView";
 import InviteUserView from "./InviteUserView";
+import {getProjectInfo} from "../../server/api";
+import ProjectInfoWidget from "./ProjectInfoWidget";
+
 
 export default class ProjectDashboardView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      xid: props.match.params.id,
       milestoneArray: [],
       editMilestoneArray: [],
-      currentProgress: 100,
       currentWeight: 0,
-      totalWeight: 100
+      totalWeight: 0,
     };
+    //console.log(this.state.projId);
     this.handleAddMilestone = this.handleAddMilestone.bind(this);
     this.handleRemoveMilestone = this.handleRemoveMilestone.bind(this);
     this.handleIncrementProgress = this.handleIncrementProgress.bind(this);
     this.handleDecrementProgress = this.handleDecrementProgress.bind(this);
   }
 
+  componentDidMount() {
+    const projDataPromise = getProjectInfo([this.state.xid]);
+    projDataPromise.then(response => {
+      console.log("get project info response: ");
+      console.log(response);
+      if (response.success) {
+        return response.projects[0];
+      }
+      else {
+        alert("Error loading project")
+      }
+      
+    })
+      .then((projectInfo) => { // TODO update to retrieve milestones from db
+        this.setState({
+          xid: projectInfo.xid,
+          title: projectInfo.title,
+          projectleader: projectInfo.projectleader,
+          percentdone: projectInfo.percentdone,
+          groupsize: projectInfo.groupsize,
+          isprivate: projectInfo.isprivate,
+          tags: projectInfo.tags,
+          deadline: projectInfo.deadline,
+          calendarid: projectInfo.calendarid,
+          description: projectInfo.description,
+          done: projectInfo.done,
+          joinrequests: projectInfo.joinrequests,
+          memberslist: projectInfo.memberslist,
+          milestones : projectInfo.milestones,
+          pinnedannouncements: projectInfo.pinnedannouncements,
+          unpinnedannouncements: projectInfo.unpinnedannouncements
+        });
+      });
+      
+  }
+
   handleDecrementProgress(updateWeight) {
-    var currProg = this.state.currentProgress;
+    var currProg = this.state.percentdone;
     var currWeight = this.state.currentWeight;
     currWeight = currWeight * 1 - updateWeight * 1;
 
     currProg = Math.ceil(100 * (currWeight / this.state.totalWeight));
 
-    this.setState({ currentProgress: currProg, currentWeight: currWeight });
+    this.setState({ percentdone: currProg, currentWeight: currWeight });
   }
-  
+
   handleIncrementProgress(updateWeight) {
-    var currProg = this.state.currentProgress;
+    var currProg = this.state.percentdone;
     var currWeight = this.state.currentWeight;
 
     //update current weight
@@ -41,7 +81,7 @@ export default class ProjectDashboardView extends Component {
 
     currProg = Math.ceil(100 * (currWeight / this.state.totalWeight));
 
-    this.setState({ currentProgress: currProg, currentWeight: currWeight });
+    this.setState({ percentdone: currProg, currentWeight: currWeight });
   }
 
   handleAddMilestone(msName, msWeight, msDeadline, msDescription) {
@@ -53,7 +93,7 @@ export default class ProjectDashboardView extends Component {
     console.log("new total: " + totalWeight);
 
     this.setState({
-      currentProgress: Math.ceil(100 * (currWeight / totalWeight)),
+      percentdone: Math.ceil(100 * (currWeight / totalWeight)),
       totalWeight: totalWeight,
       currentWeight: currWeight
     });
@@ -95,7 +135,7 @@ export default class ProjectDashboardView extends Component {
     totalWeight -= msWeight;
 
     this.setState({
-      currentProgress: Math.ceil(100 * (currWeight / totalWeight)),
+      percentdone: Math.ceil(100 * (currWeight / totalWeight)),
       totalWeight: totalWeight,
       currentWeight: currWeight
     });
@@ -113,9 +153,7 @@ export default class ProjectDashboardView extends Component {
     this.setState({ milestoneArray: list, editMilestoneArray: list2 });
   }
 
-  componentDidMount() {
-    this.setState({
-      milestoneArray: [
+  /* Format for MilstonesViewEvent
         <MilestonesViewEvent
           msName="testmilestone1"
           msWeight={25}
@@ -126,99 +164,41 @@ export default class ProjectDashboardView extends Component {
           updateProgFunc={this.handleIncrementProgress}
           decrementProgFunc={this.handleDecrementProgress}
         />,
-        <MilestonesViewEvent
-          msName="testmilestone2"
-          msWeight={25}
-          msDeadline="never"
-          msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
-          key="testmilestone2"
-          isDelete={false}
-          updateProgFunc={this.handleIncrementProgress}
-          decrementProgFunc={this.handleDecrementProgress}
-        />,
-        <MilestonesViewEvent
-          msName="testmilestone3"
-          msWeight={25}
-          msDeadline="never"
-          msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
-          key="testmilestone3"
-          isDelete={false}
-          updateProgFunc={this.handleIncrementProgress}
-          decrementProgFunc={this.handleDecrementProgress}
-        />,
-        <MilestonesViewEvent
-          msName="testmilestone4"
-          msWeight={25}
-          msDeadline="never"
-          msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
-          key="testmilestone4"
-          isDelete={false}
-          updateProgFunc={this.handleIncrementProgress}
-          decrementProgFunc={this.handleDecrementProgress}
-        />
-      ],
-      editMilestoneArray: [
-        <MilestonesViewEvent
-          msName="testmilestone1"
-          msWeight={25}
-          msDeadline="never"
-          msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
-          key="testmilestone1"
-          isDelete={true}
-          deleteFunc={this.handleRemoveMilestone}
-          decrementProgFunc={this.handleDecrementProgress}
-        />,
-        <MilestonesViewEvent
-          msName="testmilestone2"
-          msWeight={25}
-          msDeadline="never"
-          msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
-          key="testmilestone2"
-          isDelete={true}
-          deleteFunc={this.handleRemoveMilestone}
-          decrementProgFunc={this.handleDecrementProgress}
-        />,
-        <MilestonesViewEvent
-          msName="testmilestone3"
-          msWeight={25}
-          msDeadline="never"
-          msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
-          key="testmilestone3"
-          isDelete={true}
-          deleteFunc={this.handleRemoveMilestone}
-          decrementProgFunc={this.handleDecrementProgress}
-        />,
-        <MilestonesViewEvent
-          msName="testmilestone4"
-          msWeight={25}
-          msDeadline="never"
-          msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
-          key="testmilestone4"
-          isDelete={true}
-          deleteFunc={this.handleRemoveMilestone}
-          decrementProgFunc={this.handleDecrementProgress}
-        />
-      ]
-    });
-  }
+  */
+
   render() {
     //TODO have call to repopulate list from backend
+    console.log("Rendering Dashboard View");
+    console.log(this.state);
+
     const list = this.state.milestoneArray;
     const list2 = this.state.editMilestoneArray;
     return (
       <Segment>
         <Grid centered style={{ width: "60rem" }}>
           <Grid.Row>
-            <h1>Project Name</h1>
+            <Header as='h1'>{this.state.title}</Header>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column className="profile-columns3">
+             
+              <ProjectInfoWidget 
+                projectLeader={this.state.projectleader}
+                groupSize={this.state.groupsize}
+                tags={this.state.tags}
+                isPrivate={this.state.isprivate}
+                deadline={this.state.deadline}
+                description={this.state.description}
+                memberslist={this.state.memberslist}
+              />
+
               <MilestonesView
                 handleAddMilestone={this.handleAddMilestone}
                 milestoneArray={list}
                 editMilestoneArray={list2}
                 currentProjectName="Project Name"
-                currentProgress={this.state.currentProgress}
+                currentProgress={this.state.percentdone}
+                memberslist={this.state.memberslist}
               />
               <Segment>
                 <InviteUserView />
@@ -226,10 +206,14 @@ export default class ProjectDashboardView extends Component {
             </Grid.Column>
             <Grid.Column className="profile-columns3">
               <Segment textAlign="center">
-                <h1>Calendar</h1>
-                <CalendarWidget />
+                <h2>Calendar</h2>
+                <CalendarWidget hasCalendar={this.props.calendarid != null} calendarId={this.props.calendarid}/>
               </Segment>
               <AnnouncementsView />
+              <Segment textAlign='center'>
+                <h2>UCSD Dibs</h2>
+                <a>https://ucsd.evanced.info/dibs</a>
+              </Segment>
             </Grid.Column>
           </Grid.Row>
         </Grid>

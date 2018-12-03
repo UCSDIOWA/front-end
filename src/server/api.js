@@ -62,6 +62,7 @@ export function getUserProfile(email) {
     body: JSON.stringify(data)
   })
     .then(response => {
+      console.log("get user profile response");
       console.log(response);
       return response.json();
     })
@@ -71,9 +72,10 @@ export function getUserProfile(email) {
     });
 }
 
-export function getProjectInfo(projectid) {
+
+export function getProjectInfo(projectids) {
   let url = "https://tea-project-handler-api.herokuapp.com/getprojects";
-  let data = { xid: projectid };
+  let data = { xid: projectids };
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data)
@@ -111,8 +113,6 @@ export function updateUserProfile(valueList) {
 
 //{ project_name: string, percentage_done: float, group_size: int,
 //  tags: list }
-//TODO replace with actual project information
-//https://tea-project-handler-api.herokuapp.com/getallprojects
 export function getProjectListings(userEmail) {
   let url = "https://tea-project-handler-api.herokuapp.com/getallprojects";
   let data = {
@@ -131,6 +131,7 @@ export function getProjectListings(userEmail) {
     });
 }
 
+// backend not ready
 export function inviteUser(xid, remail, semail) {
   let url = "https://tea-project-handler-api.herokuapp.com/inviteuser";
   let data = {
@@ -151,7 +152,7 @@ export function inviteUser(xid, remail, semail) {
       console.log(error);
     });
 }
-// getting project info for EditProjectForm
+// to fix
 export function getEditProjForm(valueList) {
   let url = "https://tea-login-api.herokuapp.com/editProjForm";
   let data = {
@@ -226,6 +227,7 @@ export function sendJoinRequest(projectId, useremail) {
     xid: projectId,
     email: useremail
   };
+  console.log(data);
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(data)

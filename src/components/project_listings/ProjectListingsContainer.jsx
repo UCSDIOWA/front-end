@@ -7,10 +7,12 @@ import { Icon, Button, Header, Pagination, Grid, Segment } from "semantic-ui-rea
 export default class ProjectListingsContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {activePage: 1};
+    this.handlePaginationChange = this.handlePaginationChange.bind(this);
   }
 
-  handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
+  handlePaginationChange(e, { activePage }) {
+    this.props.onPageChange(activePage)
+  }
 
 
 
@@ -20,7 +22,7 @@ export default class ProjectListingsContainer extends Component {
       var toReturn = noProjectListingFound;
     }
     else {
-      let list = this.props.projectListings[this.state.activePage - 1].map((projectListing) => (
+      let list = this.props.projectListings[this.props.activePage - 1].map((projectListing) => (
         <ProjectListingCard 
           key={projectListing.xid}
           projectTitle={projectListing.title}
@@ -40,7 +42,7 @@ export default class ProjectListingsContainer extends Component {
         <Segment vertical padded loading={this.props.isLoading} style={{width:'100vh', height:'100%'}}>
           <Segment.Group>
             <Pagination
-              activePage={this.state.activePage}
+              activePage={this.props.activePage}
               onPageChange={this.handlePaginationChange}
               totalPages={this.props.projectListings.length}
             />

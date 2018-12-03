@@ -35,19 +35,22 @@ export default class LoginView extends Component {
 
   render() {
     return (
+      <main className="App-container-login">
       <Grid
         textAlign="center"
-        style={{ height: "100%" }}
+        style={{ height: "100%"}}
         verticalAlign="middle"
       >
-        <Grid.Column style={{ maxWidth: 800 }} />
+        <Grid.Column width={4}>
         <LoginLogo />
 
         <LoginForm
           onLogin={this.handleLogin}
           onLoadingLogin={this.state.loginLoading}
         />
+        </Grid.Column>
       </Grid>
+      </main>
     );
   }
 }

@@ -326,7 +326,7 @@ export default class CreateProjectForm extends Component {
                 </Grid.Row>
               </Grid.Column>
               <Grid.Row centered>
-                <Link to={"/" + DASHBOARD}>
+                <Link to={"/" + GATEWAY}>
                   <Button color="teal" onClick={this.handleSubmit}>
                     Create
                   </Button>

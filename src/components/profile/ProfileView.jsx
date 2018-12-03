@@ -72,9 +72,11 @@ export default class ProfileView extends Component {
           response.length
         )
       });
+      /*
       console.log(this.state.currentProjects);
       console.log(this.state.previousProjects);
       console.log(this.state.profileDescription);
+      */
     });
   }
 

@@ -34,13 +34,16 @@ export default class ProjectListingsView extends Component {
       searchListings: [],
 
       tagSelections: [],
-      isLoading: false
+      isLoading: false,
+
+      activePage: 1
     }
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchResultsReset = this.handleSearchResultsReset.bind(this);
     this.handleSearchResultsSelect = this.handleSearchResultsSelect.bind(this);
     this.handleAddTags = this.handleAddTags.bind(this);
     this.filterOnTags = this.filterOnTags.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   // update states upon mounting
@@ -58,6 +61,17 @@ export default class ProjectListingsView extends Component {
     })
       .then((listingData) => {
         this.setState({isLoading: false});
+        listingData = listingData.map(s => {
+          if (s.tags == null) {
+            return {...s, tags: []};
+          }
+          else {
+            return s;
+          }
+        })
+        return listingData;
+    })
+      .then((listingData) => {
         // populate all tags
         let listOfAllTags = listingData.map(obj => obj.tags);
         allTags = _.union(...listOfAllTags).map(tag =>{return{key: tag, value: tag, text: tag};});
@@ -84,6 +98,10 @@ export default class ProjectListingsView extends Component {
     
   }
 
+  handlePageChange(activePage) {
+    this.setState({activePage: activePage});
+  }
+
   /** Search via title handler functions **/
 
   // pagesListings the search terms to turn into pages
@@ -91,7 +109,7 @@ export default class ProjectListingsView extends Component {
   convertToPages(pagesListings, newSearchListings, callback) {
     var tempArr = pagesListings.slice();
     while(tempArr.length) {
-      newSearchListings.push(tempArr.splice(0,3));
+      newSearchListings.push(tempArr.splice(0,2));
     }
     callback();
   }
@@ -102,7 +120,7 @@ export default class ProjectListingsView extends Component {
     this.convertToPages(filteredListings, newSearchListings,
       () => {
         this.setState((prevState) => {
-        return {searchResults: [], searchListings: newSearchListings, searchValue: ''};
+        return {searchResults: [], searchListings: newSearchListings, searchValue: '', activePage: 1};
       });
     })
   }
@@ -120,7 +138,7 @@ export default class ProjectListingsView extends Component {
       () => {
         this.setState((prevState) => {
           return {searchResults: searchResults, 
-            searchListings: newSearchListings, searchValue: searchValue};
+            searchListings: newSearchListings, searchValue: searchValue, activePage: 1};
         });
     })
   }
@@ -178,6 +196,8 @@ export default class ProjectListingsView extends Component {
             <ProjectListingsContainer 
               isLoading={this.state.isLoading} 
               projectListings={this.state.searchListings}
+              activePage={this.state.activePage}
+              onPageChange={this.handlePageChange}
             />
           </Grid.Column>
         </Grid.Row>

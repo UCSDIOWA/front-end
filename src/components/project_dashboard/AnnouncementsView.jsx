@@ -5,7 +5,7 @@ import holderimage from "../../resources/holder-image.jpg";
   render() {
     return (
       <Segment textAlign="center">
-        <h1>Project Announcements</h1>
+        <h2>Project Announcements</h2>
         <Segment>
           <Comment.Group>
             <Comment>
