@@ -61,7 +61,6 @@ export default class ProjectListingsView extends Component {
     })
       .then((listingData) => {
         this.setState({isLoading: false});
-        console.log(listingData);
         listingData = listingData.map(s => {
           if (s.tags == null) {
             return {...s, tags: []};
@@ -70,7 +69,6 @@ export default class ProjectListingsView extends Component {
             return s;
           }
         })
-        console.log(listingData);
         return listingData;
     })
       .then((listingData) => {
