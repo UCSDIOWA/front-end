@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getProjectInfo, getUserProfile } from "../../server/api";
-import { Segment, Pagination, Table, Grid } from "semantic-ui-react";
+import { Segment, Pagination, Header, Grid } from "semantic-ui-react";
 import GatewayProjectTileEvent from "./GatewayProjectTileEvent";
 import UserSession from "../../server/UserSession";
 
@@ -11,6 +11,7 @@ export default class GatewayProjectTable extends Component {
     this.handlePaginationChange = this.handlePaginationChange.bind(this);
     //TODO GRAB NUMBER OF PROJECTS FROM BACKEND
     this.state = {
+      empty: false,
       projsPerPage: 4,
       tableRows: [],
       activePage: 1,
@@ -59,18 +60,23 @@ export default class GatewayProjectTable extends Component {
     userProfilePromise.then(response => {
       console.log(response);
       var idArray = response.currentprojects;
-      const projDataPromise = getProjectInfo(idArray);
-      projDataPromise
-        .then(response => {
-          console.log(response);
-          console.log(response.projects);
-          this.setState({ projectList: response.projects });
-          return response;
-        })
-        .then(response => {
-          console.log(this.state.projectList);
-          this.tableGenerate(this.state.activePage);
-        });
+      console.log(idArray);
+      if (idArray !== undefined) {
+        const projDataPromise = getProjectInfo(idArray);
+        projDataPromise
+          .then(response => {
+            console.log(response);
+            console.log(response.projects);
+            this.setState({ projectList: response.projects });
+            return response;
+          })
+          .then(response => {
+            console.log(this.state.projectList);
+            this.tableGenerate(this.state.activePage);
+          });
+      } else {
+        this.setState({ empty: true });
+      }
     });
   }
 
@@ -80,9 +86,9 @@ export default class GatewayProjectTable extends Component {
 
   tableGenerate(activePage) {
     var list = [];
-    console.log("herro");
-    console.log(this.state.projectList);
-    console.log(this.state.projectList.length);
+    //console.log("herro");
+    //console.log(this.state.projectList);
+    //console.log(this.state.projectList.length);
     //loop through retrieved current projects and grab each based on active page index
     for (
       //grabs up to 4 total projects to populate a page of the pagination
@@ -111,17 +117,22 @@ export default class GatewayProjectTable extends Component {
   render() {
     return (
       <Segment>
-        <Segment.Group style={{ width: "50vh" }}>
-          {this.state.tableRows}
-        </Segment.Group>
-        <Pagination
-          totalPages={Math.ceil(
-            this.props.totalProjs / this.state.projsPerPage
-          )}
-          boundaryRange={0}
-          activePage={this.state.activePage}
-          onPageChange={this.handlePaginationChange}
-        />
+        {!this.state.empty && (
+          <Segment>
+            <Segment.Group style={{ width: "50vh" }}>
+              {this.state.tableRows}
+            </Segment.Group>
+            <Pagination
+              totalPages={Math.ceil(
+                this.props.totalProjs / this.state.projsPerPage
+              )}
+              boundaryRange={0}
+              activePage={this.state.activePage}
+              onPageChange={this.handlePaginationChange}
+            />
+          </Segment>
+        )}
+        {this.state.empty && <Header>No Current Projects Found</Header>}
       </Segment>
     );
   }
