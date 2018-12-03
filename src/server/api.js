@@ -216,6 +216,32 @@ export function getProjectListings(userEmail) {
   ];
   */
 }
+// getting project info for EditProjectForm
+export function getEditProjForm(valueList) {
+  let url = "https://tea-login-api.herokuapp.com/editProjForm";
+  let data = {
+    title:valueList.title,
+    description: valueList.description,
+    //tags: valueList.tags,
+    deadline: valueList.deadline,
+    teamSize: valueList.teamSize,
+    privacy: valueList.privacy,
+    members: valueList.members,
+    membersViewer: valueList.membersViewer,
+    pendingMembers: valueList.pendingMembers,
+    pendingMembersView: valueList.pendingMembersView
+  };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("edit proj form post error: ");
+      console.log(error);
+    });
+}
+
 
 /* Create Project API
  */

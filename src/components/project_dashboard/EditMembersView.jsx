@@ -17,6 +17,7 @@ export default class MembersRequestsView extends Component {
       ],
       pendingMembersView: []
     };
+    
   }
   populatePendingMembers() {
     this.state.pendingMembersViewer = [];
