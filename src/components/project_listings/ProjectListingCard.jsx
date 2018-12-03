@@ -31,7 +31,7 @@ export default class ProjectListingCard extends Component {
   render() {
 
     return (
-      <Card fluid centered style={{width:'100vh', height:'25vh'}}>
+      <Card fluid centered style={{width:'100vh'}}>
         <Card.Content>
           <List inverted>
             <List.Item>
