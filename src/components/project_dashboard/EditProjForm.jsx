@@ -17,8 +17,8 @@ import {
   Icon,
   Confirm,
   Dropdown,
-  Container,
-  Label
+  Label,
+  Container
 } from "semantic-ui-react";
 
 //PRIVACY OPTIONS
