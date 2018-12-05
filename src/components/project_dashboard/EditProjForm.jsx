@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getEditProjForm } from "../../server/api";
 import UserSession from "../../server/UserSession";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import CurrentTags from "../create_project/CurrentTags";
 import DayPicker from "react-day-picker/DayPickerInput";
 import dateFnsFormat from "date-fns/format";
@@ -68,74 +68,61 @@ export default class EditProjectForm extends Component {
     this.handleAddTags = this.handleAddTags.bind(this);
     this.handleRemoveTag = this.handleRemoveTag.bind(this);
 
-    this.populateMembers();
-    this.populatePendingMembers();
-    this.populateCurrentTags();
+    //this.populateMembers();
   }
-
 
   componentDidMount() {
-    const profDataPromise = getEditProjForm(UserSession.getEmail());
-    profDataPromise.then(response => {
-      console.log(response);
-      this.setState({
-        // title: response.title,
-        // description: response.description,
-        // deadline: response.deadline,
-        // currentTags: response.tags,
-        // teamSize: response.teamSize,
-        // isPrivate: response.privacy,
-        // members: response.members,
-        // membersViewer: response.membersViewer,
-        // pendingMembers: response.pendingMembers,
-        // pendingMembersView: response.pendingMembersView
-      });
-    });
+    this.populateCurrentTags();
+    this.populatePendingMembers();
+    //this.populateCurrentTags();
   }
 
-//Populate current tags array
+  //Populate current tags array
   populateCurrentTags() {
-    for(var i = 0; i < this.state.tags.length; i++) {
-      this.state.currentTagsViewer.push(
-          <Label>
-            {this.state.tags[i]}
-            <Icon name='delete' />
-          </Label>
+    var temp = [];
+    for (var i = 0; i < this.props.tags.length; i++) {
+      temp.push(
+        <Label>
+          {this.state.tags[i]}
+          <Icon name="delete" />
+        </Label>
       );
     }
+    this.setState({ currentTagsViewer: temp });
   }
 
   //Handles saving tags. Each time the user selects a new tag, we add it to the tags array
   handleAddTags() {
-    if (this.state.tagForm != "" ) {
-      this.setState((prevState) => {
+    if (this.state.tagForm != "") {
+      this.setState(prevState => {
         if (this.state.tags.includes(this.state.tagForm)) {
           return {
             tagForm: ""
-          }
-        }
-        else {
+          };
+        } else {
           return {
             tagForm: "",
-            tags: [...prevState.tags, prevState.tagForm],
-          }
+            tags: [...prevState.tags, prevState.tagForm]
+          };
         }
       });
     }
   }
 
-//Handles removing tags.
+  //Handles removing tags.
   handleRemoveTag(index) {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return {
-        tags: prevState.tags.filter((_, i) => i !== index) }
+        tags: prevState.tags.filter((_, i) => i !== index)
+      };
     });
   }
 
-//For membersViewer
+  //For membersViewer
   populateMembers() {
-    for (var i = 0; i < this.state.members.length; i++) {
-      this.state.membersViewer.push(
+    var temp = [];
+    for (var i = 0; i < this.props.memberslist.length; i++) {
+      temp.push(
         <Segment vertical>
           <Grid>
             <Grid.Row>
@@ -155,12 +142,13 @@ export default class EditProjectForm extends Component {
         </Segment>
       );
     }
-    //this.setState({ MembersView: temp });
+    this.setState({ MembersView: temp });
   }
 
   populatePendingMembers() {
-    for (var i = 0; i < this.state.pendingMembers.length; i++) {
-      this.state.pendingMembersView.push(
+    for (var i = 0; i < this.props.joinRequests.length; i++) {
+      var temp = [];
+      temp.push(
         <Segment vertical>
           <Grid>
             <Grid.Row>
@@ -182,7 +170,7 @@ export default class EditProjectForm extends Component {
         </Segment>
       );
     }
-    //this.setState({ pendingMembersView: temp });
+    this.setState({ pendingMembersView: temp });
   }
 
   render() {
@@ -209,61 +197,65 @@ export default class EditProjectForm extends Component {
             <Form.Field>
               <label>Team Size</label>
               <input
-                placeholder = {this.state.teamSize}
+                placeholder={this.state.teamSize}
                 type="number"
                 onChange={e => this.setState({ teamSize: e.target.value })}
               />
             </Form.Field>
           </Segment>
 
-        <Segment>
-          <Form.Field>
-            <label>Deadline</label>
-            <DayPicker
-              placeholder="MM-DD-YYYY"
-              formatDate={formatDate}
-              parseDate={parseDate}
-              format={FORMAT}
-              hideOnDayClick
-              inputProps={{ style: { width: 200 } }}
-              selectedDay={this.state.selectedDay}
-              onDayChange={this.handleDeadline}
-            />
-          </Form.Field>
+          <Segment>
+            <Form.Field>
+              <label>Deadline</label>
+              <DayPicker
+                placeholder="MM-DD-YYYY"
+                formatDate={formatDate}
+                parseDate={parseDate}
+                format={FORMAT}
+                hideOnDayClick
+                inputProps={{ style: { width: 200 } }}
+                selectedDay={this.state.selectedDay}
+                onDayChange={this.handleDeadline}
+              />
+            </Form.Field>
 
-          <Form.Field>
-            <label> Private </label>
-            <Dropdown placeholder="Select Privacy" fluid selection options = {privateOptions} />
-          </Form.Field>
-        </Segment>
+            <Form.Field>
+              <label> Private </label>
+              <Dropdown
+                placeholder="Select Privacy"
+                fluid
+                selection
+                options={privateOptions}
+              />
+            </Form.Field>
+          </Segment>
 
-        <Segment>
-          <Form.Field>
-           <label> Edit Tags </label>
-            <Form.Input
-              icon="tags"
-              iconPosition="left"
-              placeholder="Enter tags for this project"
-              onChange={e => this.setState({ tagForm: e.target.value })}
-              value={this.state.tagForm}
-            />
-            <Button
-              color="linkedin"
-              onClick={this.handleAddTags}
-              size = "mini"
-            >
-              Add Tag
-            </Button>
-          </Form.Field>
+          <Segment>
+            <Form.Field>
+              <label> Edit Tags </label>
+              <Form.Input
+                icon="tags"
+                iconPosition="left"
+                placeholder="Enter tags for this project"
+                onChange={e => this.setState({ tagForm: e.target.value })}
+                value={this.state.tagForm}
+              />
+              <Button color="linkedin" onClick={this.handleAddTags} size="mini">
+                Add Tag
+              </Button>
+            </Form.Field>
 
-          <Form.Field>
-            <label> Current Tags </label>
-            <Segment>
-              <CurrentTags onRemoveTag={this.handleRemoveTag} tags={this.state.tags} />
-            </Segment>
-          </Form.Field>
-        </Segment>
-      </Segment.Group>
+            <Form.Field>
+              <label> Current Tags </label>
+              <Segment>
+                <CurrentTags
+                  onRemoveTag={this.handleRemoveTag}
+                  tags={this.state.tags}
+                />
+              </Segment>
+            </Form.Field>
+          </Segment>
+        </Segment.Group>
 
         <Segment>
           <Header>Current Members</Header>

@@ -5,9 +5,8 @@ import MilestonesViewEvent from "./MilestonesViewEvent";
 import CalendarWidget from "./CalendarWidget";
 import AnnouncementsView from "./AnnouncementsView";
 import InviteUserView from "./InviteUserView";
-import {getProjectInfo} from "../../server/api";
+import { getProjectInfo } from "../../server/api";
 import ProjectInfoWidget from "./ProjectInfoWidget";
-
 
 export default class ProjectDashboardView extends Component {
   constructor(props) {
@@ -17,7 +16,7 @@ export default class ProjectDashboardView extends Component {
       milestoneArray: [],
       editMilestoneArray: [],
       currentWeight: 0,
-      totalWeight: 0,
+      totalWeight: 0
     };
     //console.log(this.state.projId);
     this.handleAddMilestone = this.handleAddMilestone.bind(this);
@@ -28,18 +27,18 @@ export default class ProjectDashboardView extends Component {
 
   componentDidMount() {
     const projDataPromise = getProjectInfo([this.state.xid]);
-    projDataPromise.then(response => {
-      console.log("get project info response: ");
-      console.log(response);
-      if (response.success) {
-        return response.projects[0];
-      }
-      else {
-        alert("Error loading project")
-      }
-      
-    })
-      .then((projectInfo) => { // TODO update to retrieve milestones from db
+    projDataPromise
+      .then(response => {
+        console.log("get project info response: ");
+        console.log(response);
+        if (response.success) {
+          return response.projects[0];
+        } else {
+          alert("Error loading project");
+        }
+      })
+      .then(projectInfo => {
+        // TODO update to retrieve milestones from db
         this.setState({
           xid: projectInfo.xid,
           title: projectInfo.title,
@@ -54,12 +53,11 @@ export default class ProjectDashboardView extends Component {
           done: projectInfo.done,
           joinrequests: projectInfo.joinrequests,
           memberslist: projectInfo.memberslist,
-          milestones : projectInfo.milestones,
+          milestones: projectInfo.milestones,
           pinnedannouncements: projectInfo.pinnedannouncements,
           unpinnedannouncements: projectInfo.unpinnedannouncements
         });
       });
-      
   }
 
   handleDecrementProgress(updateWeight) {
@@ -177,12 +175,11 @@ export default class ProjectDashboardView extends Component {
       <Segment>
         <Grid centered style={{ width: "60rem" }}>
           <Grid.Row>
-            <Header as='h1'>{this.state.title}</Header>
+            <Header as="h1">{this.state.title}</Header>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column className="profile-columns3">
-             
-              <ProjectInfoWidget 
+              <ProjectInfoWidget
                 projectLeader={this.state.projectleader}
                 groupSize={this.state.groupsize}
                 tags={this.state.tags}
@@ -199,6 +196,7 @@ export default class ProjectDashboardView extends Component {
                 currentProjectName="Project Name"
                 currentProgress={this.state.percentdone}
                 memberslist={this.state.memberslist}
+                xid={this.state.xid}
               />
               <Segment>
                 <InviteUserView />
@@ -207,10 +205,13 @@ export default class ProjectDashboardView extends Component {
             <Grid.Column className="profile-columns3">
               <Segment textAlign="center">
                 <h2>Calendar</h2>
-                <CalendarWidget hasCalendar={this.props.calendarid != null} calendarId={this.props.calendarid}/>
+                <CalendarWidget
+                  hasCalendar={this.props.calendarid != null}
+                  calendarId={this.props.calendarid}
+                />
               </Segment>
               <AnnouncementsView />
-              <Segment textAlign='center'>
+              <Segment textAlign="center">
                 <h2>UCSD Dibs</h2>
                 <a>https://ucsd.evanced.info/dibs</a>
               </Segment>

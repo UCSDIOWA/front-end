@@ -68,7 +68,7 @@ export default class MilestonesView extends Component {
           </Grid.Row>
         </Grid>
         <Segment textAlign="center" vertical>
-          <EditProjectView />
+          <EditProjectView xid={this.props.xid} />
         </Segment>
       </Segment>
     );

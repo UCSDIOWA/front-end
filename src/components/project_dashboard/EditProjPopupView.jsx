@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Icon, Button, Modal, Header, Popup } from "semantic-ui-react";
 //import EditProjectView from "./EditProjectView";
 import EditProjForm from "./EditProjForm";
+import { getProjectInfo } from "../../server/api";
 
 export default class EditProjectView extends Component {
   constructor(props) {
@@ -15,6 +16,30 @@ export default class EditProjectView extends Component {
 
   handleClose = () => this.setState({ modalOpen: false });
 
+  createProjectObject() {
+    const projectPromise = getProjectInfo(this.props.xid);
+    projectPromise.then(response => {
+      var projectObject = {
+        xid: response.xid,
+        title: response.title,
+        projectleader: response.projectleader,
+        percentdone: response.percentdone,
+        groupsize: response.groupsize,
+        isprivate: response.isprivate,
+        tags: response.tags,
+        deadline: response.deadline,
+        calendarid: response.calendarid,
+        description: response.description,
+        done: response.done,
+        joinrequests: response.joinrequests,
+        memberslist: response.memberslist,
+        milestones: response.milestones,
+        pinnedannouncements: response.pinnedannouncements,
+        unpinnedannouncements: response.unpinnedannouncements
+      };
+      return projectObject;
+    });
+  }
 
   render() {
     return (
@@ -40,10 +65,8 @@ export default class EditProjectView extends Component {
         >
           <Header icon="settings" content="Project Settings" />
           <Modal.Content>
-            <EditProjForm />
+            <EditProjForm projectObject={this.createProjectObject} />
           </Modal.Content>
-
-
         </Modal>
       </div>
     );

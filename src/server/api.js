@@ -72,7 +72,6 @@ export function getUserProfile(email) {
     });
 }
 
-
 export function getProjectInfo(projectids) {
   let url = "https://tea-project-handler-api.herokuapp.com/getprojects";
   let data = { xid: projectids };
@@ -156,7 +155,7 @@ export function inviteUser(xid, remail, semail) {
 export function getEditProjForm(valueList) {
   let url = "https://tea-login-api.herokuapp.com/editProjForm";
   let data = {
-    title:valueList.title,
+    title: valueList.title,
     description: valueList.description,
     //tags: valueList.tags,
     deadline: valueList.deadline,
@@ -177,7 +176,6 @@ export function getEditProjForm(valueList) {
       console.log(error);
     });
 }
-
 
 /* Create Project API
  */
@@ -221,6 +219,38 @@ export function createProject(
     });
 }
 
+export function updateProject(projectFields) {
+  let url = "https://tea-project-handler-api.herokuapp.com/updateproject";
+  let data = {
+    xid: projectFields.xid,
+    title: projectFields.title,
+    projectleader: projectFields.projectleader,
+    percentdone: projectFields.percentdone,
+    groupsize: projectFields.groupsize,
+    isprivate: projectFields.isprivate,
+    tags: projectFields.tags,
+    deadline: projectFields.deadline,
+    calendarid: projectFields.calendarid,
+    description: projectFields.description,
+    done: projectFields.done,
+    joinrequests: projectFields.joinrequests,
+    memberslist: projectFields.memberslist,
+    milestones: projectFields.milestones,
+    pinnedannouncements: projectFields.pinnedannouncements,
+    unpinnedannouncements: projectFields.unpinnedannouncements
+  };
+  console.log(data);
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("update project post error: ");
+      console.log(error);
+    });
+}
+
 export function sendJoinRequest(projectId, useremail) {
   let url = "https://tea-project-handler-api.herokuapp.com/joinprojects";
   let data = {
@@ -232,9 +262,10 @@ export function sendJoinRequest(projectId, useremail) {
     method: "POST",
     body: JSON.stringify(data)
   })
-    .then(response => 
-      { console.log(response);
-        return response.json()})
+    .then(response => {
+      console.log(response);
+      return response.json();
+    })
     .catch(error => {
       console.log("send join request post error: ");
       console.log(error);
