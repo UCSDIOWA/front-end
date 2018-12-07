@@ -5,6 +5,7 @@ export default class MembersRequestsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isOpen: false,
       pendingMembers: [
         "so",
         "wake",
@@ -17,7 +18,10 @@ export default class MembersRequestsView extends Component {
       ],
       pendingMembersView: []
     };
-    
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick() {
+    this.setState({ isOpen: !this.state.isOpen });
   }
   populatePendingMembers() {
     this.state.pendingMembersViewer = [];
@@ -40,14 +44,15 @@ export default class MembersRequestsView extends Component {
         trigger={<Button color="green">Member Requests</Button>}
         basic
         size="small"
+        open={this.state.isOpen}
       >
         <Header icon="address card" content="Member Requests" />
         <Modal.Content>{this.state.pendingMembersView}</Modal.Content>
         <Modal.Actions>
-          <Button basic color="red" inverted>
+          <Button basic color="red" inverted onClick={this.handleClick}>
             <Icon name="remove" /> Cancel
           </Button>
-          <Button color="linkedin" inverted>
+          <Button color="linkedin" inverted onClick={this.handleClick}>
             <Icon name="checkmark" /> Confirm
           </Button>
         </Modal.Actions>

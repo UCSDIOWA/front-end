@@ -5,9 +5,13 @@ import MilestonesViewEvent from "./MilestonesViewEvent";
 import CalendarWidget from "./CalendarWidget";
 import AnnouncementsView from "./AnnouncementsView";
 import InviteUserView from "./InviteUserView";
-import {getProjectInfo} from "../../server/api";
+import {
+  getProjectInfo,
+  getMilestones,
+  addMilestone,
+  deleteMilestone
+} from "../../server/api";
 import ProjectInfoWidget from "./ProjectInfoWidget";
-
 
 export default class ProjectDashboardView extends Component {
   constructor(props) {
@@ -16,30 +20,33 @@ export default class ProjectDashboardView extends Component {
       xid: props.match.params.id,
       milestoneArray: [],
       editMilestoneArray: [],
+      milestones: [],
+      testArray: [],
       currentWeight: 0,
-      totalWeight: 0,
+      totalWeight: 0
     };
     //console.log(this.state.projId);
     this.handleAddMilestone = this.handleAddMilestone.bind(this);
     this.handleRemoveMilestone = this.handleRemoveMilestone.bind(this);
     this.handleIncrementProgress = this.handleIncrementProgress.bind(this);
     this.handleDecrementProgress = this.handleDecrementProgress.bind(this);
+    this.populateMilestones = this.populateMilestones.bind(this);
   }
 
   componentDidMount() {
     const projDataPromise = getProjectInfo([this.state.xid]);
-    projDataPromise.then(response => {
-      console.log("get project info response: ");
-      console.log(response);
-      if (response.success) {
-        return response.projects[0];
-      }
-      else {
-        alert("Error loading project")
-      }
-      
-    })
-      .then((projectInfo) => { // TODO update to retrieve milestones from db
+    projDataPromise
+      .then(response => {
+        console.log("get project info response: ");
+        console.log(response);
+
+        if (response.success) {
+          return response.projects[0];
+        } else {
+          alert("Error loading project");
+        }
+      })
+      .then(projectInfo => {
         this.setState({
           xid: projectInfo.xid,
           title: projectInfo.title,
@@ -54,12 +61,28 @@ export default class ProjectDashboardView extends Component {
           done: projectInfo.done,
           joinrequests: projectInfo.joinrequests,
           memberslist: projectInfo.memberslist,
-          milestones : projectInfo.milestones,
+          milestones: projectInfo.milestones,
           pinnedannouncements: projectInfo.pinnedannouncements,
           unpinnedannouncements: projectInfo.unpinnedannouncements
         });
+        console.log("ms: " + projectInfo.milestones);
+        return projectInfo.milestones;
+      })
+      .then(milestones => {
+        const msDataPromise = getMilestones(milestones);
+        msDataPromise.then(msresponse => {
+          console.log("get milestone response: ");
+          console.log(msresponse.milestones[0]);
+
+          //if (msresponse.success) {
+          this.setState({ testArray: msresponse.milestones });
+          this.populateMilestones(msresponse.milestones);
+          console.log("grabbed milestones: " + this.state.milestoneArray);
+          //}
+        });
+
+        // TODO update to retrieve milestones from db
       });
-      
   }
 
   handleDecrementProgress(updateWeight) {
@@ -85,6 +108,70 @@ export default class ProjectDashboardView extends Component {
   }
 
   handleAddMilestone(msName, msWeight, msDeadline, msDescription) {
+    const addMSPromise = addMilestone(
+      this.state.xid,
+      msName,
+      msDescription,
+      msWeight
+    );
+    addMSPromise.then(response => {
+      console.log("add ms response: ");
+      console.log(response);
+
+      if (!response.success) {
+        alert("Error loading project");
+      }
+      const projDataPromise = getProjectInfo([this.state.xid]);
+      projDataPromise
+        .then(response => {
+          console.log("get project info response: ");
+          console.log(response);
+
+          if (response.success) {
+            return response.projects[0];
+          } else {
+            alert("Error loading project");
+          }
+        })
+        .then(projectInfo => {
+          this.setState({
+            xid: projectInfo.xid,
+            title: projectInfo.title,
+            projectleader: projectInfo.projectleader,
+            percentdone: projectInfo.percentdone,
+            groupsize: projectInfo.groupsize,
+            isprivate: projectInfo.isprivate,
+            tags: projectInfo.tags,
+            deadline: projectInfo.deadline,
+            calendarid: projectInfo.calendarid,
+            description: projectInfo.description,
+            done: projectInfo.done,
+            joinrequests: projectInfo.joinrequests,
+            memberslist: projectInfo.memberslist,
+            milestones: projectInfo.milestones,
+            pinnedannouncements: projectInfo.pinnedannouncements,
+            unpinnedannouncements: projectInfo.unpinnedannouncements
+          });
+          console.log("ms: " + projectInfo.milestones);
+          return projectInfo.milestones;
+        })
+        .then(milestones => {
+          const msDataPromise = getMilestones(milestones);
+          msDataPromise.then(msresponse => {
+            console.log("get milestone response: ");
+            console.log(msresponse.milestones[0]);
+
+            //if (msresponse.success) {
+            this.setState({ testArray: msresponse.milestones });
+            this.populateMilestones(msresponse.milestones);
+            console.log("grabbed milestones: " + this.state.milestoneArray);
+            //}
+          });
+
+          // TODO update to retrieve milestones from db
+        });
+    });
+
     //handles adding weight from total milestones weight
     var totalWeight = this.state.totalWeight;
     var currWeight = this.state.currentWeight;
@@ -97,38 +184,101 @@ export default class ProjectDashboardView extends Component {
       totalWeight: totalWeight,
       currentWeight: currWeight
     });
-    //TODO include sending new Milestone object to backend
-    var newMilestone1 = (
-      <MilestonesViewEvent
-        msName={msName}
-        msWeight={msWeight}
-        msDeadline={msDeadline}
-        msDescription={msDescription}
-        key={msName}
-        isDelete={false}
-        updateProgFunc={this.handleIncrementProgress}
-        decrementProgFunc={this.handleDecrementProgress}
-      />
-    );
-    var newMilestone2 = (
-      <MilestonesViewEvent
-        msName={msName}
-        msWeight={msWeight}
-        msDeadline={msDeadline}
-        msDescription={msDescription}
-        key={msName}
-        isDelete={true}
-        deleteFunc={this.handleRemoveMilestone}
-        decrementProgFunc={this.handleDecrementProgress}
-      />
-    );
-    this.setState({
-      milestoneArray: [...this.state.milestoneArray, newMilestone1],
-      editMilestoneArray: [...this.state.editMilestoneArray, newMilestone2]
-    });
   }
 
-  handleRemoveMilestone(msName, msWeight) {
+  populateMilestones(msArray) {
+    var list = [];
+    var list2 = [];
+    for (var i = 0; i < msArray.length; i++) {
+      list.push(
+        <MilestonesViewEvent
+          msName={msArray[i].title}
+          msWeight={msArray[i].weight}
+          msDescription={msArray[i].description}
+          msID={msArray[i].milestoneid}
+          isFinish={msArray[i].done}
+          key={msArray[i].title}
+          isDelete={false}
+          updateProgFunc={this.handleIncrementProgress}
+          decrementProgFunc={this.handleDecrementProgress}
+        />
+      );
+      list2.push(
+        <MilestonesViewEvent
+          msName={msArray[i].title}
+          msWeight={msArray[i].weight}
+          msDescription={msArray[i].description}
+          msID={msArray[i].milestoneid}
+          isFinish={msArray[i].done}
+          key={msArray[i].title}
+          isDelete={true}
+          deleteFunc={this.handleRemoveMilestone}
+          decrementProgFunc={this.handleDecrementProgress}
+        />
+      );
+    }
+    this.setState({ milestoneArray: list, editMilestoneArray: list2 });
+  }
+
+  handleRemoveMilestone(msWeight, msID) {
+    const deleteMSPromise = deleteMilestone(this.state.xid, msID);
+    deleteMSPromise.then(response => {
+      console.log("delete ms response: ");
+      console.log(response);
+
+      if (!response.success) {
+        alert("Error loading project");
+      }
+      const projDataPromise = getProjectInfo([this.state.xid]);
+      projDataPromise
+        .then(response => {
+          console.log("get project info response: ");
+          console.log(response);
+
+          if (response.success) {
+            return response.projects[0];
+          } else {
+            alert("Error loading project");
+          }
+        })
+        .then(projectInfo => {
+          this.setState({
+            xid: projectInfo.xid,
+            title: projectInfo.title,
+            projectleader: projectInfo.projectleader,
+            percentdone: projectInfo.percentdone,
+            groupsize: projectInfo.groupsize,
+            isprivate: projectInfo.isprivate,
+            tags: projectInfo.tags,
+            deadline: projectInfo.deadline,
+            calendarid: projectInfo.calendarid,
+            description: projectInfo.description,
+            done: projectInfo.done,
+            joinrequests: projectInfo.joinrequests,
+            memberslist: projectInfo.memberslist,
+            milestones: projectInfo.milestones,
+            pinnedannouncements: projectInfo.pinnedannouncements,
+            unpinnedannouncements: projectInfo.unpinnedannouncements
+          });
+          console.log("ms: " + projectInfo.milestones);
+          return projectInfo.milestones;
+        })
+        .then(milestones => {
+          const msDataPromise = getMilestones(milestones);
+          msDataPromise.then(msresponse => {
+            console.log("get milestone response: ");
+            console.log(msresponse.milestones[0]);
+
+            //if (msresponse.success) {
+            this.setState({ testArray: msresponse.milestones });
+            this.populateMilestones(msresponse.milestones);
+            console.log("grabbed milestones: " + this.state.milestoneArray);
+            //}
+          });
+
+          // TODO update to retrieve milestones from db
+        });
+    });
     //handles removing weight from total milestones weight
     var totalWeight = this.state.totalWeight;
     var currWeight = this.state.currentWeight;
@@ -139,7 +289,9 @@ export default class ProjectDashboardView extends Component {
       totalWeight: totalWeight,
       currentWeight: currWeight
     });
+  }
 
+  /*
     //handles removing from display
     var list = [];
     var list2 = [];
@@ -150,8 +302,7 @@ export default class ProjectDashboardView extends Component {
       }
     }
 
-    this.setState({ milestoneArray: list, editMilestoneArray: list2 });
-  }
+    this.setState({ milestoneArray: list, editMilestoneArray: list2 }); */
 
   /* Format for MilstonesViewEvent
         <MilestonesViewEvent
@@ -177,12 +328,11 @@ export default class ProjectDashboardView extends Component {
       <Segment>
         <Grid centered style={{ width: "60rem" }}>
           <Grid.Row>
-            <Header as='h1'>{this.state.title}</Header>
+            <Header as="h1">{this.state.title}</Header>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column className="profile-columns3">
-             
-              <ProjectInfoWidget 
+              <ProjectInfoWidget
                 projectLeader={this.state.projectleader}
                 groupSize={this.state.groupsize}
                 tags={this.state.tags}
@@ -207,12 +357,17 @@ export default class ProjectDashboardView extends Component {
             <Grid.Column className="profile-columns3">
               <Segment textAlign="center">
                 <h2>Calendar</h2>
-                <CalendarWidget hasCalendar={this.props.calendarid != null} calendarId={this.props.calendarid}/>
+                <CalendarWidget
+                  hasCalendar={this.props.calendarid != null}
+                  calendarId={this.props.calendarid}
+                />
               </Segment>
               <AnnouncementsView />
-              <Segment textAlign='center'>
+              <Segment textAlign="center">
                 <h2>UCSD Dibs</h2>
-                <a href="https://ucsd.evanced.info/dibs" target="_blank">https://ucsd.evanced.info/dibs</a>
+                <a href="https://ucsd.evanced.info/dibs" target="_blank">
+                  https://ucsd.evanced.info/dibs
+                </a>
               </Segment>
             </Grid.Column>
           </Grid.Row>

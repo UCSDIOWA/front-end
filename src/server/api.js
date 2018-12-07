@@ -72,7 +72,55 @@ export function getUserProfile(email) {
     });
 }
 
+export function getMilestones(milestoneIDs) {
+  let url = "https://tea-project-management-api.herokuapp.com/getallmilestones";
+  let data = { milestoneid: milestoneIDs };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("get project info error: ");
+      console.log(error);
+    });
+}
 
+export function deleteMilestone(projectID, msID) {
+  let url = "https://tea-project-management-api.herokuapp.com/deletemilestone";
+  let data = { xid: projectID, milestoneid: msID };
+  console.log(data);
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("delete milestone post error: ");
+      console.log(error);
+    });
+}
+
+export function addMilestone(projectID, msName, msDescription, msWeight) {
+  let url = "https://tea-project-management-api.herokuapp.com/addmilestone";
+  let data = {
+    xid: projectID,
+    title: msName,
+    description: msDescription,
+    users: [],
+    weight: msWeight
+  };
+  console.log(data);
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("add milestone post error: ");
+      console.log(error);
+    });
+}
 export function getProjectInfo(projectids) {
   let url = "https://tea-project-handler-api.herokuapp.com/getprojects";
   let data = { xid: projectids };
@@ -156,7 +204,7 @@ export function inviteUser(xid, remail, semail) {
 export function getEditProjForm(valueList) {
   let url = "https://tea-login-api.herokuapp.com/editProjForm";
   let data = {
-    title:valueList.title,
+    title: valueList.title,
     description: valueList.description,
     //tags: valueList.tags,
     deadline: valueList.deadline,
@@ -177,7 +225,6 @@ export function getEditProjForm(valueList) {
       console.log(error);
     });
 }
-
 
 /* Create Project API
  */
@@ -232,9 +279,10 @@ export function sendJoinRequest(projectId, useremail) {
     method: "POST",
     body: JSON.stringify(data)
   })
-    .then(response => 
-      { console.log(response);
-        return response.json()})
+    .then(response => {
+      console.log(response);
+      return response.json();
+    })
     .catch(error => {
       console.log("send join request post error: ");
       console.log(error);

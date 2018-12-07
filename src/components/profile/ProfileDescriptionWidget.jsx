@@ -32,11 +32,11 @@ export default class ProfileDescriptionWidget extends Component {
   render() {
     return (
       <Grid>
-        <Grid.Row>
+        <Grid.Row className="profile-columns3">
           {this.state.displayForm === true && (
             <Form size="massive">
               <Form.TextArea
-                label="Edit Le Description"
+                label="EditDescription"
                 placeholder={this.props.profileDescription}
                 onChange={e => this.setState({ formContents: e.target.value })}
               />
@@ -53,7 +53,7 @@ export default class ProfileDescriptionWidget extends Component {
             <Segment className="profile-columns3">
               <h1>
                 About Me{" "}
-                <div>
+                <div className="profile-columns3">
                   <a onClick={this.handleClick}>
                     <font size="2">Edit Description</font>
                   </a>

@@ -65,6 +65,7 @@ export default class AddMilestonesView extends Component {
           <Segment vertical>
             <Icon name="weight" />
             <Input
+              type="integer"
               placeholder="Weight (Integer)"
               onChange={e => this.setState({ msWeight: e.target.value })}
             />
