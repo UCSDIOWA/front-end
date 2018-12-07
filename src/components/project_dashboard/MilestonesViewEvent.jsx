@@ -12,7 +12,11 @@ import MilestoneEventPopup from "./MilestoneEventPopup";
 export default class MilestonesViewEvent extends Component {
   constructor(props) {
     super(props);
-    this.state = { isFinish: false, deleteOpen: false, finishOpen: false };
+    this.state = {
+      isFinish: this.props.isFinish,
+      deleteOpen: false,
+      finishOpen: false
+    };
     this.handleEditMS = this.handleEditMS.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleFinishMS = this.handleFinishMS.bind(this);
@@ -23,7 +27,7 @@ export default class MilestonesViewEvent extends Component {
   }
   handleDelete() {
     //TODO include backend call to send deleted milestone id
-    this.props.deleteFunc(this.props.msName, this.props.msWeight);
+    this.props.deleteFunc(this.props.msWeight, this.props.msID);
   }
 
   handleFinishConfirm() {
@@ -32,6 +36,7 @@ export default class MilestonesViewEvent extends Component {
   }
 
   handleFinishMS() {
+    //TODO tell backend to update finishMS request to flip boolean
     if (this.state.isFinish == false) {
       this.props.updateProgFunc(this.props.msWeight);
     } else {

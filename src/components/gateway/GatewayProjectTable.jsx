@@ -21,7 +21,6 @@ export default class GatewayProjectTable extends Component {
   componentDidMount() {
     const userProfilePromise = getUserProfile(UserSession.getEmail());
     userProfilePromise.then(response => {
-      
       //console.log(response);
       var idArray = response.currentprojects;
       //console.log(idArray);
@@ -31,6 +30,7 @@ export default class GatewayProjectTable extends Component {
           .then(response => {
             console.log(response);
             console.log(response.projects);
+            console.log(response.percentdone);
             this.setState({ projectList: response.projects });
             return response;
           })
@@ -64,7 +64,11 @@ export default class GatewayProjectTable extends Component {
           isFinished={false}
           projName={this.state.projectList[i].title}
           groupSize={this.state.projectList[i].groupsize}
-          percentDone={30}
+          percentDone={
+            this.state.projectList[i].percentdone === undefined
+              ? 0
+              : this.state.projectList[i].percentdone
+          }
           tags={this.state.projectList[i].tags}
           key={i}
         />
