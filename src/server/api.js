@@ -81,7 +81,21 @@ export function getMilestones(milestoneIDs) {
   })
     .then(response => response.json())
     .catch(error => {
-      console.log("get project info error: ");
+      console.log("get milestones error: ");
+      console.log(error);
+    });
+}
+export function toggleMilestoneComplete(msID) {
+  let url =
+    "https://tea-project-management-api.herokuapp.com/milestonecompletion";
+  let data = { milestoneid: msID };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("toggle milestone completion error: ");
       console.log(error);
     });
 }
@@ -121,6 +135,20 @@ export function addMilestone(projectID, msName, msDescription, msWeight) {
       console.log(error);
     });
 }
+export function sendAnnouncement(projectID, message, isPinned) {
+  let url = "https://tea-project-management-api.herokuapp.com/announcement";
+  let data = { xid: projectID, message: message, pin: isPinned };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("send announcement error: ");
+      console.log(error);
+    });
+}
+
 export function getProjectInfo(projectids) {
   let url = "https://tea-project-handler-api.herokuapp.com/getprojects";
   let data = { xid: projectids };
