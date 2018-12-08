@@ -59,9 +59,6 @@ export default class GatewayProjectTileEvent extends Component {
           <Transition.Group animation="slide down" duration={150}>
             {isVis && (
               <Accordion.Content active={activeIndex === 0}>
-                {!this.props.isFinished && (
-                  <Progress percent={this.props.percentDone} progress />
-                )}
                 <List>
                   <List.Item>
                     <List.Icon name="group" />

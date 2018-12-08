@@ -22,8 +22,13 @@ export default class ProjectDashboardView extends Component {
       editMilestoneArray: [],
       milestones: [],
       testArray: [],
+      pinnedannouncements: [],
+      unpinnedannouncements: [],
+      pinnedArray: [],
+      unpinnedArray: [],
       currentWeight: 0,
-      totalWeight: 0
+      totalWeight: 0,
+      percentdone: 0
     };
     //console.log(this.state.projId);
     this.handleAddMilestone = this.handleAddMilestone.bind(this);
@@ -31,6 +36,36 @@ export default class ProjectDashboardView extends Component {
     this.handleIncrementProgress = this.handleIncrementProgress.bind(this);
     this.handleDecrementProgress = this.handleDecrementProgress.bind(this);
     this.populateMilestones = this.populateMilestones.bind(this);
+    this.populateAnnouncements = this.populateAnnouncements.bind(this);
+  }
+
+  populateAnnouncements() {
+    console.log("pinned array :" + this.state.pinnedannouncements);
+    //TODO make new items with correct id fields and push to state arrays using prop arrays
+    for (var i = 0; i < this.state.pinnedannouncements; i++) {
+      const newItem = {
+        text: this.state.pinnedannouncements[i],
+        id: Date.now(),
+        //id: Date.now(), //TODO: maybe subtract this from last date to order in reverse
+        pinned: true
+      };
+
+      this.setState(state => ({
+        pinnedArray: this.state.pinnedArray.concat(newItem)
+      }));
+    }
+    for (var i2 = 0; i2 < this.state.unpinnedannouncements; i2++) {
+      const newItem = {
+        text: this.state.unpinnedannouncements[i],
+        id: Date.now(),
+        //id: Date.now(), //TODO: maybe subtract this from last date to order in reverse
+        pinned: false
+      };
+
+      this.setState(state => ({
+        unpinnedArray: this.state.unpinnedArray.concat(newItem)
+      }));
+    }
   }
 
   componentDidMount() {
@@ -65,7 +100,8 @@ export default class ProjectDashboardView extends Component {
           pinnedannouncements: projectInfo.pinnedannouncements,
           unpinnedannouncements: projectInfo.unpinnedannouncements
         });
-        console.log("ms: " + projectInfo.milestones);
+        console.log("announcements: " + this.state.pinnedannouncements);
+
         return projectInfo.milestones;
       })
       .then(milestones => {
@@ -73,7 +109,7 @@ export default class ProjectDashboardView extends Component {
         msDataPromise.then(msresponse => {
           console.log("get milestone response: ");
           console.log(msresponse.milestones[0]);
-
+          //this.populateAnnouncements();
           //if (msresponse.success) {
           this.setState({ testArray: msresponse.milestones });
           this.populateMilestones(msresponse.milestones);
@@ -96,6 +132,7 @@ export default class ProjectDashboardView extends Component {
   }
 
   handleIncrementProgress(updateWeight) {
+    console.log("updating weight");
     var currProg = this.state.percentdone;
     var currWeight = this.state.currentWeight;
 
@@ -173,30 +210,36 @@ export default class ProjectDashboardView extends Component {
     });
 
     //handles adding weight from total milestones weight
+
     var totalWeight = this.state.totalWeight;
     var currWeight = this.state.currentWeight;
-    console.log("old total: " + totalWeight);
+    console.log("totalWeight: " + totalWeight);
+    console.log("currWeight: " + currWeight);
+    //console.log("old total: " + totalWeight);
     totalWeight = totalWeight * 1 + msWeight * 1;
-    console.log("new total: " + totalWeight);
+    //console.log("new total: " + totalWeight);
 
     this.setState({
       percentdone: Math.ceil(100 * (currWeight / totalWeight)),
-      totalWeight: totalWeight,
-      currentWeight: currWeight
+      totalWeight: totalWeight
     });
   }
 
   populateMilestones(msArray) {
     var list = [];
     var list2 = [];
+    var totalWeight = 0;
+    var currWeight = 0;
     for (var i = 0; i < msArray.length; i++) {
+      //console.log("is finished: " + msArray[i].done);
+      //console.log(msArray[i]);
       list.push(
         <MilestonesViewEvent
           msName={msArray[i].title}
           msWeight={msArray[i].weight}
           msDescription={msArray[i].description}
           msID={msArray[i].milestoneid}
-          isFinish={msArray[i].done}
+          isFinish={msArray[i].done != undefined ? true : false}
           key={msArray[i].title}
           isDelete={false}
           updateProgFunc={this.handleIncrementProgress}
@@ -209,15 +252,27 @@ export default class ProjectDashboardView extends Component {
           msWeight={msArray[i].weight}
           msDescription={msArray[i].description}
           msID={msArray[i].milestoneid}
-          isFinish={msArray[i].done}
+          isFinish={false}
           key={msArray[i].title}
           isDelete={true}
           deleteFunc={this.handleRemoveMilestone}
           decrementProgFunc={this.handleDecrementProgress}
         />
       );
+      totalWeight += msArray[i].weight;
+      if (msArray[i].done != undefined) {
+        currWeight += msArray[i].weight;
+      }
     }
-    this.setState({ milestoneArray: list, editMilestoneArray: list2 });
+    console.log("totalweight: " + totalWeight);
+    console.log("currentweight: " + currWeight);
+    this.setState({
+      milestoneArray: list,
+      editMilestoneArray: list2,
+      totalWeight: totalWeight,
+      currentWeight: currWeight,
+      percentdone: Math.ceil(100 * (currWeight / totalWeight))
+    });
   }
 
   handleRemoveMilestone(msWeight, msID) {
@@ -232,8 +287,8 @@ export default class ProjectDashboardView extends Component {
       const projDataPromise = getProjectInfo([this.state.xid]);
       projDataPromise
         .then(response => {
-          console.log("get project info response: ");
-          console.log(response);
+          //console.log("get project info response: ");
+          //console.log(response);
 
           if (response.success) {
             return response.projects[0];
@@ -260,14 +315,14 @@ export default class ProjectDashboardView extends Component {
             pinnedannouncements: projectInfo.pinnedannouncements,
             unpinnedannouncements: projectInfo.unpinnedannouncements
           });
-          console.log("ms: " + projectInfo.milestones);
+          //console.log("ms: " + projectInfo.milestones);
           return projectInfo.milestones;
         })
         .then(milestones => {
           const msDataPromise = getMilestones(milestones);
           msDataPromise.then(msresponse => {
-            console.log("get milestone response: ");
-            console.log(msresponse.milestones[0]);
+            //console.log("get milestone response: ");
+            //console.log(msresponse.milestones[0]);
 
             //if (msresponse.success) {
             this.setState({ testArray: msresponse.milestones });
@@ -290,32 +345,6 @@ export default class ProjectDashboardView extends Component {
       currentWeight: currWeight
     });
   }
-
-  /*
-    //handles removing from display
-    var list = [];
-    var list2 = [];
-    for (var i = 0; i < this.state.milestoneArray.length; i++) {
-      if (this.state.milestoneArray[i].key != msName) {
-        list.push(this.state.milestoneArray[i]);
-        list2.push(this.state.editMilestoneArray[i]);
-      }
-    }
-
-    this.setState({ milestoneArray: list, editMilestoneArray: list2 }); */
-
-  /* Format for MilstonesViewEvent
-        <MilestonesViewEvent
-          msName="testmilestone1"
-          msWeight={25}
-          msDeadline="never"
-          msDescription="yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet yah yeet"
-          key="testmilestone1"
-          isDelete={false}
-          updateProgFunc={this.handleIncrementProgress}
-          decrementProgFunc={this.handleDecrementProgress}
-        />,
-  */
 
   render() {
     //TODO have call to repopulate list from backend
@@ -362,7 +391,13 @@ export default class ProjectDashboardView extends Component {
                   calendarId={this.props.calendarid}
                 />
               </Segment>
-              <AnnouncementsView />
+              <Segment>
+                <AnnouncementsView
+                  pinnedArray={this.state.pinnedArray}
+                  unpinnedArray={this.state.unpinnedArray}
+                  projectID={this.state.xid}
+                />
+              </Segment>
               <Segment textAlign="center">
                 <h2>UCSD Dibs</h2>
                 <a href="https://ucsd.evanced.info/dibs" target="_blank">

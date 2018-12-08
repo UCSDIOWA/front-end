@@ -19,7 +19,6 @@ export default class MilestoneEventPopup extends Component {
         <Header as="h3">{this.props.msName}</Header>
         <List>
           <List.Item>Weight: {this.props.msWeight} </List.Item>
-          <List.Item>Deadline: {this.props.msDeadline}</List.Item>
           <List.Item>Description: {this.props.msDescription}</List.Item>
         </List>
       </div>

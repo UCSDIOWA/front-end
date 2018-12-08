@@ -8,6 +8,7 @@ import {
   Confirm
 } from "semantic-ui-react";
 import MilestoneEventPopup from "./MilestoneEventPopup";
+import { toggleMilestoneComplete } from "../../server/api";
 
 export default class MilestonesViewEvent extends Component {
   constructor(props) {
@@ -37,16 +38,26 @@ export default class MilestonesViewEvent extends Component {
 
   handleFinishMS() {
     //TODO tell backend to update finishMS request to flip boolean
-    if (this.state.isFinish == false) {
+    if (!this.state.isFinish) {
+      console.log("updateprog");
       this.props.updateProgFunc(this.props.msWeight);
-    } else {
+    } else if (this.state.isFinish) {
+      console.log("decrementprog");
       this.props.decrementProgFunc(this.props.msWeight);
     }
-    //TODO handle call to backend to send completion for MS id
-    this.setState({
-      isFinish: !this.state.isFinish,
-      finishOpen: !this.state.finishOpen
+    const toggleMSPromise = toggleMilestoneComplete(this.props.msID);
+    toggleMSPromise.then(response => {
+      console.log("toggle ms response: ");
+      console.log(response);
+      this.setState({
+        isFinish: !this.state.isFinish,
+        finishOpen: !this.state.finishOpen
+      });
+      if (!response.success) {
+        alert("Error loading project");
+      }
     });
+    //TODO handle call to backend to send completion for MS id
   }
 
   render() {
@@ -102,7 +113,6 @@ export default class MilestonesViewEvent extends Component {
             <MilestoneEventPopup
               msName={this.props.msName}
               msWeight={this.props.msWeight}
-              msDeadline={this.props.msDeadline}
               msDescription={this.props.msDescription}
             />
           }

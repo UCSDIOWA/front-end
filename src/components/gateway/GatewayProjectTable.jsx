@@ -12,7 +12,7 @@ export default class GatewayProjectTable extends Component {
     //TODO GRAB NUMBER OF PROJECTS FROM BACKEND
     this.state = {
       empty: false,
-      projsPerPage: 4,
+      projsPerPage: 20,
       tableRows: [],
       activePage: 1,
       projectList: []
@@ -61,14 +61,8 @@ export default class GatewayProjectTable extends Component {
       list.push(
         <GatewayProjectTileEvent
           projectId={this.state.projectList[i].xid}
-          isFinished={false}
           projName={this.state.projectList[i].title}
           groupSize={this.state.projectList[i].groupsize}
-          percentDone={
-            this.state.projectList[i].percentdone === undefined
-              ? 0
-              : this.state.projectList[i].percentdone
-          }
           tags={this.state.projectList[i].tags}
           key={i}
         />
@@ -84,17 +78,19 @@ export default class GatewayProjectTable extends Component {
       <Segment>
         {!this.state.empty && (
           <Segment>
-            <Segment.Group style={{ width: "50vh" }}>
+            <Segment.Group style={{ width: "80vh" }}>
               {this.state.tableRows}
             </Segment.Group>
-            <Pagination
-              totalPages={Math.ceil(
-                this.props.totalProjs / this.state.projsPerPage
-              )}
-              boundaryRange={0}
-              activePage={this.state.activePage}
-              onPageChange={this.handlePaginationChange}
-            />
+            {Math.ceil(this.props.totalProjs / this.state.projsPerPage) > 1 && (
+              <Pagination
+                totalPages={Math.ceil(
+                  this.props.totalProjs / this.state.projsPerPage
+                )}
+                boundaryRange={0}
+                activePage={this.state.activePage}
+                onPageChange={this.handlePaginationChange}
+              />
+            )}
           </Segment>
         )}
         {this.state.empty && <Header>No Current Projects Found</Header>}
