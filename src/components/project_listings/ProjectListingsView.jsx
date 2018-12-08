@@ -109,7 +109,7 @@ export default class ProjectListingsView extends Component {
   convertToPages(pagesListings, newSearchListings, callback) {
     var tempArr = pagesListings.slice();
     while(tempArr.length) {
-      newSearchListings.push(tempArr.splice(0,2));
+      newSearchListings.push(tempArr.splice(0,5));
     }
     callback();
   }

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import ProjectListingCard from "./ProjectListingCard";
-import { Icon, Button, Header, Pagination, Grid, Segment } from "semantic-ui-react";
+import { Header, Pagination, Grid, Segment } from "semantic-ui-react";
+import "./listings.css"
 
 
 // props: image, projectTitle, projectLeader, description, extra (extra components to render)
@@ -47,7 +48,7 @@ export default class ProjectListingsContainer extends Component {
               totalPages={this.props.projectListings.length}
             />
           </Segment.Group>
-          <Segment.Group>
+          <Segment.Group className="project-listings">
             {toReturn}
           </Segment.Group>
         </Segment>

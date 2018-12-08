@@ -108,7 +108,7 @@ export default class ProjectDashboardView extends Component {
         const msDataPromise = getMilestones(milestones);
         msDataPromise.then(msresponse => {
           console.log("get milestone response: ");
-          console.log(msresponse.milestones[0]);
+          //console.log(msresponse.milestones[0]);
           //this.populateAnnouncements();
           //if (msresponse.success) {
           this.setState({ testArray: msresponse.milestones });

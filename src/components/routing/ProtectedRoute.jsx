@@ -9,6 +9,7 @@ class ProtectedRoute extends Component {
     // ...props is an array with all parameters passed to props
     const { component: Component, ...props } = this.props;
     const { LOGIN } = navConsts;
+
     // render Component with props if authenticated
     return (
       <Route
