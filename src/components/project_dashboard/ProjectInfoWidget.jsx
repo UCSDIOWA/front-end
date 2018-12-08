@@ -9,27 +9,29 @@ export default class ProjectInfoWidget extends Component {
           <List.Item
             floated="left"
             icon="chess king"
-            content={"project leader: " + this.props.projectLeader}
+            content={"Project leader: " + this.props.projectLeader}
           />
           <List.Item
             floated="left"
             icon="lock"
-            content={"private: " + this.props.isPrivate}
+            content={
+              "Private: " + (this.props.isPrivate != undefined ? "Yes" : "No")
+            }
           />
           <List.Item
             floated="left"
             icon="group"
-            content={"group size: " + this.props.groupSize}
+            content={"Group Size: " + this.props.groupSize}
           />
           <List.Item
             floated="left"
             icon="calendar outline"
-            content={"deadline: " + this.props.deadline}
+            content={"Deadline: " + this.props.deadline}
           />
           <List.Item
             floated="left"
             icon="pencil alternate"
-            content={"description: " + this.props.description}
+            content={"Description: " + this.props.description}
           />
           <List.Item
             floated="left"

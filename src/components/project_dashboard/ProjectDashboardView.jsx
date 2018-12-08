@@ -107,8 +107,6 @@ export default class ProjectDashboardView extends Component {
       .then(milestones => {
         const msDataPromise = getMilestones(milestones);
         msDataPromise.then(msresponse => {
-          console.log("get milestone response: ");
-          //console.log(msresponse.milestones[0]);
           //this.populateAnnouncements();
           //if (msresponse.success) {
           this.setState({ testArray: msresponse.milestones });
@@ -195,8 +193,8 @@ export default class ProjectDashboardView extends Component {
         .then(milestones => {
           const msDataPromise = getMilestones(milestones);
           msDataPromise.then(msresponse => {
-            console.log("get milestone response: ");
-            console.log(msresponse.milestones[0]);
+            //console.log("get milestone response: ");
+            //console.log(msresponse.milestones[0]);
 
             //if (msresponse.success) {
             this.setState({ testArray: msresponse.milestones });
@@ -230,7 +228,7 @@ export default class ProjectDashboardView extends Component {
     var list2 = [];
     var totalWeight = 0;
     var currWeight = 0;
-    for (var i = 0; i < msArray.length; i++) {
+    for (var i = 0; msArray != undefined && i < msArray.length; i++) {
       //console.log("is finished: " + msArray[i].done);
       //console.log(msArray[i]);
       list.push(
