@@ -75,7 +75,7 @@ export default class EditProjectForm extends Component {
       pendingMembersView: [],
       previousState: undefined
     };
-    console.log(this.state);
+    //console.log("projectleader: " + this.state.projectleader);
     this.handleRemoveMember = this.handleRemoveMember.bind(this);
     this.handleDeadline = this.handleDeadline.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
@@ -146,6 +146,10 @@ export default class EditProjectForm extends Component {
     });
   }
   handleRemoveMember(name) {
+    if (name === this.state.projectleader) {
+      console.log("cannot remove team leader");
+      return;
+    }
     console.log(name);
     console.log(this.props.xid);
     console.log(this.state);

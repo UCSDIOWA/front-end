@@ -82,7 +82,10 @@ export default class AnnouncementsView extends Component {
         <Segment>
           <Segment style={{ overflow: "auto", maxHeight: "200px" }}>
             <AnnouncementsList items={this.state.pinnedItems} isPinned={true} />
-            <AnnouncementsList items={this.state.unpinnedItems} isPinned={false} />
+            <AnnouncementsList
+              items={this.state.unpinnedItems}
+              isPinned={false}
+            />
           </Segment>
           <Form onSubmit={this.handleSubmit}>
             <Form.Field onChange={e => this.setState({ text: e.target.value })}>
@@ -106,18 +109,20 @@ export default class AnnouncementsView extends Component {
   }
 
   handleChange(e) {
-    if (e.target.type === "checkbox") {
-      //for the checkbox
-      this.setState({ isPinned: e.target.checked });
-    } else {
-      //for the text box
-      this.setState({ text: e.target.value });
-      //this.state.count--;
-    }
+    //if (e.target.type === "checkbox") {
+    //for the checkbox
+    this.setState({ isPinned: !this.state.isPinned });
+    //} else {
+    //for the text box
+    //console.log("check");
+    //this.setState({ text: e.target.value });
+    //this.state.count--;
+    //}
   }
 
   handleSubmit(e) {
-    if (!this.state.text.length) {
+    if (this.state.text === undefined || !this.state.text.length) {
+      console.log("boi");
       return;
     }
     const sendAnnouncementPromise = sendAnnouncement(
@@ -171,7 +176,14 @@ class AnnouncementsList extends React.Component {
       //consider using a sorted list below here instead of a map
       <List bulleted={!this.props.isPinned}>
         {this.props.items.map(item => (
-          <List.Item key={item.id}>  {this.props.isPinned && <Icon name="pin"/> }<List.Content>  <List.Header>{item.text}</List.Header> </List.Content></List.Item>
+          <List.Item key={item.id}>
+            {" "}
+            {this.props.isPinned && <Icon name="pin" />}
+            <List.Content>
+              {" "}
+              <List.Header>{item.text}</List.Header>{" "}
+            </List.Content>
+          </List.Item>
         ))}
       </List>
     );
