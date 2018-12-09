@@ -2,42 +2,69 @@ import React, { Component } from "react";
 import { Icon, Button, Modal, Header, Popup } from "semantic-ui-react";
 //import EditProjectView from "./EditProjectView";
 import EditProjForm from "./EditProjForm";
-import { getProjectInfo } from "../../server/api";
+import { getProjectInfo, updateProject } from "../../server/api";
 
 export default class EditProjectView extends Component {
   constructor(props) {
     super(props);
-    this.state = { modalOpen: false, msName: "" };
+    this.state = { modalOpen: false, msName: "", projObject: undefined };
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
   }
 
-  handleOpen = () => this.setState({ modalOpen: true });
+  handleOpen = () => {
+    var temp = this.createProjectObject();
+    //this.setState({ projObject: temp });
+  };
 
   handleClose = () => this.setState({ modalOpen: false });
 
+  handleSubmit(newFields) {
+    var updateProjectSuccess = false;
+    console.log(newFields);
+    const submitPromise = updateProject(newFields);
+    submitPromise.then(response => {
+      console.log(response);
+      updateProjectSuccess = response.success;
+      if (!updateProjectSuccess) {
+        alert("Error updating project");
+        console.log(response);
+      } else {
+        // update
+        alert("Successfully updated project!");
+        //this.createProjectObject();
+      }
+    });
+  }
+
   createProjectObject() {
-    const projectPromise = getProjectInfo(this.props.xid);
+    //console.log(this.props.xid);
+    //var temp = [this.props.xid]
+    const projectPromise = getProjectInfo([this.props.xid]);
     projectPromise.then(response => {
+      console.log(response);
       var projectObject = {
-        xid: response.xid,
-        title: response.title,
-        projectleader: response.projectleader,
-        percentdone: response.percentdone,
-        groupsize: response.groupsize,
-        isprivate: response.isprivate,
-        tags: response.tags,
-        deadline: response.deadline,
-        calendarid: response.calendarid,
-        description: response.description,
-        done: response.done,
-        joinrequests: response.joinrequests,
-        memberslist: response.memberslist,
-        milestones: response.milestones,
-        pinnedannouncements: response.pinnedannouncements,
-        unpinnedannouncements: response.unpinnedannouncements
+        xid: response.projects[0].xid,
+        title: response.projects[0].title,
+        projectleader: response.projects[0].projectleader,
+        percentdone: response.projects[0].percentdone,
+        groupsize: response.projects[0].groupsize,
+        isprivate: response.projects[0].isprivate,
+        tags: response.projects[0].tags,
+        deadline: response.projects[0].deadline,
+        calendarid: response.projects[0].calendarid,
+        description: response.projects[0].description,
+        done: response.projects[0].done,
+        joinrequests: response.projects[0].joinrequests,
+        memberslist: response.projects[0].memberslist,
+        milestones: response.projects[0].milestones,
+        pinnedannouncements: response.projects[0].pinnedannouncements,
+        unpinnedannouncements: response.projects[0].unpinnedannouncements
       };
-      return projectObject;
+      console.log(projectObject);
+      this.setState({ projObject: projectObject });
+      //console.log(temp);
+      this.setState({ modalOpen: true });
     });
   }
 
@@ -65,7 +92,13 @@ export default class EditProjectView extends Component {
         >
           <Header icon="settings" content="Project Settings" />
           <Modal.Content>
-            <EditProjForm projectObject={this.createProjectObject} />
+            <EditProjForm
+              projectObject={this.state.projObject}
+              handleSubmit={this.handleSubmit}
+              handleCancel={this.handleClose}
+              xid={this.props.xid}
+              handleTransferLeadership={this.props.handleTransferLeadership}
+            />
           </Modal.Content>
         </Modal>
       </div>

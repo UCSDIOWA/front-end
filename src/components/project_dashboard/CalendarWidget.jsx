@@ -9,13 +9,52 @@ import {
   Input
 } from "semantic-ui-react";
 import GoogleCalendar from "./GoogleCalendar";
+import { getProjectInfo, updateProject } from "../../server/api";
 
 export default class CalendarWidget extends Component {
   constructor(props) {
     super(props);
-    this.state = { hasCalendar: this.props.hasCalendar, calendarID: this.props.calendarID };
+    this.state = {
+      hasCalendar: this.props.hasCalendar,
+      calendarID: this.props.calendarID,
+      projectObject: undefined
+    };
     this.addCalendar = this.addCalendar.bind(this);
     this.setID = this.setID.bind(this);
+    this.submit = this.submit.bind(this);
+  }
+
+  componentDidMount() {
+    const getProjPromise = getProjectInfo([this.props.xid]);
+    getProjPromise.then(response => {
+      console.log(response);
+      var projectObject = {
+        xid: response.projects[0].xid,
+        title: response.projects[0].title,
+        projectleader: response.projects[0].projectleader,
+        percentdone: response.projects[0].percentdone,
+        groupsize: response.projects[0].groupsize,
+        isprivate: response.projects[0].isprivate,
+        tags: response.projects[0].tags,
+        deadline: response.projects[0].deadline,
+        calendarid: response.projects[0].calendarid,
+        description: response.projects[0].description,
+        done: response.projects[0].done,
+        joinrequests: response.projects[0].joinrequests,
+        memberslist: response.projects[0].memberslist,
+        milestones: response.projects[0].milestones,
+        pinnedannouncements: response.projects[0].pinnedannouncements,
+        unpinnedannouncements: response.projects[0].unpinnedannouncements
+      };
+      console.log(projectObject);
+      this.setState({ projectObject: projectObject });
+      if (projectObject.calendarid !== undefined) {
+        this.setState({
+          hasCalendar: true,
+          calendarID: this.state.projectObject.calendarid
+        });
+      }
+    });
   }
 
   /* This function sets state hasCalendar to true, so this component will rerender and 
@@ -27,18 +66,58 @@ export default class CalendarWidget extends Component {
       this.setState({ hasCalendar: true });
       console.log("Calendar id is " + this.state.calendarID);
     }
+    var newProjectObject = this.state.projectObject;
+    newProjectObject.calendarid = this.state.calendarID;
+    console.log(newProjectObject);
+    this.setState({ projectObject: newProjectObject });
+    this.submit(newProjectObject);
   }
 
+  submit(newProjectObject) {
+    var updateProjectSuccess = false;
+    console.log(newProjectObject);
+    const submitPromise = updateProject(newProjectObject);
+    submitPromise.then(response => {
+      console.log(response);
+      updateProjectSuccess = response.success;
+      if (!updateProjectSuccess) {
+        alert("Error inputting calendar");
+        console.log(response);
+      } else {
+        // update
+        alert("Successfully inputted calendar!");
+        //this.createProjectObject();
+      }
+    });
+  }
   /* Sets the state calendarID to value (does not render the calendar)
    */
   setID(e, { value }) {
+    /* var newProjectObject = this.state.projectObject;
+    newProjectObject.calendarID = value; */
     this.setState({ calendarID: value });
+    /*  var updateProjectSuccess = false;
+    console.log(this.state.projectObject);
+    const submitPromise = updateProject(this.state.projectObject);
+    submitPromise.then(response => {
+      console.log(response);
+      updateProjectSuccess = response.success;
+      if (!updateProjectSuccess) {
+        alert("Error inputting calendar");
+        console.log(response);
+      } else {
+        // update
+        alert("Successfully inputted calendar!");
+        //this.createProjectObject();
+      }
+    }); */
   }
 
   render() {
     const { hasCalendar, calendarID } = this.state;
     // if project has connected a calendar then render it
     if (hasCalendar) {
+      console.log("reached");
       return <GoogleCalendar calendarID={calendarID} />;
       // otherwise return a button that allows the user to enter a calendar id
     } else {

@@ -5,9 +5,10 @@ import MilestonesViewEvent from "./MilestonesViewEvent";
 import CalendarWidget from "./CalendarWidget";
 import AnnouncementsView from "./AnnouncementsView";
 import InviteUserView from "./InviteUserView";
-import { getProjectInfo } from "../../server/api";
+import { getProjectInfo, transferLeadership } from "../../server/api";
 import ProjectInfoWidget from "./ProjectInfoWidget";
-
+import MemberRequestsView from "./MemberRequestsView";
+import LeaveGroupView from "./LeaveGroupView";
 export default class ProjectDashboardView extends Component {
   constructor(props) {
     super(props);
@@ -23,9 +24,46 @@ export default class ProjectDashboardView extends Component {
     this.handleRemoveMilestone = this.handleRemoveMilestone.bind(this);
     this.handleIncrementProgress = this.handleIncrementProgress.bind(this);
     this.handleDecrementProgress = this.handleDecrementProgress.bind(this);
+    this.handleTransferLeadership = this.handleTransferLeadership.bind(this);
+    this.renderPage = this.renderPage.bind(this);
   }
 
   componentDidMount() {
+    const projDataPromise = getProjectInfo([this.state.xid]);
+    projDataPromise
+      .then(response => {
+        console.log("get project info response: ");
+        console.log(response);
+        if (response.success) {
+          return response.projects[0];
+        } else {
+          alert("Error loading project");
+        }
+      })
+      .then(projectInfo => {
+        // TODO update to retrieve milestones from db
+        this.setState({
+          xid: projectInfo.xid,
+          title: projectInfo.title,
+          projectleader: projectInfo.projectleader,
+          percentdone: projectInfo.percentdone,
+          groupsize: projectInfo.groupsize,
+          isprivate: projectInfo.isprivate,
+          tags: projectInfo.tags,
+          deadline: projectInfo.deadline,
+          calendarid: projectInfo.calendarid,
+          description: projectInfo.description,
+          done: projectInfo.done,
+          joinrequests: projectInfo.joinrequests,
+          memberslist: projectInfo.memberslist,
+          milestones: projectInfo.milestones,
+          pinnedannouncements: projectInfo.pinnedannouncements,
+          unpinnedannouncements: projectInfo.unpinnedannouncements
+        });
+      });
+  }
+
+  renderPage() {
     const projDataPromise = getProjectInfo([this.state.xid]);
     projDataPromise
       .then(response => {
@@ -126,6 +164,26 @@ export default class ProjectDashboardView extends Component {
     });
   }
 
+  handleTransferLeadership(newleader) {
+    console.log(this.state);
+    console.log(newleader);
+    var transferSuccess = false;
+    const acceptPromise = transferLeadership(this.state.xid, newleader);
+    acceptPromise.then(response => {
+      console.log(response);
+      transferSuccess = response.success;
+      if (!transferSuccess) {
+        alert("Error transferring leadership!");
+        console.log(response);
+      } else {
+        // update
+        alert("Successfully transferred leadership!");
+        this.renderPage();
+        //this.createProjectObject();
+      }
+    });
+  }
+
   handleRemoveMilestone(msName, msWeight) {
     //handles removing weight from total milestones weight
     var totalWeight = this.state.totalWeight;
@@ -197,7 +255,10 @@ export default class ProjectDashboardView extends Component {
                 currentProgress={this.state.percentdone}
                 memberslist={this.state.memberslist}
                 xid={this.state.xid}
+                handleTransferLeadership={this.handleTransferLeadership}
               />
+              <MemberRequestsView xid={this.state.xid} />
+              <LeaveGroupView xid={this.state.xid} />
               <Segment>
                 <InviteUserView />
               </Segment>
@@ -208,6 +269,7 @@ export default class ProjectDashboardView extends Component {
                 <CalendarWidget
                   hasCalendar={this.props.calendarid != null}
                   calendarId={this.props.calendarid}
+                  xid={this.state.xid}
                 />
               </Segment>
               <AnnouncementsView />
