@@ -54,6 +54,83 @@ export function getNotifications(email) {
 
 /** User profile API  **/
 
+export function inviteUser(projID, invitedEmail, inviterEmail) {
+  let url = "https://tea-project-management-api.herokuapp.com/inviteuser";
+  let data = {
+    xid: projID,
+    recipientemail: invitedEmail,
+    senderemail: inviterEmail
+  };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      console.log("invite user response");
+      console.log(response);
+      return response.json();
+    })
+    .catch(error => {
+      console.log("invite user post error: ");
+      console.log(error);
+    });
+}
+
+export function rejectProjectInvite(email, projectID) {
+  let url = "https://tea-project-management-api.herokuapp.com/rejectinvitation";
+  let data = { email: email, xid: projectID };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      console.log("reject project invite response");
+      console.log(response);
+      return response.json();
+    })
+    .catch(error => {
+      console.log("reject project invite error: ");
+      console.log(error);
+    });
+}
+
+export function acceptProjectInvite(email, projectID) {
+  let url = "https://tea-project-management-api.herokuapp.com/acceptinvitation";
+  let data = { email: email, xid: projectID };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      console.log("accept project invite response");
+      console.log(response);
+      return response.json();
+    })
+    .catch(error => {
+      console.log("accept project invite error: ");
+      console.log(error);
+    });
+}
+
+export function getProjectInvites(email) {
+  let url =
+    "https://tea-project-management-api.herokuapp.com/displayinvitations";
+  let data = { email: email };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      console.log("get project invites response");
+      console.log(response);
+      return response.json();
+    })
+    .catch(error => {
+      console.log("get project invites error: ");
+      console.log(error);
+    });
+}
+
 export function getUserProfile(email) {
   let url = "https://tea-user-profile-api.herokuapp.com/getuserprofile";
   let data = { email: email };
@@ -207,27 +284,6 @@ export function getProjectListings(userEmail) {
     });
 }
 
-// backend not ready
-export function inviteUser(xid, remail, semail) {
-  let url = "https://tea-project-handler-api.herokuapp.com/inviteuser";
-  let data = {
-    projectid: xid,
-    recipientemail: remail,
-    senderemail: semail
-  };
-  return fetch(url, {
-    method: "POST",
-    body: JSON.stringify(data)
-  })
-    .then(response => {
-      //console.log(response);
-      return response.json();
-    })
-    .catch(error => {
-      console.log("getAllProjects post error: ");
-      console.log(error);
-    });
-}
 // to fix
 export function getEditProjForm(valueList) {
   let url = "https://tea-login-api.herokuapp.com/editProjForm";

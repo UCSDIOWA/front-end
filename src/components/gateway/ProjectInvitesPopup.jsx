@@ -11,7 +11,11 @@ export default class ProjectInvitesPopup extends Component {
     return (
       <Segment textAlign="center">
         <Header as="h2">Projects:</Header>
-        {this.props.invitesArray}
+        {this.props.invitesArray.length === 0 ? (
+          <Segment className="profile-columns3">No Project Invites</Segment>
+        ) : (
+          this.props.invitesArray
+        )}
       </Segment>
     );
   }

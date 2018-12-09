@@ -26,6 +26,7 @@ export default class ProjectDashboardView extends Component {
       unpinnedannouncements: [],
       pinnedArray: [],
       unpinnedArray: [],
+      memberslist: [],
       currentWeight: 0,
       totalWeight: 0,
       percentdone: 0
@@ -82,6 +83,9 @@ export default class ProjectDashboardView extends Component {
         }
       })
       .then(projectInfo => {
+        if (projectInfo === undefined) {
+          return;
+        }
         this.setState({
           xid: projectInfo.xid,
           title: projectInfo.title,
@@ -100,13 +104,16 @@ export default class ProjectDashboardView extends Component {
           pinnedannouncements: projectInfo.pinnedannouncements,
           unpinnedannouncements: projectInfo.unpinnedannouncements
         });
-        console.log("announcements: " + this.state.pinnedannouncements);
+        console.log(" MEMBERS: " + this.state.memberslist);
 
         return projectInfo.milestones;
       })
       .then(milestones => {
         const msDataPromise = getMilestones(milestones);
         msDataPromise.then(msresponse => {
+          if (msresponse === undefined) {
+            return;
+          }
           //this.populateAnnouncements();
           //if (msresponse.success) {
           this.setState({ testArray: msresponse.milestones });
@@ -378,7 +385,10 @@ export default class ProjectDashboardView extends Component {
                 memberslist={this.state.memberslist}
               />
               <Segment>
-                <InviteUserView />
+                <InviteUserView
+                  xid={this.state.xid}
+                  memberslist={this.state.memberslist}
+                />
               </Segment>
             </Grid.Column>
             <Grid.Column className="profile-columns3">
@@ -394,6 +404,7 @@ export default class ProjectDashboardView extends Component {
                   pinnedArray={this.state.pinnedArray}
                   unpinnedArray={this.state.unpinnedArray}
                   projectID={this.state.xid}
+                  memberslist={this.state.memberslist}
                 />
               </Segment>
               <Segment textAlign="center">

@@ -12,7 +12,7 @@ export default class GatewayProjectTable extends Component {
     //TODO GRAB NUMBER OF PROJECTS FROM BACKEND
     this.state = {
       empty: false,
-      projsPerPage: 20,
+      projsPerPage: 4,
       tableRows: [],
       activePage: 1,
       projectList: []
@@ -50,6 +50,7 @@ export default class GatewayProjectTable extends Component {
 
   tableGenerate(activePage) {
     var list = [];
+
     //loop through retrieved current projects and grab each based on active page index
     for (
       //grabs up to 4 total projects to populate a page of the pagination
@@ -64,7 +65,7 @@ export default class GatewayProjectTable extends Component {
           projName={this.state.projectList[i].title}
           groupSize={this.state.projectList[i].groupsize}
           tags={this.state.projectList[i].tags}
-          key={i}
+          key={this.state.projectList[i].xid}
         />
       );
     }
@@ -81,12 +82,14 @@ export default class GatewayProjectTable extends Component {
             <Segment.Group style={{ width: "80vh" }}>
               {this.state.tableRows}
             </Segment.Group>
-            {Math.ceil(this.props.totalProjs / this.state.projsPerPage) > 1 && (
+            {Math.ceil(
+              this.state.projectList.length / this.state.projsPerPage
+            ) > 1 && (
               <Pagination
                 totalPages={Math.ceil(
-                  this.props.totalProjs / this.state.projsPerPage
+                  this.state.projectList.length / this.state.projsPerPage
                 )}
-                boundaryRange={0}
+                boundaryRange={1}
                 activePage={this.state.activePage}
                 onPageChange={this.handlePaginationChange}
               />

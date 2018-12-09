@@ -29,6 +29,9 @@ export default class AnnouncementsView extends Component {
         }
       })
       .then(projectInfo => {
+        if (projectInfo === undefined) {
+          return;
+        }
         this.setState({
           pinnedannouncements: projectInfo.pinnedannouncements,
           unpinnedannouncements: projectInfo.unpinnedannouncements
