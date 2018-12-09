@@ -8,14 +8,14 @@ projects. It also allows for the group projects to proceed smoothly by having pr
 ## Login Credentials ##
 For testing purposes we provide two accounts, one basic freshly created account and one preloaded with their own
 projects and projects that they have joined
-### User 1: ### Bare minimum account
+### User 1: Bare minimum account
 Username: cse110test@ucsd.edu
 Password: cse110
-### User2: ### Pre-populated
+### User2: Pre-populated
 Username: cse110test2@ucsd.edu
 Password: cse110
 
-## Requirements: ## 
+## Requirements: ##
 This web app is meant to be used on a desktop on a computer. Due to the layout of the web app at the moment,
 using the web app on a device with smaller screens such as a mobile device will layout the information in 
 a not user friendly way.
