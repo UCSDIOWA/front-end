@@ -34,7 +34,7 @@ export default class LeaveGroupView extends Component {
       <Segment textAlign="center">
         <Form.Field>
           <Link to={"/" + GATEWAY}>
-            <Button negative onClick={this.handleClick}>
+            <Button fluid negative onClick={this.handleClick}>
               Leave Project
             </Button>
           </Link>

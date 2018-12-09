@@ -181,6 +181,7 @@ export default class MemberRequestsView extends Component {
           <Modal
             trigger={
               <Button
+                fluid
                 color="green"
                 onClick={this.handleOpen}
                 textalign="center"
