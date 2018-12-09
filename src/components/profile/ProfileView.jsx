@@ -30,7 +30,14 @@ export default class ProfileView extends Component {
     const profDataPromise = getUserProfile(UserSession.getEmail());
     profDataPromise.then(response => {
       console.log(response);
+
       if (response.currentprojects !== undefined || response.previousprojects !== undefined) {
+        if (response.currentprojects === undefined) {
+          response.currentprojects = [];
+        }
+        if (response.previousprojects === undefined) {
+          response.previousprojects = [];
+        }
         let allProjectIDs = [];
         allProjectIDs = response.currentprojects.concat(
           response.previousprojects
