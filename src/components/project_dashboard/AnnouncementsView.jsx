@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Segment, Form, Checkbox } from "semantic-ui-react";
+import { Button, Segment, Form, Checkbox, List, Icon } from "semantic-ui-react";
 import { sendAnnouncement, getProjectInfo } from "../../server/api";
 export default class AnnouncementsView extends Component {
   constructor(props) {
@@ -81,8 +81,8 @@ export default class AnnouncementsView extends Component {
 
         <Segment>
           <Segment style={{ overflow: "auto", maxHeight: "200px" }}>
-            <AnnouncementsList items={this.state.pinnedItems} />
-            <AnnouncementsList items={this.state.unpinnedItems} />
+            <AnnouncementsList items={this.state.pinnedItems} isPinned={true} />
+            <AnnouncementsList items={this.state.unpinnedItems} isPinned={false} />
           </Segment>
           <Form onSubmit={this.handleSubmit}>
             <Form.Field onChange={e => this.setState({ text: e.target.value })}>
@@ -169,11 +169,11 @@ class AnnouncementsList extends React.Component {
   render() {
     return (
       //consider using a sorted list below here instead of a map
-      <div>
+      <List bulleted={!this.props.isPinned}>
         {this.props.items.map(item => (
-          <div key={item.id}>{item.text}</div>
+          <List.Item key={item.id}>  {this.props.isPinned && <Icon name="pin"/> }<List.Content>  <List.Header>{item.text}</List.Header> </List.Content></List.Item>
         ))}
-      </div>
+      </List>
     );
   }
 }
