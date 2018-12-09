@@ -49,10 +49,87 @@ export function sendRecoverPasswordEmail(email) {
 
 /** Notifications **/
 export function getNotifications(email) {
-  return ["test invite", "test request"];
+  return ["Welcome to Tea, " + UserSession.getName()];
 }
 
 /** User profile API  **/
+
+export function inviteUser(projID, invitedEmail, inviterEmail) {
+  let url = "https://tea-project-management-api.herokuapp.com/inviteuser";
+  let data = {
+    xid: projID,
+    recipientemail: invitedEmail,
+    senderemail: inviterEmail
+  };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      console.log("invite user response");
+      console.log(response);
+      return response.json();
+    })
+    .catch(error => {
+      console.log("invite user post error: ");
+      console.log(error);
+    });
+}
+
+export function rejectProjectInvite(email, projectID) {
+  let url = "https://tea-project-management-api.herokuapp.com/rejectinvitation";
+  let data = { email: email, xid: projectID };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      console.log("reject project invite response");
+      console.log(response);
+      return response.json();
+    })
+    .catch(error => {
+      console.log("reject project invite error: ");
+      console.log(error);
+    });
+}
+
+export function acceptProjectInvite(email, projectID) {
+  let url = "https://tea-project-management-api.herokuapp.com/acceptinvitation";
+  let data = { email: email, xid: projectID };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      console.log("accept project invite response");
+      console.log(response);
+      return response.json();
+    })
+    .catch(error => {
+      console.log("accept project invite error: ");
+      console.log(error);
+    });
+}
+
+export function getProjectInvites(email) {
+  let url =
+    "https://tea-project-management-api.herokuapp.com/displayinvitations";
+  let data = { email: email };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      console.log("get project invites response");
+      console.log(response);
+      return response.json();
+    })
+    .catch(error => {
+      console.log("get project invites error: ");
+      console.log(error);
+    });
+}
 
 export function getUserProfile(email) {
   let url = "https://tea-user-profile-api.herokuapp.com/getuserprofile";
@@ -68,6 +145,83 @@ export function getUserProfile(email) {
     })
     .catch(error => {
       console.log("get profile post error: ");
+      console.log(error);
+    });
+}
+
+export function getMilestones(milestoneIDs) {
+  let url = "https://tea-project-management-api.herokuapp.com/getallmilestones";
+  let data = { milestoneid: milestoneIDs };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("get milestones error: ");
+      console.log(error);
+    });
+}
+export function toggleMilestoneComplete(msID) {
+  let url =
+    "https://tea-project-management-api.herokuapp.com/milestonecompletion";
+  let data = { milestoneid: msID };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("toggle milestone completion error: ");
+      console.log(error);
+    });
+}
+
+export function deleteMilestone(projectID, msID) {
+  let url = "https://tea-project-management-api.herokuapp.com/deletemilestone";
+  let data = { xid: projectID, milestoneid: msID };
+  console.log(data);
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("delete milestone post error: ");
+      console.log(error);
+    });
+}
+
+export function addMilestone(projectID, msName, msDescription, msWeight) {
+  let url = "https://tea-project-management-api.herokuapp.com/addmilestone";
+  let data = {
+    xid: projectID,
+    title: msName,
+    description: msDescription,
+    users: [],
+    weight: msWeight
+  };
+  console.log(data);
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("add milestone post error: ");
+      console.log(error);
+    });
+}
+export function sendAnnouncement(projectID, message, isPinned) {
+  let url = "https://tea-project-management-api.herokuapp.com/announcement";
+  let data = { xid: projectID, message: message, pin: isPinned };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("send announcement error: ");
       console.log(error);
     });
 }
@@ -186,27 +340,6 @@ export function getProjectListings(userEmail) {
     });
 }
 
-// backend not ready
-export function inviteUser(xid, remail, semail) {
-  let url = "https://tea-project-handler-api.herokuapp.com/inviteuser";
-  let data = {
-    projectid: xid,
-    recipientemail: remail,
-    senderemail: semail
-  };
-  return fetch(url, {
-    method: "POST",
-    body: JSON.stringify(data)
-  })
-    .then(response => {
-      //console.log(response);
-      return response.json();
-    })
-    .catch(error => {
-      console.log("getAllProjects post error: ");
-      console.log(error);
-    });
-}
 // to fix
 export function getEditProjForm(valueList) {
   let url = "https://tea-login-api.herokuapp.com/editProjForm";

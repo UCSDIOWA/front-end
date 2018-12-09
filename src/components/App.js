@@ -20,7 +20,7 @@ class App extends Component {
     this.state = {
       name: "",
       profileImage: "",
-      isAuthenticated: false,
+      isAuthenticated: UserSession.getAuthenticated() || false,
       systemMessages: []
     };
     this.handleUserSessionUpdate = this.handleUserSessionUpdate.bind(this);

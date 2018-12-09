@@ -10,11 +10,13 @@ import {
   Confirm
 } from "semantic-ui-react";
 import EndorseTeammatesEvent from "./EndorseTeammatesEvent";
+import UserSession from "../../server/UserSession";
 
 export default class EndorseTeammatesView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: UserSession.getEmail(),
       teammatesEvents: [],
       teamSize: this.props.memberslist.length,
       teammateNames: this.props.memberslist
@@ -26,9 +28,11 @@ export default class EndorseTeammatesView extends Component {
 
     var list = this.state.teammatesEvents;
     for (var i = 0; i < this.state.teamSize; i++) {
-      list.push(
-        <EndorseTeammatesEvent teammateName={this.state.teammateNames[i]} />
-      );
+      if (this.state.teammateNames[i] != this.state.email) {
+        list.push(
+          <EndorseTeammatesEvent teammateName={this.state.teammateNames[i]} />
+        );
+      }
     }
     this.setState({ teammatesEvents: list });
   }

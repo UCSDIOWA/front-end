@@ -1,3 +1,7 @@
 .ui.segment.Change:hover {
   background-color: rgb(238, 238, 238) !important;
 }
+
+.notification-bell {
+  color: #7ac17a;
+}

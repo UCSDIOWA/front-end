@@ -21,7 +21,6 @@ export default class GatewayProjectTable extends Component {
   componentDidMount() {
     const userProfilePromise = getUserProfile(UserSession.getEmail());
     userProfilePromise.then(response => {
-      
       //console.log(response);
       var idArray = response.currentprojects;
       //console.log(idArray);
@@ -31,6 +30,7 @@ export default class GatewayProjectTable extends Component {
           .then(response => {
             console.log(response);
             console.log(response.projects);
+            console.log(response.percentdone);
             this.setState({ projectList: response.projects });
             return response;
           })
@@ -50,6 +50,7 @@ export default class GatewayProjectTable extends Component {
 
   tableGenerate(activePage) {
     var list = [];
+
     //loop through retrieved current projects and grab each based on active page index
     for (
       //grabs up to 4 total projects to populate a page of the pagination
@@ -61,12 +62,10 @@ export default class GatewayProjectTable extends Component {
       list.push(
         <GatewayProjectTileEvent
           projectId={this.state.projectList[i].xid}
-          isFinished={false}
           projName={this.state.projectList[i].title}
           groupSize={this.state.projectList[i].groupsize}
-          percentDone={30}
           tags={this.state.projectList[i].tags}
-          key={i}
+          key={this.state.projectList[i].xid}
         />
       );
     }
@@ -80,17 +79,21 @@ export default class GatewayProjectTable extends Component {
       <Segment>
         {!this.state.empty && (
           <Segment>
-            <Segment.Group style={{ width: "50vh" }}>
+            <Segment.Group style={{ width: "80vh" }}>
               {this.state.tableRows}
             </Segment.Group>
-            <Pagination
-              totalPages={Math.ceil(
-                this.props.totalProjs / this.state.projsPerPage
-              )}
-              boundaryRange={0}
-              activePage={this.state.activePage}
-              onPageChange={this.handlePaginationChange}
-            />
+            {Math.ceil(
+              this.state.projectList.length / this.state.projsPerPage
+            ) > 1 && (
+              <Pagination
+                totalPages={Math.ceil(
+                  this.state.projectList.length / this.state.projsPerPage
+                )}
+                boundaryRange={1}
+                activePage={this.state.activePage}
+                onPageChange={this.handlePaginationChange}
+              />
+            )}
           </Segment>
         )}
         {this.state.empty && <Header>No Current Projects Found</Header>}

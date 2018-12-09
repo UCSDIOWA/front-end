@@ -57,14 +57,14 @@ export default class NotificationsContainer extends Component {
     const notificationButton = 
     this.state.notifications.length != 0 ?
     (
-      <Menu.Item color='black'>
-          <Icon fitted name='bell' size='large'color='black' inverted />
+      <Menu.Item >
+          <Icon className="notification-bell" fitted name='bell' size='large'/>
           <Label color='red' floating >
             {this.state.notifications.length}
           </Label> 
       </Menu.Item>
-    ) : (<Menu.Item color='black'>          
-          <Icon fitted name='bell' size='large'color='black' inverted /> 
+    ) : (<Menu.Item>          
+          <Icon className="notification-bell" fitted name='bell' size='large' /> 
         </Menu.Item>
     );
 

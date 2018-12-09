@@ -1,0 +1,5 @@
+.project-listings {
+  overflow-y: scroll;
+  height: 65vh;
+  width:100vh;
+}

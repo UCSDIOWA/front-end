@@ -9,7 +9,7 @@ import {
   Icon,
   Button,
   Table,
-  Grid
+  Label
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { navConsts } from "../../constants";
@@ -40,7 +40,7 @@ export default class GatewayProjectTileEvent extends Component {
     } = navConsts;
     const { activeIndex, isVis } = this.state;
     return (
-      <Segment style={{width: '100%', height:'100%'}}>
+      <Segment style={{ width: "100%", height: "100%" }}>
         <Accordion>
           <Accordion.Title
             active={activeIndex === 0}
@@ -59,9 +59,6 @@ export default class GatewayProjectTileEvent extends Component {
           <Transition.Group animation="slide down" duration={150}>
             {isVis && (
               <Accordion.Content active={activeIndex === 0}>
-                {!this.props.isFinished && (
-                  <Progress percent={this.props.percentDone} progress />
-                )}
                 <List>
                   <List.Item>
                     <List.Icon name="group" />
@@ -70,12 +67,13 @@ export default class GatewayProjectTileEvent extends Component {
                     </List.Content>
                   </List.Item>
                   <List.Item>
-                    <List.Icon name="id badge outline" />
-                    <List.Content>Role: {this.props.projRole}</List.Content>
-                  </List.Item>
-                  <List.Item>
                     <List.Icon name="tags" />
-                    <List.Content>Tags: {this.props.tags}</List.Content>
+                    <List.Content>
+                      Tags:{" "}
+                      {this.props.tags.map((tag, index) => {
+                        return <Label key={index}>{tag}</Label>;
+                      })}
+                    </List.Content>
                   </List.Item>
                 </List>
               </Accordion.Content>

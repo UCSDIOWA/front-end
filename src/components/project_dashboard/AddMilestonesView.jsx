@@ -65,17 +65,12 @@ export default class AddMilestonesView extends Component {
           <Segment vertical>
             <Icon name="weight" />
             <Input
+              type="integer"
               placeholder="Weight (Integer)"
               onChange={e => this.setState({ msWeight: e.target.value })}
             />
           </Segment>
-          <Segment vertical>
-            <Icon name="calendar alternate" />
-            <Input
-              placeholder="Deadline"
-              onChange={e => this.setState({ msDeadline: e.target.value })}
-            />
-          </Segment>
+
           <Segment vertical>
             <Icon name="tasks" />
             <Input
