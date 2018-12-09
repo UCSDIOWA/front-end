@@ -8,7 +8,11 @@ export default class PreviousProjectsTable extends Component {
   }
 
   render() {
-    const noPreviousProjectsFound = <Header>No Previous Projects Found</Header>;
+    const noPreviousProjectsFound = (
+      <Segment textAlign="center">
+        <Header>No Previous Projects Found</Header>
+      </Segment>
+    );
     var Rows;
     if (this.props.previousProjects.length === 0) {
       Rows = noPreviousProjectsFound;

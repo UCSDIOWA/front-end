@@ -240,6 +240,20 @@ export function getProjectInfo(projectids) {
     });
 }
 
+export function updateProgress(xid, percent) {
+  let url = "https://tea-project-management-api.herokuapp.com/updatepercentage";
+  let data = { xid: xid, percent: percent };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("update progress error: ");
+      console.log(error);
+    });
+}
+
 export function updateUserProfile(valueList) {
   let url = "https://tea-user-profile-api.herokuapp.com/updateuserprofile";
   let data = {

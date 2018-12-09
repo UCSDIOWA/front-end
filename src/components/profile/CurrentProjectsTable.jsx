@@ -9,7 +9,11 @@ export default class CurrentProjectsTable extends Component {
   }
 
   render() {
-    const noCurrentProjectsFound = <Header>No Current Projects Found</Header>;
+    const noCurrentProjectsFound = (
+      <Segment textAlign="center">
+        <Header>No Current Projects Found</Header>
+      </Segment>
+    );
     var Rows;
     if (this.props.currentProjects[0] === "dx") {
       Rows = noCurrentProjectsFound;

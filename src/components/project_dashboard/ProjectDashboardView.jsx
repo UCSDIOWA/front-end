@@ -9,7 +9,8 @@ import {
   getProjectInfo,
   getMilestones,
   addMilestone,
-  deleteMilestone
+  deleteMilestone,
+  updateProgress
 } from "../../server/api";
 import ProjectInfoWidget from "./ProjectInfoWidget";
 
@@ -42,12 +43,11 @@ export default class ProjectDashboardView extends Component {
 
   populateAnnouncements() {
     console.log("pinned array :" + this.state.pinnedannouncements);
-    //TODO make new items with correct id fields and push to state arrays using prop arrays
+
     for (var i = 0; i < this.state.pinnedannouncements; i++) {
       const newItem = {
         text: this.state.pinnedannouncements[i],
         id: Date.now(),
-        //id: Date.now(), //TODO: maybe subtract this from last date to order in reverse
         pinned: true
       };
 
@@ -59,7 +59,6 @@ export default class ProjectDashboardView extends Component {
       const newItem = {
         text: this.state.unpinnedannouncements[i],
         id: Date.now(),
-        //id: Date.now(), //TODO: maybe subtract this from last date to order in reverse
         pinned: false
       };
 
@@ -104,7 +103,7 @@ export default class ProjectDashboardView extends Component {
           pinnedannouncements: projectInfo.pinnedannouncements,
           unpinnedannouncements: projectInfo.unpinnedannouncements
         });
-        console.log(" MEMBERS: " + this.state.memberslist);
+        //console.log(" MEMBERS: " + this.state.memberslist);
 
         return projectInfo.milestones;
       })
@@ -114,15 +113,10 @@ export default class ProjectDashboardView extends Component {
           if (msresponse === undefined) {
             return;
           }
-          //this.populateAnnouncements();
-          //if (msresponse.success) {
           this.setState({ testArray: msresponse.milestones });
           this.populateMilestones(msresponse.milestones);
           console.log("grabbed milestones: " + this.state.milestoneArray);
-          //}
         });
-
-        // TODO update to retrieve milestones from db
       });
   }
 
@@ -133,7 +127,10 @@ export default class ProjectDashboardView extends Component {
 
     currProg = Math.ceil(100 * (currWeight / this.state.totalWeight));
 
-    this.setState({ percentdone: currProg, currentWeight: currWeight });
+    const updateProgressPromise = updateProgress(this.state.xid, currProg);
+    updateProgressPromise.then(response => {
+      this.setState({ percentdone: currProg, currentWeight: currWeight });
+    });
   }
 
   handleIncrementProgress(updateWeight) {
@@ -146,7 +143,10 @@ export default class ProjectDashboardView extends Component {
 
     currProg = Math.ceil(100 * (currWeight / this.state.totalWeight));
 
-    this.setState({ percentdone: currProg, currentWeight: currWeight });
+    const updateProgressPromise = updateProgress(this.state.xid, currProg);
+    updateProgressPromise.then(response => {
+      this.setState({ percentdone: currProg, currentWeight: currWeight });
+    });
   }
 
   handleAddMilestone(msName, msWeight, msDeadline, msDescription) {
@@ -177,22 +177,7 @@ export default class ProjectDashboardView extends Component {
         })
         .then(projectInfo => {
           this.setState({
-            xid: projectInfo.xid,
-            title: projectInfo.title,
-            projectleader: projectInfo.projectleader,
-            percentdone: projectInfo.percentdone,
-            groupsize: projectInfo.groupsize,
-            isprivate: projectInfo.isprivate,
-            tags: projectInfo.tags,
-            deadline: projectInfo.deadline,
-            calendarid: projectInfo.calendarid,
-            description: projectInfo.description,
-            done: projectInfo.done,
-            joinrequests: projectInfo.joinrequests,
-            memberslist: projectInfo.memberslist,
-            milestones: projectInfo.milestones,
-            pinnedannouncements: projectInfo.pinnedannouncements,
-            unpinnedannouncements: projectInfo.unpinnedannouncements
+            milestones: projectInfo.milestones
           });
           console.log("ms: " + projectInfo.milestones);
           return projectInfo.milestones;
@@ -203,18 +188,12 @@ export default class ProjectDashboardView extends Component {
             //console.log("get milestone response: ");
             //console.log(msresponse.milestones[0]);
 
-            //if (msresponse.success) {
             this.setState({ testArray: msresponse.milestones });
             this.populateMilestones(msresponse.milestones);
-            console.log("grabbed milestones: " + this.state.milestoneArray);
-            //}
+            //console.log("grabbed milestones: " + this.state.milestoneArray);
           });
-
-          // TODO update to retrieve milestones from db
         });
     });
-
-    //handles adding weight from total milestones weight
 
     var totalWeight = this.state.totalWeight;
     var currWeight = this.state.currentWeight;
@@ -224,9 +203,16 @@ export default class ProjectDashboardView extends Component {
     totalWeight = totalWeight * 1 + msWeight * 1;
     //console.log("new total: " + totalWeight);
 
-    this.setState({
-      percentdone: Math.ceil(100 * (currWeight / totalWeight)),
-      totalWeight: totalWeight
+    var currProg = Math.ceil(100 * (currWeight / totalWeight));
+    console.log("HESDFASDF");
+
+    const updateProgressPromise = updateProgress(this.state.xid, currProg);
+    updateProgressPromise.then(response => {
+      console.log("ms added: " + response);
+      this.setState({
+        percentdone: currProg,
+        totalWeight: totalWeight
+      });
     });
   }
 
@@ -303,22 +289,7 @@ export default class ProjectDashboardView extends Component {
         })
         .then(projectInfo => {
           this.setState({
-            xid: projectInfo.xid,
-            title: projectInfo.title,
-            projectleader: projectInfo.projectleader,
-            percentdone: projectInfo.percentdone,
-            groupsize: projectInfo.groupsize,
-            isprivate: projectInfo.isprivate,
-            tags: projectInfo.tags,
-            deadline: projectInfo.deadline,
-            calendarid: projectInfo.calendarid,
-            description: projectInfo.description,
-            done: projectInfo.done,
-            joinrequests: projectInfo.joinrequests,
-            memberslist: projectInfo.memberslist,
-            milestones: projectInfo.milestones,
-            pinnedannouncements: projectInfo.pinnedannouncements,
-            unpinnedannouncements: projectInfo.unpinnedannouncements
+            milestones: projectInfo.milestones
           });
           //console.log("ms: " + projectInfo.milestones);
           return projectInfo.milestones;
@@ -335,8 +306,6 @@ export default class ProjectDashboardView extends Component {
             console.log("grabbed milestones: " + this.state.milestoneArray);
             //}
           });
-
-          // TODO update to retrieve milestones from db
         });
     });
     //handles removing weight from total milestones weight
@@ -344,10 +313,16 @@ export default class ProjectDashboardView extends Component {
     var currWeight = this.state.currentWeight;
     totalWeight -= msWeight;
 
-    this.setState({
-      percentdone: Math.ceil(100 * (currWeight / totalWeight)),
-      totalWeight: totalWeight,
-      currentWeight: currWeight
+    //TODO handle backend call to update percentage
+    var currProg = Math.ceil(100 * (currWeight / totalWeight));
+
+    const updateProgressPromise = updateProgress(this.state.xid, currProg);
+    updateProgressPromise.then(response => {
+      this.setState({
+        percentdone: currProg,
+        totalWeight: totalWeight,
+        currentWeight: currWeight
+      });
     });
   }
 
