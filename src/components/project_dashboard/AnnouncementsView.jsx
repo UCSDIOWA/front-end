@@ -57,7 +57,7 @@ export default class AnnouncementsView extends Component {
         if (this.state.unpinnedannouncements != undefined) {
           for (var i2 = 0; i2 < this.state.unpinnedannouncements.length; i2++) {
             const newItem = {
-              text: this.state.unpinnedannouncements[i],
+              text: this.state.unpinnedannouncements[i2],
               id: Date.now(),
               //id: Date.now(), //TODO: maybe subtract this from last date to order in reverse
               pinned: false
@@ -78,17 +78,16 @@ export default class AnnouncementsView extends Component {
     return (
       <div>
         <h3>Announcements Thread</h3>
-        {/*<br></br><br></br><br></br><br></br>*/}
-        {/* <AnnouncementsList items={this.state.items} /> */}
+
         <Segment>
           <Segment style={{ overflow: "auto", maxHeight: "200px" }}>
             <AnnouncementsList items={this.state.pinnedItems} />
             <AnnouncementsList items={this.state.unpinnedItems} />
           </Segment>
-          <Form onSubmit={this.handleSubmit} value={this.state.text}>
+          <Form onSubmit={this.handleSubmit}>
             <Form.Field onChange={e => this.setState({ text: e.target.value })}>
               <label>Add Announcement</label>
-              <input placeholder="Say Something!" />
+              <input placeholder="Say Something!" value={this.state.text} />
             </Form.Field>
 
             <Form.Field>
@@ -144,14 +143,14 @@ export default class AnnouncementsView extends Component {
       //id: Date.now(), //TODO: maybe subtract this from last date to order in reverse
       pinned: this.state.isPinned
     };
-
+    var newItemList = [newItem];
     if (this.state.isPinned) {
       this.setState(state => ({
-        pinnedItems: this.state.pinnedItems.concat(newItem)
+        pinnedItems: newItemList.concat(this.state.pinnedItems)
       }));
     } else {
       this.setState(state => ({
-        unpinnedItems: this.state.unpinnedItems.concat(newItem)
+        unpinnedItems: newItemList.concat(this.state.unpinnedItems)
       }));
     }
     this.setState(state => ({ text: "" }));
