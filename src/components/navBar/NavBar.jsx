@@ -6,6 +6,7 @@ import NotificationsContainer from "./NotificationsContainer";
 import NavBarDropDownMenu from "./NavBarDropDownMenu";
 import { navConsts } from "../../constants";
 import "../../css/App.css";
+import "./navbar.css"
 
 export default class NavBar extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ export default class NavBar extends Component {
     } = navConsts;
  
     return (
-      <Menu color="blue" inverted borderless size="large">
+      <Menu inverted borderless size="large">
         
         <Menu.Menu position="left">
           <Menu.Item>
@@ -35,7 +36,7 @@ export default class NavBar extends Component {
         
         <Menu.Menu position="right">
           <Menu.Item position="right">
-            <Segment inverted color="blue">Welcome back,  {this.props.name} </Segment>
+            <div>Welcome back,  {this.props.name} </div>
           </Menu.Item>
           
           <Menu.Item position="right">
