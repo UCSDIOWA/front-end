@@ -6,27 +6,38 @@ import ForgotPasswordForm from "./ForgotPasswordForm";
 export default class ForgotPasswordView extends Component {
   constructor(props) {
     super(props);
-    this.state = { isSubmissionSuccessful: false, sEmail: "" };
+    this.state = { isSubmissionSuccessful: false, sEmail: "", recoveryLoading: false };
     this.handlePasswordRecovery = this.handlePasswordRecovery.bind(this);
   }
 
   handlePasswordRecovery(email) {
     // TODO sendRecoverEmail functionality + callback
     const result = sendRecoverPasswordEmail(email);
-    const recoverySent = result;
-    if (!recoverySent) {
-      this.props.onSystemMessage("Failed to send recovery email");
-    } else {
-      this.props.onSystemMessage("Sent Recovery Email to " + email + "!");
-    }
-    this.setState({ isSubmissionSuccessful: result, sEmail: email });
+    var recoverySuccess = false;
+    this.setState({recoveryLoading: true});
+    result.then((response) => {
+      console.log("Recovery response");
+      console.log(response);
+      recoverySuccess = response.success;
+      this.setState({recoveryLoading: false});
+
+      this.setState({ recoveryLoading: false });
+      if (!recoverySuccess) {
+        alert("Invalid email");
+      } else {
+        this.props.onSystemMessage("Sent Recovery Email to " + email + "!");
+        this.setState({ isSubmissionSuccessful: result, sEmail: email });
+
+      }
+    })
+
   }
 
   render() {
     return this.state.isSubmissionSuccessful ? (
       <Redirect to={"/"} />
     ) : (
-      <ForgotPasswordForm onPasswordRecovery={this.handlePasswordRecovery} />
+      <ForgotPasswordForm onPasswordRecovery={this.handlePasswordRecovery} isLoading={this.state.recoveryLoading} />
     );
   }
 }

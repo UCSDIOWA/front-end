@@ -50,6 +50,7 @@ export default class ForgotPasswordForm extends Component {
                   <Button
                     color="teal"
                     size="large"
+                    loading={this.props.isLoading}
                     onClick={() => {
                       this.props.onPasswordRecovery(this.state.sEmail);
                     }}

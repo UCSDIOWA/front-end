@@ -44,7 +44,23 @@ export function login(email, password) {
 
 // TODO
 export function sendRecoverPasswordEmail(email) {
-  return true;
+  let url = "https://tea-login-api.herokuapp.com/forgotpassword";
+  let data = {
+    email: email
+  };
+  console.log(data);
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      console.log(response);
+      return response.json();
+    })
+    .catch(error => {
+      console.log("send password reset post error: ");
+      console.log(error);
+    });
 }
 
 /** Notifications **/
