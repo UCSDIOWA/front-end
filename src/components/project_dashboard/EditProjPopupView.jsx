@@ -10,6 +10,7 @@ export default class EditProjectView extends Component {
     this.state = { modalOpen: false, msName: "", projObject: undefined };
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
+    this.handleTransferLeadership = this.handleTransferLeadership.bind(this);
   }
 
   handleOpen = () => {
@@ -68,6 +69,11 @@ export default class EditProjectView extends Component {
     });
   }
 
+  handleTransferLeadership(name) {
+    this.setState({ modalOpen: false });
+    this.props.handleTransferLeadership(name);
+  }
+
   render() {
     return (
       <div>
@@ -97,7 +103,7 @@ export default class EditProjectView extends Component {
               handleSubmit={this.handleSubmit}
               handleCancel={this.handleClose}
               xid={this.props.xid}
-              handleTransferLeadership={this.props.handleTransferLeadership}
+              handleTransferLeadership={this.handleTransferLeadership}
             />
           </Modal.Content>
         </Modal>

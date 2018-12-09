@@ -16,6 +16,7 @@ export default class PreviousProjectsTable extends Component {
       Rows = this.props.previousProjects.map(previousProject => (
         <tbody>
           <ProjectTileEvent
+            projectId={previousProject.xid}
             isFinished={true}
             description={previousProject.description}
             projectleader={previousProject.projectleader}

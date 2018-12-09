@@ -85,7 +85,9 @@ export default class ProjectTileEvent extends Component {
                   <List.Item>
                     <List.Icon name="location arrow" />
                     <List.Content>
-                      <Link to={"/" + DASHBOARD}>Go to Dashboard</Link>
+                    <Link to={"/" + DASHBOARD + "/" + this.props.projectId}>
+                        Go to Dashboard
+                      </Link>
                     </List.Content>
                   </List.Item>
                 </List>

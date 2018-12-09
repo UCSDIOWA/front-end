@@ -182,6 +182,7 @@ export default class EditProjectForm extends Component {
       for (var i = 0; i < this.props.projectObject.memberslist.length; i++) {
         temp.push(
           <MembersView
+            projectId={this.state.xid}
             name={this.props.projectObject.memberslist[i]}
             handleRemove={this.handleRemoveMember}
             handleTransferLeadership={this.props.handleTransferLeadership}

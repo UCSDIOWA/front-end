@@ -17,6 +17,7 @@ export default class CurrentProjectsTable extends Component {
       Rows = this.props.currentProjects.map(currentProject => (
         <tbody>
           <ProjectTileEvent
+            projectId ={currentProject.xid}
             isFinished={false}
             description={currentProject.description}
             projectleader={currentProject.projectleader}

@@ -422,7 +422,7 @@ export default class ProjectDashboardView extends Component {
     const list2 = this.state.editMilestoneArray;
     return (
       <Segment>
-        <Grid centered style={{ width: "60rem" }}>
+        <Grid centered style={{ width: "80rem" }}>
           <Grid.Row>
             <Header as="h1">{this.state.title}</Header>
           </Grid.Row>
@@ -472,16 +472,6 @@ export default class ProjectDashboardView extends Component {
                 projectID={this.state.xid}
                 memberslist={this.state.memberslist}
               />
-              {/* /> */}
-              {/* </Segment> */}
-              <Segment>
-                <AnnouncementsView
-                  pinnedArray={this.state.pinnedArray}
-                  unpinnedArray={this.state.unpinnedArray}
-                  projectID={this.state.xid}
-                  memberslist={this.state.memberslist}
-                />
-              </Segment>
               <Segment textAlign="center">
                 <h2>UCSD Dibs</h2>
                 <a href="https://ucsd.evanced.info/dibs" target="_blank">
