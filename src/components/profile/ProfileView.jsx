@@ -104,27 +104,27 @@ export default class ProfileView extends Component {
     console.log("Rendering Profile");
     return (
       <Segment loading={this.state.loading}>
-        <div>
-          <div>
-            <Grid className="profile-header">
-              <Grid.Row>
-                <Grid.Column width={5} verticalAlign="bottom">
+
+            <Grid columns={2} style={{width:'100vh'}}>
+              <Grid.Row centered>
+                <Grid.Column width={8} textAlign='center'>
                   <h1>Profile</h1>
+                  <Image
+                    centered
+                    src={UserSession.getProfileImage()}
+                    size="small"
+                    rounded
+                  />
                 </Grid.Column>
                 <Grid.Column width={8}>
-                  <Image
-                    src={UserSession.getProfileImage()}
-                    width="80px"
-                    rounded={true}
+                <ProfileDescriptionWidget
+                    profileDescription={this.state.profileDescription}
+                    handleSubmit={this.handleDescriptionSubmit}
                   />
                 </Grid.Column>
               </Grid.Row>
-            </Grid>
-          </div>
-          <div>
-            <Grid columns={2} divided="vertically" className="profile-grid">
               <Grid.Row>
-                <Grid.Column>
+                <Grid.Column width={8}>
                   <CurrentProjectsTable
                     currentProjects={this.state.currentProjects}
                   />
@@ -132,18 +132,17 @@ export default class ProfileView extends Component {
                     previousProjects={this.state.previousProjects}
                   />
                 </Grid.Column>
-                <Grid.Column className="profile-columns3">
-                  <ProfileDescriptionWidget
-                    profileDescription={this.state.profileDescription}
-                    handleSubmit={this.handleDescriptionSubmit}
-                  />
-                  {/*  <EndorsementsWidget endorsements={this.state.endorsements} /> */}
+                <Grid.Column width={8}>
+
+
+                  <Segment textAlign='center' style={{height:'100%', width:'100%'}}>
+                    Endorsements
+                  </Segment>
                 </Grid.Column>
-              </Grid.Row>
+                </Grid.Row>
             </Grid>
-          </div>
-        </div>
       </Segment>
     );
   }
 }
+

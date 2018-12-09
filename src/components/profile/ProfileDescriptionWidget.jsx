@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Segment, Grid, Button, Checkbox, Form } from "semantic-ui-react";
 //import EditDescriptionForm from "./EditDescriptionForm";
+import './profile.css'
 
 export default class ProfileDescriptionWidget extends Component {
   constructor(props) {
@@ -31,12 +32,11 @@ export default class ProfileDescriptionWidget extends Component {
 
   render() {
     return (
-      <Grid>
-        <Grid.Row className="profile-columns3">
+      <Segment style={{height:'100%'}}>
           {this.state.displayForm === true && (
             <Form size="massive">
               <Form.TextArea
-                label="EditDescription"
+                label="Edit Profile Description"
                 placeholder={this.props.profileDescription}
                 onChange={e => this.setState({ formContents: e.target.value })}
               />
@@ -50,20 +50,20 @@ export default class ProfileDescriptionWidget extends Component {
             </Form>
           )}
           {this.state.displayForm === false && (
-            <Segment className="profile-columns3">
+            <Segment style={{height:'100%'}} textAlign='center'>
               <h1>
-                About Me{" "}
-                <div className="profile-columns3">
+                About Me
+                <div>
                   <a onClick={this.handleClick}>
                     <font size="2">Edit Description</font>
                   </a>
                 </div>
               </h1>
-              <p>{this.props.profileDescription}</p>
+              <p id='prof-desc'>{this.props.profileDescription}</p>
             </Segment>
           )}
-        </Grid.Row>
-      </Grid>
+      </Segment>
     );
   }
 }
+

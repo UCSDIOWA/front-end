@@ -8,7 +8,7 @@ export default class PreviousProjectsTable extends Component {
   }
 
   render() {
-    const noPreviousProjectsFound = <Header>No Previous Projects Found</Header>;
+    const noPreviousProjectsFound = <Segment textAlign='center'><h2> No Previous Projects</h2></Segment>;
     var Rows;
     if (this.props.previousProjects.length === 0) {
       Rows = noPreviousProjectsFound;
@@ -28,10 +28,11 @@ export default class PreviousProjectsTable extends Component {
     }
 
     return (
-      <Segment className="profile-columns1">
+      <Segment style={{width:'100%'}}>
         <Header>Previous Project(s)</Header>
         <Table celled>{Rows}</Table>
       </Segment>
     );
   }
 }
+

@@ -30,10 +30,11 @@ export default class CurrentProjectsTable extends Component {
     }
 
     return (
-      <Segment className="profile-columns1">
+      <Segment style={{width:'100%'}}>
         <Header>Current Project(s)</Header>
         <Table celled>{Rows}</Table>
       </Segment>
     );
   }
 }
+
