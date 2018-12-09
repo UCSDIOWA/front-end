@@ -240,6 +240,62 @@ export function getProjectInfo(projectids) {
     });
 }
 
+export function addUser(email, xid) {
+  let url = "https://tea-project-management-api.herokuapp.com/adduser";
+  let data = { email: email, xid: xid };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("accept user error: ");
+      console.log(error);
+    });
+}
+
+export function removeUser(email, xid) {
+  let url = "https://tea-project-management-api.herokuapp.com/removeuser";
+  let data = { xid: xid, email: email };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("remove user error: ");
+      console.log(error);
+    });
+}
+
+export function transferLeadership(xid, newleader) {
+  let url = "https://tea-project-management-api.herokuapp.com/transferleader";
+  let data = { xid: xid, newleader: newleader };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("transfer error: ");
+      console.log(error);
+    });
+}
+
+export function rejectUser(email, xid) {
+  let url = "https://tea-project-management-api.herokuapp.com/rejectuser";
+  let data = { email: email, xid: xid };
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("remove user error: ");
+      console.log(error);
+    });
+}
+
 export function updateUserProfile(valueList) {
   let url = "https://tea-user-profile-api.herokuapp.com/updateuserprofile";
   let data = {
@@ -348,6 +404,39 @@ export function createProject(
     .then(response => response.json())
     .catch(error => {
       console.log("createproject post error: ");
+      console.log(error);
+    });
+}
+
+export function updateProject(projectFields) {
+  let url = "https://tea-project-handler-api.herokuapp.com/updateproject";
+  console.log(projectFields);
+  let data = {
+    xid: projectFields.xid,
+    title: projectFields.title,
+    projectleader: projectFields.projectleader,
+    percentdone: projectFields.percentdone,
+    groupsize: projectFields.groupsize,
+    isprivate: projectFields.isprivate,
+    tags: projectFields.tags,
+    deadline: projectFields.deadline,
+    calendarid: projectFields.calendarid,
+    description: projectFields.description,
+    done: projectFields.done,
+    joinrequests: projectFields.joinrequests,
+    memberslist: projectFields.memberslist,
+    milestones: projectFields.milestones,
+    pinnedannouncements: projectFields.pinnedannouncements,
+    unpinnedannouncements: projectFields.unpinnedannouncements
+  };
+  console.log(data);
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+    .then(response => response.json())
+    .catch(error => {
+      console.log("update project post error: ");
       console.log(error);
     });
 }

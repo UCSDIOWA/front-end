@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import MembersView from "./MembersView";
 import { getEditProjForm } from "../../server/api";
 import UserSession from "../../server/UserSession";
 import PropTypes from "prop-types";
@@ -7,6 +8,7 @@ import DayPicker from "react-day-picker/DayPickerInput";
 import dateFnsFormat from "date-fns/format";
 import dateFnsParse from "date-fns/parse";
 import { DateUtils } from "react-day-picker";
+import PendingMembersView from "./PendingMembersView";
 import {
   Segment,
   Button,
@@ -20,6 +22,8 @@ import {
   Label,
   Container
 } from "semantic-ui-react";
+import PendingMember from "./PendingMember";
+import { removeUser, transferLeadership } from "../../server/api";
 
 //PRIVACY OPTIONS
 const privateOptions = [
@@ -47,66 +51,72 @@ function formatDate(date, format, locale) {
 export default class EditProjectForm extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
-      title: "",
-      description: "",
-      deadline: "",
+      xid: this.props.projectObject.xid,
+      title: this.props.projectObject.title,
+      projectleader: this.props.projectObject.projectleader,
+      percentdone: this.props.projectObject.percentdone,
+      groupsize: this.props.projectObject.groupsize,
+      description: this.props.projectObject.description,
+      deadline: this.props.projectObject.deadline,
       tags: [],
       currentTagsViewer: [],
       tagForm: "",
-      teamSize: 0,
-      isPrivate: false,
-      members: [],
+      calendarid: this.props.projectObject.calendarid,
+      done: this.props.projectObject.done,
+      isprivate: this.props.projectObject.isprivate,
+      memberslist: this.props.projectObject.memberslist,
       membersViewer: [],
-      pendingMembers: [],
+      joinrequests: this.props.projectObject.joinrequests,
+      milestones: this.props.projectObject.milestones,
+      pinnedannouncements: this.props.projectObject.pinnedannouncements,
+      unpinnedannouncements: this.props.projectObject.unpinnedannouncements,
       pendingMembersView: [],
-      isOpen: false
+      previousState: undefined
     };
-
+    console.log(this.state);
+    this.handleRemoveMember = this.handleRemoveMember.bind(this);
+    this.handleDeadline = this.handleDeadline.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     this.populateMembers = this.populateMembers.bind(this);
-    this.populatePendingMembers = this.populatePendingMembers.bind(this);
+    //this.populatePendingMembers = this.populatePendingMembers.bind(this);
     this.populateCurrentTags = this.populateCurrentTags.bind(this);
     this.handleAddTags = this.handleAddTags.bind(this);
     this.handleRemoveTag = this.handleRemoveTag.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-
-    this.populateMembers();
-    this.populatePendingMembers();
-    this.populateCurrentTags();
+    this.handleSubmit = this.handleSubmit.bind(this);
+    //this.acceptPendingMember = this.acceptPendingMember.bind(this);
+    //this.rejectPendingMember = this.rejectPendingMember.bind(this);
   }
 
-  handleClick() {
-    this.setState({ isOpen: !this.state.isOpen });
-  }
   componentDidMount() {
-    const profDataPromise = getEditProjForm(UserSession.getEmail());
-    profDataPromise.then(response => {
-      console.log(response);
-      this.setState({
-        // title: response.title,
-        // description: response.description,
-        // deadline: response.deadline,
-        // currentTags: response.tags,
-        // teamSize: response.teamSize,
-        // isPrivate: response.privacy,
-        // members: response.members,
-        // membersViewer: response.membersViewer,
-        // pendingMembers: response.pendingMembers,
-        // pendingMembersView: response.pendingMembersView
-      });
-    });
+    console.log(this.state);
+    this.populateCurrentTags();
+    //this.populatePendingMembers();
+    this.populateMembers();
+    console.log(this.state.membersViewer);
   }
 
   //Populate current tags array
   populateCurrentTags() {
-    for (var i = 0; i < this.state.tags.length; i++) {
-      this.state.currentTagsViewer.push(
-        <Label>
-          {this.state.tags[i]}
-          <Icon name="delete" />
-        </Label>
-      );
+    var temp = [];
+    var temp2 = [];
+    //console.log(this.props.tags);
+    console.log(this.props.projectObject.tags);
+    if (this.props.projectObject.tags !== undefined) {
+      for (var i = 0; i < this.props.projectObject.tags.length; i++) {
+        temp.push(
+          <Label>
+            {this.props.projectObject.tags[i]}
+            <Icon name="delete" />
+          </Label>
+        );
+        temp2.push(this.props.projectObject.tags[i]);
+      }
     }
+    console.log(temp2);
+    this.setState({ currentTagsViewer: temp });
+    this.setState({ tags: temp2 });
   }
 
   //Handles saving tags. Each time the user selects a new tag, we add it to the tags array
@@ -135,58 +145,95 @@ export default class EditProjectForm extends Component {
       };
     });
   }
+  handleRemoveMember(name) {
+    console.log(name);
+    console.log(this.props.xid);
+    console.log(this.state);
+    var acceptSuccess = false;
+    const acceptPromise = removeUser(name, this.props.xid);
+    acceptPromise.then(response => {
+      console.log(response);
+      acceptSuccess = response.success;
+      if (!acceptSuccess) {
+        alert("Error removing from project");
+        console.log(response);
+      } else {
+        // update
+        alert("Successfully removed from project!");
+        //this.createProjectObject();
+      }
+      this.setState(prevState => {
+        return {
+          //joinrequests: newjoinrequests,
+          //memberslist: newmemberslist,
+          membersViewer: prevState.membersViewer.filter(
+            e => e.props.name !== name
+          )
+        };
+      });
+      console.log(this.state);
+    });
+  }
 
   //For membersViewer
   populateMembers() {
-    for (var i = 0; i < this.state.members.length; i++) {
-      this.state.membersViewer.push(
-        <Segment vertical>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column width={12}>{this.state.members[i]}</Grid.Column>
-              <Grid.Column width={2}>
-                <Button color="red" size="mini">
-                  Remove Member
-                </Button>
-              </Grid.Column>
-              <Grid.Column>
-                <Button color="facebook" size="mini">
-                  Make Leader
-                </Button>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Segment>
-      );
+    var temp = [];
+    if (this.props.projectObject.memberslist !== undefined) {
+      for (var i = 0; i < this.props.projectObject.memberslist.length; i++) {
+        temp.push(
+          <MembersView
+            name={this.props.projectObject.memberslist[i]}
+            handleRemove={this.handleRemoveMember}
+            handleTransferLeadership={this.props.handleTransferLeadership}
+          />
+        );
+      }
     }
-    //this.setState({ MembersView: temp });
+    this.setState({ membersViewer: temp });
   }
 
-  populatePendingMembers() {
-    for (var i = 0; i < this.state.pendingMembers.length; i++) {
-      this.state.pendingMembersView.push(
-        <Segment vertical>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column width={12}>
-                {this.state.pendingMembers[i]}
-              </Grid.Column>
-              <Grid.Column width={2}>
-                <Button color="green" size="mini">
-                  Accept Member
-                </Button>
-              </Grid.Column>
-              <Grid.Column>
-                <Button color="youtube" size="mini">
-                  Reject Member
-                </Button>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Segment>
-      );
-    }
-    //this.setState({ pendingMembersView: temp });
+  handleCancel() {
+    this.props.handleCancel();
+  }
+
+  handleDeadline(day, { selected }) {
+    this.setState({
+      deadline: selected
+        ? undefined
+        : day.getMonth() + 1 + "/" + day.getDate() + "/" + day.getFullYear()
+    });
+    console.log(this.state.deadline);
+  }
+
+  handlePrivacyChange = (e, data) => {
+    console.log(data);
+    this.setState({
+      isprivate: data.value
+    });
+    console.log(this.state.isprivate);
+  };
+  handleSubmit() {
+    console.log(this.state);
+    var toReturn = {
+      xid: this.state.xid,
+      title: this.state.title,
+      projectleader: this.state.projectleader,
+      percentdone: this.state.percentdone,
+      groupsize: this.state.groupsize,
+      isprivate: this.state.isprivate,
+      tags: this.state.tags,
+      deadline: this.state.deadline,
+      calendarid: this.state.calendarid,
+      description: this.state.description,
+      done: this.state.done,
+      joinrequests: this.state.joinrequests,
+      memberslist: this.state.memberslist,
+      milestones: this.state.milestones,
+      pinnedannouncements: this.state.pinnedannouncements,
+      unpinnedannouncements: this.state.unpinnedannouncements
+    };
+    console.log(toReturn);
+    this.props.handleSubmit(toReturn);
   }
 
   render() {
@@ -197,15 +244,15 @@ export default class EditProjectForm extends Component {
             <Form.Field>
               <label>Title</label>
               <input
-                placeholder="Edit Project Title"
-                onChange={e => this.setState({ name: e.target.value })}
+                placeholder={this.state.title}
+                onChange={e => this.setState({ title: e.target.value })}
               />
             </Form.Field>
 
             <Form.Field>
               <label>Description</label>
               <input
-                placeholder="Edit description"
+                placeholder={this.state.description}
                 onChange={e => this.setState({ description: e.target.value })}
               />
             </Form.Field>
@@ -213,9 +260,9 @@ export default class EditProjectForm extends Component {
             <Form.Field>
               <label>Team Size</label>
               <input
-                placeholder={this.state.teamSize}
+                placeholder={this.state.groupsize}
                 type="number"
-                onChange={e => this.setState({ teamSize: e.target.value })}
+                onChange={e => this.setState({ groupsize: e.target.value })}
               />
             </Form.Field>
           </Segment>
@@ -224,7 +271,7 @@ export default class EditProjectForm extends Component {
             <Form.Field>
               <label>Deadline</label>
               <DayPicker
-                placeholder="MM-DD-YYYY"
+                placeholder={this.state.deadline}
                 formatDate={formatDate}
                 parseDate={parseDate}
                 format={FORMAT}
@@ -238,10 +285,11 @@ export default class EditProjectForm extends Component {
             <Form.Field>
               <label> Private </label>
               <Dropdown
-                placeholder="Select Privacy"
+                placeholder={this.state.isprivate}
                 fluid
                 selection
                 options={privateOptions}
+                onChange={this.handlePrivacyChange}
               />
             </Form.Field>
           </Segment>
@@ -272,45 +320,87 @@ export default class EditProjectForm extends Component {
             </Form.Field>
           </Segment>
         </Segment.Group>
-
-        <Segment>
-          <Header>Current Members</Header>
-          {this.state.membersViewer}
-        </Segment>
-
-        <Segment.Group horizontal>
-          <Segment textAlign="center">
-            {" "}
-            <Form.Field>
-              <Modal
-                trigger={
-                  <Button color="green" onClick={this.handleClick}>
-                    Member Requests
-                  </Button>
-                }
-                size="large"
-                open={this.state.isOpen}
-              >
-                <Header icon="address card" content="Member Requests" />
-                <Modal.Content>{this.state.pendingMembersView}</Modal.Content>
-                <Modal.Actions>
-                  <Button color="red" inverted onClick={this.handleClick}>
-                    <Icon name="remove" /> Cancel
-                  </Button>
-                  <Button color="linkedin" inverted onClick={this.handleClick}>
-                    <Icon name="checkmark" /> Confirm
-                  </Button>
-                </Modal.Actions>
-              </Modal>
-            </Form.Field>
+        <Segment.Group>
+          <Segment>
+            <Header>Current Members</Header>
+            {console.log(this.state.membersViewer)}
+            {this.state.membersViewer}
           </Segment>
-          <Segment textAlign="center">
-            <Form.Field>
-              <Button negative>Leave Group</Button>
-            </Form.Field>
-          </Segment>
+
+          {/* <Segment.Group horizontal>
+            <Segment textAlign="center">
+              {" "}
+              {/* <Form.Field>
+                <PendingMembersView
+                  pendingMembersView={this.state.pendingMembersView}
+                />
+              </Form.Field> 
+            </Segment>
+            
+          </Segment.Group> */}
+
+          <Segment.Group horizontal>
+            <Segment horizontal textAlign="center">
+              <Button negative onClick={this.handleCancel}>
+                Cancel
+              </Button>
+            </Segment>
+            <Segment horizontal textAlign="center">
+              <Button positive onClick={this.handleSubmit}>
+                Submit
+              </Button>
+            </Segment>
+          </Segment.Group>
         </Segment.Group>
       </Form>
     );
   }
 }
+
+/*rejectPendingMember(name) {
+    this.setState(prevState => {
+      return {
+        joinrequests: prevState.joinrequests.filter(e => e !== name),
+        pendingMembersView: prevState.pendingMembersView.filter(
+          e => e.props.name !== name
+        )
+      };
+    });
+    console.log(this.state.joinrequests);
+    console.log(this.state.pendingMembersView);
+  }
+
+  acceptPendingMember(name) {
+    console.log(this.state);
+    this.setState(prevState => {
+      return {
+        joinrequests: prevState.joinrequests.filter(e => e !== name),
+        memberslist: prevState.memberslist.push(name),
+        membersViewer: prevState.membersViewer.push(
+          <MembersView name={name} handleRemove={this.handleRemoveMember} />
+        ),
+        pendingMembersView: prevState.pendingMembersView.filter(
+          e => e.props.name !== name
+        )
+      };
+    });
+    this.populateMembers();
+    console.log(this.state.joinrequests);
+    console.log(this.state.membersViewer);
+  }
+
+  populatePendingMembers() {
+    var temp = [];
+    if (this.props.projectObject.joinrequests !== undefined) {
+      for (var i = 0; i < this.props.projectObject.joinrequests.length; i++) {
+        temp.push(
+          <PendingMember
+            name={this.props.projectObject.joinrequests[i]}
+            handleAccept={this.acceptPendingMember}
+            handleReject={this.rejectPendingMember}
+          />
+        );
+      }
+    }
+    this.setState({ pendingMembersView: temp });
+  }*/
