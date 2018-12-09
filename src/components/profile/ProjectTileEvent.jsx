@@ -82,12 +82,12 @@ export default class ProjectTileEvent extends Component {
                     <List.Icon name="tags" />
                     <List.Content>Tags: {tagsDisplay}</List.Content>
                   </List.Item>
-                  {/*<List.Item>
+                  <List.Item>
                     <List.Icon name="location arrow" />
                     <List.Content>
                       <Link to={"/" + DASHBOARD}>Go to Dashboard</Link>
                     </List.Content>
-                  </List.Item>*/}
+                  </List.Item>
                 </List>
               </Accordion.Content>
             )}

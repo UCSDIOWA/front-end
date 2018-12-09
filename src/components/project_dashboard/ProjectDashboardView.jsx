@@ -10,7 +10,8 @@ import {
   getMilestones,
   addMilestone,
   deleteMilestone,
-  updateProgress
+  updateProgress,
+  toggleDone
 } from "../../server/api";
 import ProjectInfoWidget from "./ProjectInfoWidget";
 
@@ -123,6 +124,13 @@ export default class ProjectDashboardView extends Component {
   handleDecrementProgress(updateWeight) {
     var currProg = this.state.percentdone;
     var currWeight = this.state.currentWeight;
+
+    if (currProg === 100) {
+      const toggleDoneProgress = toggleDone(this.state.xid, true);
+      toggleDoneProgress.then(response => {
+        console.log("project is set to not done");
+      });
+    }
     currWeight = currWeight * 1 - updateWeight * 1;
 
     currProg = Math.ceil(100 * (currWeight / this.state.totalWeight));
@@ -147,6 +155,13 @@ export default class ProjectDashboardView extends Component {
     updateProgressPromise.then(response => {
       this.setState({ percentdone: currProg, currentWeight: currWeight });
     });
+    //TODO toggledone
+    if (currProg === 100) {
+      const toggleDoneProgress = toggleDone(this.state.xid, false);
+      toggleDoneProgress.then(response => {
+        console.log("project is set to done");
+      });
+    }
   }
 
   handleAddMilestone(msName, msWeight, msDeadline, msDescription) {
@@ -197,6 +212,12 @@ export default class ProjectDashboardView extends Component {
 
     var totalWeight = this.state.totalWeight;
     var currWeight = this.state.currentWeight;
+    if (totalWeight === currWeight) {
+      const toggleDoneProgress = toggleDone(this.state.xid, true);
+      toggleDoneProgress.then(response => {
+        console.log("project is set to not done");
+      });
+    }
     console.log("totalWeight: " + totalWeight);
     console.log("currWeight: " + currWeight);
     //console.log("old total: " + totalWeight);
@@ -204,7 +225,6 @@ export default class ProjectDashboardView extends Component {
     //console.log("new total: " + totalWeight);
 
     var currProg = Math.ceil(100 * (currWeight / totalWeight));
-    console.log("HESDFASDF");
 
     const updateProgressPromise = updateProgress(this.state.xid, currProg);
     updateProgressPromise.then(response => {
@@ -323,6 +343,13 @@ export default class ProjectDashboardView extends Component {
         totalWeight: totalWeight,
         currentWeight: currWeight
       });
+
+      if (currProg === 100) {
+        const toggleDoneProgress = toggleDone(this.state.xid, false);
+        toggleDoneProgress.then(response => {
+          console.log("project is set to done");
+        });
+      }
     });
   }
 
