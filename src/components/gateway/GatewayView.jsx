@@ -5,14 +5,23 @@ import { navConsts } from "../../constants";
 import { Link } from "react-router-dom";
 import GatewayProjectTable from "./GatewayProjectTable";
 import ProjectInvitesPopup from "./ProjectInvitesPopup";
-import { inviteUser } from "../../server/api";
+import {
+  acceptProjectInvite,
+  rejectProjectInvite,
+  getProjectInvites
+} from "../../server/api";
 import ProjectInvitesTileEvent from "./ProjectInvitesTileEvent";
+import UserSession from "../../server/UserSession";
 
 export default class GatewayView extends Component {
   //TODO add backend call to grab invites array
   constructor(props) {
     super(props);
-    this.state = { invites: ["testproject", "testproject2"], projInvites: [] };
+    this.state = {
+      invites: ["testproject", "testproject2"],
+      projInvites: [],
+      email: UserSession.getEmail()
+    };
 
     this.populateInvitesTable = this.populateInvitesTable.bind(this);
     this.handleAcceptInvite = this.handleAcceptInvite.bind(this);
@@ -21,39 +30,83 @@ export default class GatewayView extends Component {
 
   handleAcceptInvite(projName, projID) {
     //TODO handle sending backend call to accept invite
-    var list = [];
-    for (var i = 0; i < this.state.projInvites.length; i++) {
-      if (this.state.projInvites[i].key != projName) {
-        list.push(this.state.projInvites[i]);
-      }
-    }
-    this.setState({ projInvites: list });
+    const acceptInvitePromise = acceptProjectInvite(
+      UserSession.getEmail(),
+      projID
+    );
+    acceptInvitePromise
+      .then(response => {
+        console.log("accept invite response: ");
+        console.log(response);
+
+        if (!response.success) {
+          alert("Error accepting invite");
+        }
+      })
+      .then(projectInfo => {
+        this.populateInvitesTable();
+      });
   }
 
   handleRejectInvite(projName, projID) {
     //TODO handle sending backend call to accept invite
-    var list = [];
-    for (var i = 0; i < this.state.projInvites.length; i++) {
-      if (this.state.projInvites[i].key != projName) {
-        list.push(this.state.projInvites[i]);
-      }
-    }
-    this.setState({ projInvites: list });
+    const rejectInvitePromise = rejectProjectInvite(this.state.email, projID);
+    rejectInvitePromise
+      .then(response => {
+        console.log("reject invite response: ");
+        console.log(response);
+
+        if (!response.success) {
+          alert("Error rejecting invite");
+        }
+      })
+      .then(projectInfo => {
+        this.populateInvitesTable();
+      });
   }
 
   populateInvitesTable() {
-    var list = [];
-    for (var i = 0; i < this.state.invites.length; i++) {
-      list.push(
-        <ProjectInvitesTileEvent
-          key={this.state.invites[i]}
-          projectName={this.state.invites[i]}
-          handleAcceptFunc={this.handleAcceptInvite}
-          handleRejectFunc={this.handleRejectInvite}
-        />
-      );
-    }
-    this.setState({ projInvites: list });
+    const getInvitesPromise = getProjectInvites(this.state.email);
+
+    getInvitesPromise
+      .then(response => {
+        console.log("get invites response: ");
+        console.log(response);
+        if (response === undefined) {
+          return;
+        }
+
+        if (!response.success) {
+          alert("getting invites");
+        }
+        return response;
+      })
+      .then(invites => {
+        if (invites === undefined) {
+          return;
+        }
+        if (invites.invitations === undefined) {
+          this.setState({ projInvites: [] });
+          return;
+        }
+        var list = [];
+        for (
+          var i = 0;
+          invites !== undefined && i < invites.invitations.length;
+          i++
+        ) {
+          list.push(
+            <ProjectInvitesTileEvent
+              key={invites.invitations[i]}
+              inviteText={invites.invitations[i]}
+              projID={invites.xid[i]}
+              handleAcceptFunc={this.handleAcceptInvite}
+              handleRejectFunc={this.handleRejectInvite}
+            />
+          );
+        }
+        this.setState({ projInvites: list });
+      });
   }
 
   componentDidMount() {
@@ -61,7 +114,7 @@ export default class GatewayView extends Component {
   }
 
   render() {
-    const { CREATE_PROJECT, DASHBOARD, PROJECT_LISTINGS } = navConsts;
+    const { CREATE_PROJECT, PROJECT_LISTINGS } = navConsts;
     return (
       <div>
         <Link to={"/" + CREATE_PROJECT}>

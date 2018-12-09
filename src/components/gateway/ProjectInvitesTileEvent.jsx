@@ -23,7 +23,7 @@ export default class ProjectInvitesTileEvent extends Component {
       <Segment className="profile-columns3">
         <Grid columns={15} textAlign="center">
           <Grid.Row verticalAlign="middle">
-            <Grid.Column width={9}>{this.props.projectName}</Grid.Column>
+            <Grid.Column width={9}>{this.props.inviteText}</Grid.Column>
             <Grid.Column width={3}>
               <Button color="green" size="mini" onClick={this.handleAccept}>
                 Accept Invite
